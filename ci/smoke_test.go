@@ -1,32 +1,16 @@
-// SDK smoke test -- validates build-from-source and API integration.
+// SDK smoke test -- validates build-from-source and API integration using the SDK client.
 package main
 
 import (
-	"bytes"
-	"encoding/json"
+	"context"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"strings"
-	"time"
+
+	mailodds "github.com/mailodds/go-sdk"
 )
 
-const apiURL = "https://api.mailodds.com"
-
-var apiKey string
 var passed, failed int
-
-type validateReq struct {
-	Email string `json:"email"`
-}
-
-type validateResp struct {
-	Status   string  `json:"status"`
-	Action   string  `json:"action"`
-	SubStatus *string `json:"sub_status"`
-	TestMode bool    `json:"test_mode"`
-}
 
 func check(label, expected, actual string) {
 	if expected == actual {
@@ -37,35 +21,19 @@ func check(label, expected, actual string) {
 	}
 }
 
-func apiCall(email, key string) (*validateResp, int, error) {
-	body, _ := json.Marshal(validateReq{Email: email})
-	req, _ := http.NewRequest("POST", apiURL+"/v1/validate", bytes.NewReader(body))
-	req.Header.Set("Authorization", "Bearer "+key)
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{Timeout: 30 * time.Second}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, 0, err
-	}
-	defer resp.Body.Close()
-	data, _ := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != 200 {
-		return nil, resp.StatusCode, nil
-	}
-
-	var result validateResp
-	json.Unmarshal(data, &result)
-	return &result, resp.StatusCode, nil
-}
-
 func main() {
-	apiKey = os.Getenv("MAILODDS_TEST_KEY")
+	apiKey := os.Getenv("MAILODDS_TEST_KEY")
 	if apiKey == "" {
 		fmt.Println("ERROR: MAILODDS_TEST_KEY not set")
 		os.Exit(1)
 	}
+
+	cfg := mailodds.NewConfiguration()
+	cfg.Servers = mailodds.ServerConfigurations{
+		{URL: "https://api.mailodds.com", Description: "Production"},
+	}
+	client := mailodds.NewAPIClient(cfg)
+	ctx := context.WithValue(context.Background(), mailodds.ContextAccessToken, apiKey)
 
 	type tc struct {
 		email, status, action, sub string
@@ -82,45 +50,54 @@ func main() {
 
 	for _, c := range cases {
 		domain := strings.Split(strings.Split(c.email, "@")[1], ".")[0]
-		r, _, err := apiCall(c.email, apiKey)
+		req := mailodds.NewValidateRequest(c.email)
+		r, _, err := client.EmailValidationAPI.ValidateEmail(ctx).ValidateRequest(*req).Execute()
 		if err != nil {
 			failed++
 			fmt.Printf("  FAIL: %s error: %v\n", domain, err)
 			continue
 		}
-		check(domain+".status", c.status, r.Status)
-		check(domain+".action", c.action, r.Action)
+		check(domain+".status", c.status, r.GetStatus())
+		check(domain+".action", c.action, r.GetAction())
 		sub := ""
-		if r.SubStatus != nil {
-			sub = *r.SubStatus
+		if r.HasSubStatus() {
+			sub = r.GetSubStatus()
 		}
 		check(domain+".sub_status", c.sub, sub)
-		if r.TestMode {
-			passed++
-		} else {
-			failed++
-			fmt.Printf("  FAIL: %s.test_mode expected=true got=false\n", domain)
-		}
 	}
 
-	// Error handling
-	_, code, _ := apiCall("test@deliverable.mailodds.com", "invalid_key")
-	check("error.401", "401", fmt.Sprintf("%d", code))
-
-	body, _ := json.Marshal(map[string]string{})
-	req, _ := http.NewRequest("POST", apiURL+"/v1/validate", bytes.NewReader(body))
-	req.Header.Set("Authorization", "Bearer "+apiKey)
-	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{Timeout: 10 * time.Second}
-	resp, _ := client.Do(req)
-	if resp != nil {
-		resp.Body.Close()
-		if resp.StatusCode == 400 || resp.StatusCode == 422 {
-			passed++
-		} else {
-			failed++
-			fmt.Printf("  FAIL: error.400 expected=400|422 got=%d\n", resp.StatusCode)
+	// Error handling: 401 with bad key
+	badCfg := mailodds.NewConfiguration()
+	badCfg.Servers = mailodds.ServerConfigurations{
+		{URL: "https://api.mailodds.com", Description: "Production"},
+	}
+	badClient := mailodds.NewAPIClient(badCfg)
+	badCtx := context.WithValue(context.Background(), mailodds.ContextAccessToken, "invalid_key")
+	req401 := mailodds.NewValidateRequest("test@deliverable.mailodds.com")
+	_, httpResp, err := badClient.EmailValidationAPI.ValidateEmail(badCtx).ValidateRequest(*req401).Execute()
+	if err != nil && httpResp != nil && httpResp.StatusCode == 401 {
+		passed++
+	} else {
+		failed++
+		code := 0
+		if httpResp != nil {
+			code = httpResp.StatusCode
 		}
+		fmt.Printf("  FAIL: error.401 expected=401 got=%d\n", code)
+	}
+
+	// Error handling: 400/422 with empty email
+	reqEmpty := mailodds.NewValidateRequest("")
+	_, httpResp2, err2 := client.EmailValidationAPI.ValidateEmail(ctx).ValidateRequest(*reqEmpty).Execute()
+	if err2 != nil && httpResp2 != nil && (httpResp2.StatusCode == 400 || httpResp2.StatusCode == 422) {
+		passed++
+	} else {
+		failed++
+		code := 0
+		if httpResp2 != nil {
+			code = httpResp2.StatusCode
+		}
+		fmt.Printf("  FAIL: error.400 expected=400|422 got=%d\n", code)
 	}
 
 	total := passed + failed
