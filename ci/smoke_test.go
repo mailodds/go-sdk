@@ -21,6 +21,15 @@ func check(label, expected, actual string) {
 	}
 }
 
+func checkBool(label string, expected, actual bool) {
+	if expected == actual {
+		passed++
+	} else {
+		failed++
+		fmt.Printf("  FAIL: %s expected=%v got=%v\n", label, expected, actual)
+	}
+}
+
 func main() {
 	apiKey := os.Getenv("MAILODDS_TEST_KEY")
 	if apiKey == "" {
@@ -37,15 +46,16 @@ func main() {
 
 	type tc struct {
 		email, status, action, sub string
+		freeProvider, disposable, roleAccount, mxFound bool
 	}
 	cases := []tc{
-		{"test@deliverable.mailodds.com", "valid", "accept", ""},
-		{"test@invalid.mailodds.com", "invalid", "reject", "smtp_rejected"},
-		{"test@risky.mailodds.com", "catch_all", "accept_with_caution", "catch_all_detected"},
-		{"test@disposable.mailodds.com", "do_not_mail", "reject", "disposable"},
-		{"test@role.mailodds.com", "do_not_mail", "reject", "role_account"},
-		{"test@timeout.mailodds.com", "unknown", "retry_later", "smtp_unreachable"},
-		{"test@freeprovider.mailodds.com", "valid", "accept", ""},
+		{"test@deliverable.mailodds.com", "valid", "accept", "", false, false, false, true},
+		{"test@invalid.mailodds.com", "invalid", "reject", "smtp_rejected", false, false, false, true},
+		{"test@risky.mailodds.com", "catch_all", "accept_with_caution", "catch_all_detected", false, false, false, true},
+		{"test@disposable.mailodds.com", "do_not_mail", "reject", "disposable", false, true, false, true},
+		{"test@role.mailodds.com", "do_not_mail", "reject", "role_account", false, false, true, true},
+		{"test@timeout.mailodds.com", "unknown", "retry_later", "smtp_unreachable", false, false, false, true},
+		{"test@freeprovider.mailodds.com", "valid", "accept", "", true, false, false, true},
 	}
 
 	for _, c := range cases {
@@ -64,6 +74,17 @@ func main() {
 			sub = r.GetSubStatus()
 		}
 		check(domain+".sub_status", c.sub, sub)
+		checkBool(domain+".free_provider", c.freeProvider, r.GetFreeProvider())
+		checkBool(domain+".disposable", c.disposable, r.GetDisposable())
+		checkBool(domain+".role_account", c.roleAccount, r.GetRoleAccount())
+		checkBool(domain+".mx_found", c.mxFound, r.GetMxFound())
+		check(domain+".depth", "enhanced", r.GetDepth())
+		if r.GetProcessedAt().IsZero() {
+			failed++
+			fmt.Printf("  FAIL: %s.processed_at is empty\n", domain)
+		} else {
+			passed++
+		}
 	}
 
 	// Error handling: 401 with bad key
