@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Matched** | Pointer to **bool** |  | [optional] 
 **MatchType** | Pointer to **string** |  | [optional] 
 **MatchValue** | Pointer to **string** |  | [optional] 
+**Reason** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -26,31 +26,6 @@ will change when the set of required properties is changed
 NewValidationResponseSuppressionMatchWithDefaults instantiates a new ValidationResponseSuppressionMatch object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetMatched
-
-`func (o *ValidationResponseSuppressionMatch) GetMatched() bool`
-
-GetMatched returns the Matched field if non-nil, zero value otherwise.
-
-### GetMatchedOk
-
-`func (o *ValidationResponseSuppressionMatch) GetMatchedOk() (*bool, bool)`
-
-GetMatchedOk returns a tuple with the Matched field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMatched
-
-`func (o *ValidationResponseSuppressionMatch) SetMatched(v bool)`
-
-SetMatched sets Matched field to given value.
-
-### HasMatched
-
-`func (o *ValidationResponseSuppressionMatch) HasMatched() bool`
-
-HasMatched returns a boolean if a field has been set.
 
 ### GetMatchType
 
@@ -101,6 +76,31 @@ SetMatchValue sets MatchValue field to given value.
 `func (o *ValidationResponseSuppressionMatch) HasMatchValue() bool`
 
 HasMatchValue returns a boolean if a field has been set.
+
+### GetReason
+
+`func (o *ValidationResponseSuppressionMatch) GetReason() string`
+
+GetReason returns the Reason field if non-nil, zero value otherwise.
+
+### GetReasonOk
+
+`func (o *ValidationResponseSuppressionMatch) GetReasonOk() (*string, bool)`
+
+GetReasonOk returns a tuple with the Reason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReason
+
+`func (o *ValidationResponseSuppressionMatch) SetReason(v string)`
+
+SetReason sets Reason field to given value.
+
+### HasReason
+
+`func (o *ValidationResponseSuppressionMatch) HasReason() bool`
+
+HasReason returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

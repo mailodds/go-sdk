@@ -1,99 +1,99 @@
-# ValidateRequest
+# ValidateBatchRequest
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Email** | **string** | Email address to validate | 
-**Depth** | Pointer to **string** | Validation depth. &#39;standard&#39; skips SMTP verification. | [optional] [default to "enhanced"]
-**PolicyId** | Pointer to **int32** | Optional policy ID to use instead of default policy | [optional] 
+**Emails** | **[]string** | List of emails to validate | 
+**Depth** | Pointer to **string** |  | [optional] [default to "enhanced"]
+**PolicyId** | Pointer to **int32** | Optional policy ID | [optional] 
 
 ## Methods
 
-### NewValidateRequest
+### NewValidateBatchRequest
 
-`func NewValidateRequest(email string, ) *ValidateRequest`
+`func NewValidateBatchRequest(emails []string, ) *ValidateBatchRequest`
 
-NewValidateRequest instantiates a new ValidateRequest object
+NewValidateBatchRequest instantiates a new ValidateBatchRequest object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewValidateRequestWithDefaults
+### NewValidateBatchRequestWithDefaults
 
-`func NewValidateRequestWithDefaults() *ValidateRequest`
+`func NewValidateBatchRequestWithDefaults() *ValidateBatchRequest`
 
-NewValidateRequestWithDefaults instantiates a new ValidateRequest object
+NewValidateBatchRequestWithDefaults instantiates a new ValidateBatchRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetEmail
+### GetEmails
 
-`func (o *ValidateRequest) GetEmail() string`
+`func (o *ValidateBatchRequest) GetEmails() []string`
 
-GetEmail returns the Email field if non-nil, zero value otherwise.
+GetEmails returns the Emails field if non-nil, zero value otherwise.
 
-### GetEmailOk
+### GetEmailsOk
 
-`func (o *ValidateRequest) GetEmailOk() (*string, bool)`
+`func (o *ValidateBatchRequest) GetEmailsOk() (*[]string, bool)`
 
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+GetEmailsOk returns a tuple with the Emails field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEmail
+### SetEmails
 
-`func (o *ValidateRequest) SetEmail(v string)`
+`func (o *ValidateBatchRequest) SetEmails(v []string)`
 
-SetEmail sets Email field to given value.
+SetEmails sets Emails field to given value.
 
 
 ### GetDepth
 
-`func (o *ValidateRequest) GetDepth() string`
+`func (o *ValidateBatchRequest) GetDepth() string`
 
 GetDepth returns the Depth field if non-nil, zero value otherwise.
 
 ### GetDepthOk
 
-`func (o *ValidateRequest) GetDepthOk() (*string, bool)`
+`func (o *ValidateBatchRequest) GetDepthOk() (*string, bool)`
 
 GetDepthOk returns a tuple with the Depth field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDepth
 
-`func (o *ValidateRequest) SetDepth(v string)`
+`func (o *ValidateBatchRequest) SetDepth(v string)`
 
 SetDepth sets Depth field to given value.
 
 ### HasDepth
 
-`func (o *ValidateRequest) HasDepth() bool`
+`func (o *ValidateBatchRequest) HasDepth() bool`
 
 HasDepth returns a boolean if a field has been set.
 
 ### GetPolicyId
 
-`func (o *ValidateRequest) GetPolicyId() int32`
+`func (o *ValidateBatchRequest) GetPolicyId() int32`
 
 GetPolicyId returns the PolicyId field if non-nil, zero value otherwise.
 
 ### GetPolicyIdOk
 
-`func (o *ValidateRequest) GetPolicyIdOk() (*int32, bool)`
+`func (o *ValidateBatchRequest) GetPolicyIdOk() (*int32, bool)`
 
 GetPolicyIdOk returns a tuple with the PolicyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPolicyId
 
-`func (o *ValidateRequest) SetPolicyId(v int32)`
+`func (o *ValidateBatchRequest) SetPolicyId(v int32)`
 
 SetPolicyId sets PolicyId field to given value.
 
 ### HasPolicyId
 
-`func (o *ValidateRequest) HasPolicyId() bool`
+`func (o *ValidateBatchRequest) HasPolicyId() bool`
 
 HasPolicyId returns a boolean if a field has been set.
 

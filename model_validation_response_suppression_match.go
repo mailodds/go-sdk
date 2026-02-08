@@ -18,11 +18,11 @@ import (
 // checks if the ValidationResponseSuppressionMatch type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResponseSuppressionMatch{}
 
-// ValidationResponseSuppressionMatch struct for ValidationResponseSuppressionMatch
+// ValidationResponseSuppressionMatch Present only when email matched a suppression list entry.
 type ValidationResponseSuppressionMatch struct {
-	Matched *bool `json:"matched,omitempty"`
 	MatchType *string `json:"match_type,omitempty"`
 	MatchValue *string `json:"match_value,omitempty"`
+	Reason *string `json:"reason,omitempty"`
 }
 
 // NewValidationResponseSuppressionMatch instantiates a new ValidationResponseSuppressionMatch object
@@ -40,38 +40,6 @@ func NewValidationResponseSuppressionMatch() *ValidationResponseSuppressionMatch
 func NewValidationResponseSuppressionMatchWithDefaults() *ValidationResponseSuppressionMatch {
 	this := ValidationResponseSuppressionMatch{}
 	return &this
-}
-
-// GetMatched returns the Matched field value if set, zero value otherwise.
-func (o *ValidationResponseSuppressionMatch) GetMatched() bool {
-	if o == nil || IsNil(o.Matched) {
-		var ret bool
-		return ret
-	}
-	return *o.Matched
-}
-
-// GetMatchedOk returns a tuple with the Matched field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ValidationResponseSuppressionMatch) GetMatchedOk() (*bool, bool) {
-	if o == nil || IsNil(o.Matched) {
-		return nil, false
-	}
-	return o.Matched, true
-}
-
-// HasMatched returns a boolean if a field has been set.
-func (o *ValidationResponseSuppressionMatch) HasMatched() bool {
-	if o != nil && !IsNil(o.Matched) {
-		return true
-	}
-
-	return false
-}
-
-// SetMatched gets a reference to the given bool and assigns it to the Matched field.
-func (o *ValidationResponseSuppressionMatch) SetMatched(v bool) {
-	o.Matched = &v
 }
 
 // GetMatchType returns the MatchType field value if set, zero value otherwise.
@@ -138,6 +106,38 @@ func (o *ValidationResponseSuppressionMatch) SetMatchValue(v string) {
 	o.MatchValue = &v
 }
 
+// GetReason returns the Reason field value if set, zero value otherwise.
+func (o *ValidationResponseSuppressionMatch) GetReason() string {
+	if o == nil || IsNil(o.Reason) {
+		var ret string
+		return ret
+	}
+	return *o.Reason
+}
+
+// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponseSuppressionMatch) GetReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.Reason) {
+		return nil, false
+	}
+	return o.Reason, true
+}
+
+// HasReason returns a boolean if a field has been set.
+func (o *ValidationResponseSuppressionMatch) HasReason() bool {
+	if o != nil && !IsNil(o.Reason) {
+		return true
+	}
+
+	return false
+}
+
+// SetReason gets a reference to the given string and assigns it to the Reason field.
+func (o *ValidationResponseSuppressionMatch) SetReason(v string) {
+	o.Reason = &v
+}
+
 func (o ValidationResponseSuppressionMatch) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -148,14 +148,14 @@ func (o ValidationResponseSuppressionMatch) MarshalJSON() ([]byte, error) {
 
 func (o ValidationResponseSuppressionMatch) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Matched) {
-		toSerialize["matched"] = o.Matched
-	}
 	if !IsNil(o.MatchType) {
 		toSerialize["match_type"] = o.MatchType
 	}
 	if !IsNil(o.MatchValue) {
 		toSerialize["match_value"] = o.MatchValue
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
 	}
 	return toSerialize, nil
 }

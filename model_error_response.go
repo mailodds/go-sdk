@@ -26,7 +26,7 @@ type ErrorResponse struct {
 	// Machine-readable error code
 	Error string `json:"error"`
 	// Human-readable error message
-	Message string `json:"message"`
+	Message *string `json:"message,omitempty"`
 }
 
 type _ErrorResponse ErrorResponse
@@ -35,10 +35,9 @@ type _ErrorResponse ErrorResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewErrorResponse(error_ string, message string) *ErrorResponse {
+func NewErrorResponse(error_ string) *ErrorResponse {
 	this := ErrorResponse{}
 	this.Error = error_
-	this.Message = message
 	return &this
 }
 
@@ -106,28 +105,36 @@ func (o *ErrorResponse) SetError(v string) {
 	o.Error = v
 }
 
-// GetMessage returns the Message field value
+// GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ErrorResponse) GetMessage() string {
-	if o == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
-
-	return o.Message
+	return *o.Message
 }
 
-// GetMessageOk returns a tuple with the Message field value
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ErrorResponse) GetMessageOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
-	return &o.Message, true
+	return o.Message, true
 }
 
-// SetMessage sets field value
+// HasMessage returns a boolean if a field has been set.
+func (o *ErrorResponse) HasMessage() bool {
+	if o != nil && !IsNil(o.Message) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
 func (o *ErrorResponse) SetMessage(v string) {
-	o.Message = v
+	o.Message = &v
 }
 
 func (o ErrorResponse) MarshalJSON() ([]byte, error) {
@@ -144,7 +151,9 @@ func (o ErrorResponse) ToMap() (map[string]interface{}, error) {
 		toSerialize["schema_version"] = o.SchemaVersion
 	}
 	toSerialize["error"] = o.Error
-	toSerialize["message"] = o.Message
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
 	return toSerialize, nil
 }
 
@@ -154,7 +163,6 @@ func (o *ErrorResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"error",
-		"message",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -174,7 +182,6 @@ func (o *ErrorResponse) UnmarshalJSON(data []byte) (err error) {
 	varErrorResponse := _ErrorResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varErrorResponse)
 
 	if err != nil {

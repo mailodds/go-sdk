@@ -4,24 +4,31 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SchemaVersion** | Pointer to **string** |  | [optional] 
+**SchemaVersion** | **string** |  | 
 **Email** | **string** |  | 
 **Status** | **string** | Validation status | 
-**SubStatus** | Pointer to **string** | Detailed status reason | [optional] 
 **Action** | **string** | Recommended action | 
-**Domain** | Pointer to **string** |  | [optional] 
-**MxFound** | Pointer to **bool** |  | [optional] 
-**SmtpCheck** | Pointer to **bool** |  | [optional] 
-**Disposable** | Pointer to **bool** |  | [optional] 
-**RoleAccount** | Pointer to **bool** |  | [optional] 
-**FreeProvider** | Pointer to **bool** |  | [optional] 
+**SubStatus** | Pointer to **string** | Detailed status reason. Omitted when none. | [optional] 
+**Domain** | **string** |  | 
+**MxFound** | **bool** | Whether MX records were found for the domain | 
+**MxHost** | Pointer to **string** | Primary MX hostname. Omitted when MX not resolved. | [optional] 
+**SmtpCheck** | Pointer to **bool** | Whether SMTP verification passed. Omitted when SMTP not checked. | [optional] 
+**CatchAll** | Pointer to **bool** | Whether domain is catch-all. Omitted when SMTP not checked. | [optional] 
+**Disposable** | **bool** | Whether domain is a known disposable email provider | 
+**RoleAccount** | **bool** | Whether address is a role account (e.g., info@, admin@) | 
+**FreeProvider** | **bool** | Whether domain is a known free email provider (e.g., gmail.com) | 
+**Depth** | **string** | Validation depth used for this check | 
+**ProcessedAt** | **time.Time** | ISO 8601 timestamp of validation | 
+**SuggestedEmail** | Pointer to **string** | Typo correction suggestion. Omitted when no typo detected. | [optional] 
+**RetryAfterMs** | Pointer to **int32** | Suggested retry delay in milliseconds. Present only for retry_later action. | [optional] 
 **SuppressionMatch** | Pointer to [**ValidationResponseSuppressionMatch**](ValidationResponseSuppressionMatch.md) |  | [optional] 
+**PolicyApplied** | Pointer to [**ValidationResponsePolicyApplied**](ValidationResponsePolicyApplied.md) |  | [optional] 
 
 ## Methods
 
 ### NewValidationResponse
 
-`func NewValidationResponse(email string, status string, action string, ) *ValidationResponse`
+`func NewValidationResponse(schemaVersion string, email string, status string, action string, domain string, mxFound bool, disposable bool, roleAccount bool, freeProvider bool, depth string, processedAt time.Time, ) *ValidationResponse`
 
 NewValidationResponse instantiates a new ValidationResponse object
 This constructor will assign default values to properties that have it defined,
@@ -55,11 +62,6 @@ and a boolean to check if the value has been set.
 
 SetSchemaVersion sets SchemaVersion field to given value.
 
-### HasSchemaVersion
-
-`func (o *ValidationResponse) HasSchemaVersion() bool`
-
-HasSchemaVersion returns a boolean if a field has been set.
 
 ### GetEmail
 
@@ -101,6 +103,26 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetAction
+
+`func (o *ValidationResponse) GetAction() string`
+
+GetAction returns the Action field if non-nil, zero value otherwise.
+
+### GetActionOk
+
+`func (o *ValidationResponse) GetActionOk() (*string, bool)`
+
+GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAction
+
+`func (o *ValidationResponse) SetAction(v string)`
+
+SetAction sets Action field to given value.
+
+
 ### GetSubStatus
 
 `func (o *ValidationResponse) GetSubStatus() string`
@@ -126,26 +148,6 @@ SetSubStatus sets SubStatus field to given value.
 
 HasSubStatus returns a boolean if a field has been set.
 
-### GetAction
-
-`func (o *ValidationResponse) GetAction() string`
-
-GetAction returns the Action field if non-nil, zero value otherwise.
-
-### GetActionOk
-
-`func (o *ValidationResponse) GetActionOk() (*string, bool)`
-
-GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAction
-
-`func (o *ValidationResponse) SetAction(v string)`
-
-SetAction sets Action field to given value.
-
-
 ### GetDomain
 
 `func (o *ValidationResponse) GetDomain() string`
@@ -165,11 +167,6 @@ and a boolean to check if the value has been set.
 
 SetDomain sets Domain field to given value.
 
-### HasDomain
-
-`func (o *ValidationResponse) HasDomain() bool`
-
-HasDomain returns a boolean if a field has been set.
 
 ### GetMxFound
 
@@ -190,11 +187,31 @@ and a boolean to check if the value has been set.
 
 SetMxFound sets MxFound field to given value.
 
-### HasMxFound
 
-`func (o *ValidationResponse) HasMxFound() bool`
+### GetMxHost
 
-HasMxFound returns a boolean if a field has been set.
+`func (o *ValidationResponse) GetMxHost() string`
+
+GetMxHost returns the MxHost field if non-nil, zero value otherwise.
+
+### GetMxHostOk
+
+`func (o *ValidationResponse) GetMxHostOk() (*string, bool)`
+
+GetMxHostOk returns a tuple with the MxHost field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMxHost
+
+`func (o *ValidationResponse) SetMxHost(v string)`
+
+SetMxHost sets MxHost field to given value.
+
+### HasMxHost
+
+`func (o *ValidationResponse) HasMxHost() bool`
+
+HasMxHost returns a boolean if a field has been set.
 
 ### GetSmtpCheck
 
@@ -221,6 +238,31 @@ SetSmtpCheck sets SmtpCheck field to given value.
 
 HasSmtpCheck returns a boolean if a field has been set.
 
+### GetCatchAll
+
+`func (o *ValidationResponse) GetCatchAll() bool`
+
+GetCatchAll returns the CatchAll field if non-nil, zero value otherwise.
+
+### GetCatchAllOk
+
+`func (o *ValidationResponse) GetCatchAllOk() (*bool, bool)`
+
+GetCatchAllOk returns a tuple with the CatchAll field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCatchAll
+
+`func (o *ValidationResponse) SetCatchAll(v bool)`
+
+SetCatchAll sets CatchAll field to given value.
+
+### HasCatchAll
+
+`func (o *ValidationResponse) HasCatchAll() bool`
+
+HasCatchAll returns a boolean if a field has been set.
+
 ### GetDisposable
 
 `func (o *ValidationResponse) GetDisposable() bool`
@@ -240,11 +282,6 @@ and a boolean to check if the value has been set.
 
 SetDisposable sets Disposable field to given value.
 
-### HasDisposable
-
-`func (o *ValidationResponse) HasDisposable() bool`
-
-HasDisposable returns a boolean if a field has been set.
 
 ### GetRoleAccount
 
@@ -265,11 +302,6 @@ and a boolean to check if the value has been set.
 
 SetRoleAccount sets RoleAccount field to given value.
 
-### HasRoleAccount
-
-`func (o *ValidationResponse) HasRoleAccount() bool`
-
-HasRoleAccount returns a boolean if a field has been set.
 
 ### GetFreeProvider
 
@@ -290,11 +322,96 @@ and a boolean to check if the value has been set.
 
 SetFreeProvider sets FreeProvider field to given value.
 
-### HasFreeProvider
 
-`func (o *ValidationResponse) HasFreeProvider() bool`
+### GetDepth
 
-HasFreeProvider returns a boolean if a field has been set.
+`func (o *ValidationResponse) GetDepth() string`
+
+GetDepth returns the Depth field if non-nil, zero value otherwise.
+
+### GetDepthOk
+
+`func (o *ValidationResponse) GetDepthOk() (*string, bool)`
+
+GetDepthOk returns a tuple with the Depth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepth
+
+`func (o *ValidationResponse) SetDepth(v string)`
+
+SetDepth sets Depth field to given value.
+
+
+### GetProcessedAt
+
+`func (o *ValidationResponse) GetProcessedAt() time.Time`
+
+GetProcessedAt returns the ProcessedAt field if non-nil, zero value otherwise.
+
+### GetProcessedAtOk
+
+`func (o *ValidationResponse) GetProcessedAtOk() (*time.Time, bool)`
+
+GetProcessedAtOk returns a tuple with the ProcessedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProcessedAt
+
+`func (o *ValidationResponse) SetProcessedAt(v time.Time)`
+
+SetProcessedAt sets ProcessedAt field to given value.
+
+
+### GetSuggestedEmail
+
+`func (o *ValidationResponse) GetSuggestedEmail() string`
+
+GetSuggestedEmail returns the SuggestedEmail field if non-nil, zero value otherwise.
+
+### GetSuggestedEmailOk
+
+`func (o *ValidationResponse) GetSuggestedEmailOk() (*string, bool)`
+
+GetSuggestedEmailOk returns a tuple with the SuggestedEmail field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSuggestedEmail
+
+`func (o *ValidationResponse) SetSuggestedEmail(v string)`
+
+SetSuggestedEmail sets SuggestedEmail field to given value.
+
+### HasSuggestedEmail
+
+`func (o *ValidationResponse) HasSuggestedEmail() bool`
+
+HasSuggestedEmail returns a boolean if a field has been set.
+
+### GetRetryAfterMs
+
+`func (o *ValidationResponse) GetRetryAfterMs() int32`
+
+GetRetryAfterMs returns the RetryAfterMs field if non-nil, zero value otherwise.
+
+### GetRetryAfterMsOk
+
+`func (o *ValidationResponse) GetRetryAfterMsOk() (*int32, bool)`
+
+GetRetryAfterMsOk returns a tuple with the RetryAfterMs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRetryAfterMs
+
+`func (o *ValidationResponse) SetRetryAfterMs(v int32)`
+
+SetRetryAfterMs sets RetryAfterMs field to given value.
+
+### HasRetryAfterMs
+
+`func (o *ValidationResponse) HasRetryAfterMs() bool`
+
+HasRetryAfterMs returns a boolean if a field has been set.
 
 ### GetSuppressionMatch
 
@@ -320,6 +437,31 @@ SetSuppressionMatch sets SuppressionMatch field to given value.
 `func (o *ValidationResponse) HasSuppressionMatch() bool`
 
 HasSuppressionMatch returns a boolean if a field has been set.
+
+### GetPolicyApplied
+
+`func (o *ValidationResponse) GetPolicyApplied() ValidationResponsePolicyApplied`
+
+GetPolicyApplied returns the PolicyApplied field if non-nil, zero value otherwise.
+
+### GetPolicyAppliedOk
+
+`func (o *ValidationResponse) GetPolicyAppliedOk() (*ValidationResponsePolicyApplied, bool)`
+
+GetPolicyAppliedOk returns a tuple with the PolicyApplied field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPolicyApplied
+
+`func (o *ValidationResponse) SetPolicyApplied(v ValidationResponsePolicyApplied)`
+
+SetPolicyApplied sets PolicyApplied field to given value.
+
+### HasPolicyApplied
+
+`func (o *ValidationResponse) HasPolicyApplied() bool`
+
+HasPolicyApplied returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

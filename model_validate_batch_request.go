@@ -17,69 +17,68 @@ import (
 	"fmt"
 )
 
-// checks if the ValidateRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ValidateRequest{}
+// checks if the ValidateBatchRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ValidateBatchRequest{}
 
-// ValidateRequest struct for ValidateRequest
-type ValidateRequest struct {
-	// Email address to validate
-	Email string `json:"email"`
-	// Validation depth. 'standard' skips SMTP verification.
+// ValidateBatchRequest struct for ValidateBatchRequest
+type ValidateBatchRequest struct {
+	// List of emails to validate
+	Emails []string `json:"emails"`
 	Depth *string `json:"depth,omitempty"`
-	// Optional policy ID to use instead of default policy
+	// Optional policy ID
 	PolicyId *int32 `json:"policy_id,omitempty"`
 }
 
-type _ValidateRequest ValidateRequest
+type _ValidateBatchRequest ValidateBatchRequest
 
-// NewValidateRequest instantiates a new ValidateRequest object
+// NewValidateBatchRequest instantiates a new ValidateBatchRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewValidateRequest(email string) *ValidateRequest {
-	this := ValidateRequest{}
-	this.Email = email
+func NewValidateBatchRequest(emails []string) *ValidateBatchRequest {
+	this := ValidateBatchRequest{}
+	this.Emails = emails
 	var depth string = "enhanced"
 	this.Depth = &depth
 	return &this
 }
 
-// NewValidateRequestWithDefaults instantiates a new ValidateRequest object
+// NewValidateBatchRequestWithDefaults instantiates a new ValidateBatchRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewValidateRequestWithDefaults() *ValidateRequest {
-	this := ValidateRequest{}
+func NewValidateBatchRequestWithDefaults() *ValidateBatchRequest {
+	this := ValidateBatchRequest{}
 	var depth string = "enhanced"
 	this.Depth = &depth
 	return &this
 }
 
-// GetEmail returns the Email field value
-func (o *ValidateRequest) GetEmail() string {
+// GetEmails returns the Emails field value
+func (o *ValidateBatchRequest) GetEmails() []string {
 	if o == nil {
-		var ret string
+		var ret []string
 		return ret
 	}
 
-	return o.Email
+	return o.Emails
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetEmailsOk returns a tuple with the Emails field value
 // and a boolean to check if the value has been set.
-func (o *ValidateRequest) GetEmailOk() (*string, bool) {
+func (o *ValidateBatchRequest) GetEmailsOk() ([]string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Emails, true
 }
 
-// SetEmail sets field value
-func (o *ValidateRequest) SetEmail(v string) {
-	o.Email = v
+// SetEmails sets field value
+func (o *ValidateBatchRequest) SetEmails(v []string) {
+	o.Emails = v
 }
 
 // GetDepth returns the Depth field value if set, zero value otherwise.
-func (o *ValidateRequest) GetDepth() string {
+func (o *ValidateBatchRequest) GetDepth() string {
 	if o == nil || IsNil(o.Depth) {
 		var ret string
 		return ret
@@ -89,7 +88,7 @@ func (o *ValidateRequest) GetDepth() string {
 
 // GetDepthOk returns a tuple with the Depth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ValidateRequest) GetDepthOk() (*string, bool) {
+func (o *ValidateBatchRequest) GetDepthOk() (*string, bool) {
 	if o == nil || IsNil(o.Depth) {
 		return nil, false
 	}
@@ -97,7 +96,7 @@ func (o *ValidateRequest) GetDepthOk() (*string, bool) {
 }
 
 // HasDepth returns a boolean if a field has been set.
-func (o *ValidateRequest) HasDepth() bool {
+func (o *ValidateBatchRequest) HasDepth() bool {
 	if o != nil && !IsNil(o.Depth) {
 		return true
 	}
@@ -106,12 +105,12 @@ func (o *ValidateRequest) HasDepth() bool {
 }
 
 // SetDepth gets a reference to the given string and assigns it to the Depth field.
-func (o *ValidateRequest) SetDepth(v string) {
+func (o *ValidateBatchRequest) SetDepth(v string) {
 	o.Depth = &v
 }
 
 // GetPolicyId returns the PolicyId field value if set, zero value otherwise.
-func (o *ValidateRequest) GetPolicyId() int32 {
+func (o *ValidateBatchRequest) GetPolicyId() int32 {
 	if o == nil || IsNil(o.PolicyId) {
 		var ret int32
 		return ret
@@ -121,7 +120,7 @@ func (o *ValidateRequest) GetPolicyId() int32 {
 
 // GetPolicyIdOk returns a tuple with the PolicyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ValidateRequest) GetPolicyIdOk() (*int32, bool) {
+func (o *ValidateBatchRequest) GetPolicyIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.PolicyId) {
 		return nil, false
 	}
@@ -129,7 +128,7 @@ func (o *ValidateRequest) GetPolicyIdOk() (*int32, bool) {
 }
 
 // HasPolicyId returns a boolean if a field has been set.
-func (o *ValidateRequest) HasPolicyId() bool {
+func (o *ValidateBatchRequest) HasPolicyId() bool {
 	if o != nil && !IsNil(o.PolicyId) {
 		return true
 	}
@@ -138,11 +137,11 @@ func (o *ValidateRequest) HasPolicyId() bool {
 }
 
 // SetPolicyId gets a reference to the given int32 and assigns it to the PolicyId field.
-func (o *ValidateRequest) SetPolicyId(v int32) {
+func (o *ValidateBatchRequest) SetPolicyId(v int32) {
 	o.PolicyId = &v
 }
 
-func (o ValidateRequest) MarshalJSON() ([]byte, error) {
+func (o ValidateBatchRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -150,9 +149,9 @@ func (o ValidateRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o ValidateRequest) ToMap() (map[string]interface{}, error) {
+func (o ValidateBatchRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["email"] = o.Email
+	toSerialize["emails"] = o.Emails
 	if !IsNil(o.Depth) {
 		toSerialize["depth"] = o.Depth
 	}
@@ -162,12 +161,12 @@ func (o ValidateRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *ValidateRequest) UnmarshalJSON(data []byte) (err error) {
+func (o *ValidateBatchRequest) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"email",
+		"emails",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -184,52 +183,52 @@ func (o *ValidateRequest) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varValidateRequest := _ValidateRequest{}
+	varValidateBatchRequest := _ValidateBatchRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	err = decoder.Decode(&varValidateRequest)
+	err = decoder.Decode(&varValidateBatchRequest)
 
 	if err != nil {
 		return err
 	}
 
-	*o = ValidateRequest(varValidateRequest)
+	*o = ValidateBatchRequest(varValidateBatchRequest)
 
 	return err
 }
 
-type NullableValidateRequest struct {
-	value *ValidateRequest
+type NullableValidateBatchRequest struct {
+	value *ValidateBatchRequest
 	isSet bool
 }
 
-func (v NullableValidateRequest) Get() *ValidateRequest {
+func (v NullableValidateBatchRequest) Get() *ValidateBatchRequest {
 	return v.value
 }
 
-func (v *NullableValidateRequest) Set(val *ValidateRequest) {
+func (v *NullableValidateBatchRequest) Set(val *ValidateBatchRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableValidateRequest) IsSet() bool {
+func (v NullableValidateBatchRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableValidateRequest) Unset() {
+func (v *NullableValidateBatchRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableValidateRequest(val *ValidateRequest) *NullableValidateRequest {
-	return &NullableValidateRequest{value: val, isSet: true}
+func NewNullableValidateBatchRequest(val *ValidateBatchRequest) *NullableValidateBatchRequest {
+	return &NullableValidateBatchRequest{value: val, isSet: true}
 }
 
-func (v NullableValidateRequest) MarshalJSON() ([]byte, error) {
+func (v NullableValidateBatchRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableValidateRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableValidateBatchRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

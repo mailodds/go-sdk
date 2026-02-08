@@ -13,6 +13,7 @@ package mailodds
 
 import (
 	"encoding/json"
+	"time"
 	"bytes"
 	"fmt"
 )
@@ -20,23 +21,41 @@ import (
 // checks if the ValidationResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResponse{}
 
-// ValidationResponse struct for ValidationResponse
+// ValidationResponse Flat validation response. Conditional fields are omitted (not null) when not applicable.
 type ValidationResponse struct {
-	SchemaVersion *string `json:"schema_version,omitempty"`
+	SchemaVersion string `json:"schema_version"`
 	Email string `json:"email"`
 	// Validation status
 	Status string `json:"status"`
-	// Detailed status reason
-	SubStatus *string `json:"sub_status,omitempty"`
 	// Recommended action
 	Action string `json:"action"`
-	Domain *string `json:"domain,omitempty"`
-	MxFound *bool `json:"mx_found,omitempty"`
+	// Detailed status reason. Omitted when none.
+	SubStatus *string `json:"sub_status,omitempty"`
+	Domain string `json:"domain"`
+	// Whether MX records were found for the domain
+	MxFound bool `json:"mx_found"`
+	// Primary MX hostname. Omitted when MX not resolved.
+	MxHost *string `json:"mx_host,omitempty"`
+	// Whether SMTP verification passed. Omitted when SMTP not checked.
 	SmtpCheck *bool `json:"smtp_check,omitempty"`
-	Disposable *bool `json:"disposable,omitempty"`
-	RoleAccount *bool `json:"role_account,omitempty"`
-	FreeProvider *bool `json:"free_provider,omitempty"`
+	// Whether domain is catch-all. Omitted when SMTP not checked.
+	CatchAll *bool `json:"catch_all,omitempty"`
+	// Whether domain is a known disposable email provider
+	Disposable bool `json:"disposable"`
+	// Whether address is a role account (e.g., info@, admin@)
+	RoleAccount bool `json:"role_account"`
+	// Whether domain is a known free email provider (e.g., gmail.com)
+	FreeProvider bool `json:"free_provider"`
+	// Validation depth used for this check
+	Depth string `json:"depth"`
+	// ISO 8601 timestamp of validation
+	ProcessedAt time.Time `json:"processed_at"`
+	// Typo correction suggestion. Omitted when no typo detected.
+	SuggestedEmail *string `json:"suggested_email,omitempty"`
+	// Suggested retry delay in milliseconds. Present only for retry_later action.
+	RetryAfterMs *int32 `json:"retry_after_ms,omitempty"`
 	SuppressionMatch *ValidationResponseSuppressionMatch `json:"suppression_match,omitempty"`
+	PolicyApplied *ValidationResponsePolicyApplied `json:"policy_applied,omitempty"`
 }
 
 type _ValidationResponse ValidationResponse
@@ -45,11 +64,19 @@ type _ValidationResponse ValidationResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewValidationResponse(email string, status string, action string) *ValidationResponse {
+func NewValidationResponse(schemaVersion string, email string, status string, action string, domain string, mxFound bool, disposable bool, roleAccount bool, freeProvider bool, depth string, processedAt time.Time) *ValidationResponse {
 	this := ValidationResponse{}
+	this.SchemaVersion = schemaVersion
 	this.Email = email
 	this.Status = status
 	this.Action = action
+	this.Domain = domain
+	this.MxFound = mxFound
+	this.Disposable = disposable
+	this.RoleAccount = roleAccount
+	this.FreeProvider = freeProvider
+	this.Depth = depth
+	this.ProcessedAt = processedAt
 	return &this
 }
 
@@ -61,36 +88,28 @@ func NewValidationResponseWithDefaults() *ValidationResponse {
 	return &this
 }
 
-// GetSchemaVersion returns the SchemaVersion field value if set, zero value otherwise.
+// GetSchemaVersion returns the SchemaVersion field value
 func (o *ValidationResponse) GetSchemaVersion() string {
-	if o == nil || IsNil(o.SchemaVersion) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.SchemaVersion
+
+	return o.SchemaVersion
 }
 
-// GetSchemaVersionOk returns a tuple with the SchemaVersion field value if set, nil otherwise
+// GetSchemaVersionOk returns a tuple with the SchemaVersion field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetSchemaVersionOk() (*string, bool) {
-	if o == nil || IsNil(o.SchemaVersion) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SchemaVersion, true
+	return &o.SchemaVersion, true
 }
 
-// HasSchemaVersion returns a boolean if a field has been set.
-func (o *ValidationResponse) HasSchemaVersion() bool {
-	if o != nil && !IsNil(o.SchemaVersion) {
-		return true
-	}
-
-	return false
-}
-
-// SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
+// SetSchemaVersion sets field value
 func (o *ValidationResponse) SetSchemaVersion(v string) {
-	o.SchemaVersion = &v
+	o.SchemaVersion = v
 }
 
 // GetEmail returns the Email field value
@@ -141,6 +160,30 @@ func (o *ValidationResponse) SetStatus(v string) {
 	o.Status = v
 }
 
+// GetAction returns the Action field value
+func (o *ValidationResponse) GetAction() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Action
+}
+
+// GetActionOk returns a tuple with the Action field value
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetActionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Action, true
+}
+
+// SetAction sets field value
+func (o *ValidationResponse) SetAction(v string) {
+	o.Action = v
+}
+
 // GetSubStatus returns the SubStatus field value if set, zero value otherwise.
 func (o *ValidationResponse) GetSubStatus() string {
 	if o == nil || IsNil(o.SubStatus) {
@@ -173,92 +216,84 @@ func (o *ValidationResponse) SetSubStatus(v string) {
 	o.SubStatus = &v
 }
 
-// GetAction returns the Action field value
-func (o *ValidationResponse) GetAction() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Action
-}
-
-// GetActionOk returns a tuple with the Action field value
-// and a boolean to check if the value has been set.
-func (o *ValidationResponse) GetActionOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Action, true
-}
-
-// SetAction sets field value
-func (o *ValidationResponse) SetAction(v string) {
-	o.Action = v
-}
-
-// GetDomain returns the Domain field value if set, zero value otherwise.
+// GetDomain returns the Domain field value
 func (o *ValidationResponse) GetDomain() string {
-	if o == nil || IsNil(o.Domain) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Domain
+
+	return o.Domain
 }
 
-// GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
+// GetDomainOk returns a tuple with the Domain field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetDomainOk() (*string, bool) {
-	if o == nil || IsNil(o.Domain) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Domain, true
+	return &o.Domain, true
 }
 
-// HasDomain returns a boolean if a field has been set.
-func (o *ValidationResponse) HasDomain() bool {
-	if o != nil && !IsNil(o.Domain) {
-		return true
-	}
-
-	return false
-}
-
-// SetDomain gets a reference to the given string and assigns it to the Domain field.
+// SetDomain sets field value
 func (o *ValidationResponse) SetDomain(v string) {
-	o.Domain = &v
+	o.Domain = v
 }
 
-// GetMxFound returns the MxFound field value if set, zero value otherwise.
+// GetMxFound returns the MxFound field value
 func (o *ValidationResponse) GetMxFound() bool {
-	if o == nil || IsNil(o.MxFound) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.MxFound
+
+	return o.MxFound
 }
 
-// GetMxFoundOk returns a tuple with the MxFound field value if set, nil otherwise
+// GetMxFoundOk returns a tuple with the MxFound field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetMxFoundOk() (*bool, bool) {
-	if o == nil || IsNil(o.MxFound) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MxFound, true
+	return &o.MxFound, true
 }
 
-// HasMxFound returns a boolean if a field has been set.
-func (o *ValidationResponse) HasMxFound() bool {
-	if o != nil && !IsNil(o.MxFound) {
+// SetMxFound sets field value
+func (o *ValidationResponse) SetMxFound(v bool) {
+	o.MxFound = v
+}
+
+// GetMxHost returns the MxHost field value if set, zero value otherwise.
+func (o *ValidationResponse) GetMxHost() string {
+	if o == nil || IsNil(o.MxHost) {
+		var ret string
+		return ret
+	}
+	return *o.MxHost
+}
+
+// GetMxHostOk returns a tuple with the MxHost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetMxHostOk() (*string, bool) {
+	if o == nil || IsNil(o.MxHost) {
+		return nil, false
+	}
+	return o.MxHost, true
+}
+
+// HasMxHost returns a boolean if a field has been set.
+func (o *ValidationResponse) HasMxHost() bool {
+	if o != nil && !IsNil(o.MxHost) {
 		return true
 	}
 
 	return false
 }
 
-// SetMxFound gets a reference to the given bool and assigns it to the MxFound field.
-func (o *ValidationResponse) SetMxFound(v bool) {
-	o.MxFound = &v
+// SetMxHost gets a reference to the given string and assigns it to the MxHost field.
+func (o *ValidationResponse) SetMxHost(v string) {
+	o.MxHost = &v
 }
 
 // GetSmtpCheck returns the SmtpCheck field value if set, zero value otherwise.
@@ -293,100 +328,220 @@ func (o *ValidationResponse) SetSmtpCheck(v bool) {
 	o.SmtpCheck = &v
 }
 
-// GetDisposable returns the Disposable field value if set, zero value otherwise.
-func (o *ValidationResponse) GetDisposable() bool {
-	if o == nil || IsNil(o.Disposable) {
+// GetCatchAll returns the CatchAll field value if set, zero value otherwise.
+func (o *ValidationResponse) GetCatchAll() bool {
+	if o == nil || IsNil(o.CatchAll) {
 		var ret bool
 		return ret
 	}
-	return *o.Disposable
+	return *o.CatchAll
 }
 
-// GetDisposableOk returns a tuple with the Disposable field value if set, nil otherwise
+// GetCatchAllOk returns a tuple with the CatchAll field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetCatchAllOk() (*bool, bool) {
+	if o == nil || IsNil(o.CatchAll) {
+		return nil, false
+	}
+	return o.CatchAll, true
+}
+
+// HasCatchAll returns a boolean if a field has been set.
+func (o *ValidationResponse) HasCatchAll() bool {
+	if o != nil && !IsNil(o.CatchAll) {
+		return true
+	}
+
+	return false
+}
+
+// SetCatchAll gets a reference to the given bool and assigns it to the CatchAll field.
+func (o *ValidationResponse) SetCatchAll(v bool) {
+	o.CatchAll = &v
+}
+
+// GetDisposable returns the Disposable field value
+func (o *ValidationResponse) GetDisposable() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Disposable
+}
+
+// GetDisposableOk returns a tuple with the Disposable field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetDisposableOk() (*bool, bool) {
-	if o == nil || IsNil(o.Disposable) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Disposable, true
+	return &o.Disposable, true
 }
 
-// HasDisposable returns a boolean if a field has been set.
-func (o *ValidationResponse) HasDisposable() bool {
-	if o != nil && !IsNil(o.Disposable) {
-		return true
-	}
-
-	return false
-}
-
-// SetDisposable gets a reference to the given bool and assigns it to the Disposable field.
+// SetDisposable sets field value
 func (o *ValidationResponse) SetDisposable(v bool) {
-	o.Disposable = &v
+	o.Disposable = v
 }
 
-// GetRoleAccount returns the RoleAccount field value if set, zero value otherwise.
+// GetRoleAccount returns the RoleAccount field value
 func (o *ValidationResponse) GetRoleAccount() bool {
-	if o == nil || IsNil(o.RoleAccount) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.RoleAccount
+
+	return o.RoleAccount
 }
 
-// GetRoleAccountOk returns a tuple with the RoleAccount field value if set, nil otherwise
+// GetRoleAccountOk returns a tuple with the RoleAccount field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetRoleAccountOk() (*bool, bool) {
-	if o == nil || IsNil(o.RoleAccount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RoleAccount, true
+	return &o.RoleAccount, true
 }
 
-// HasRoleAccount returns a boolean if a field has been set.
-func (o *ValidationResponse) HasRoleAccount() bool {
-	if o != nil && !IsNil(o.RoleAccount) {
-		return true
-	}
-
-	return false
-}
-
-// SetRoleAccount gets a reference to the given bool and assigns it to the RoleAccount field.
+// SetRoleAccount sets field value
 func (o *ValidationResponse) SetRoleAccount(v bool) {
-	o.RoleAccount = &v
+	o.RoleAccount = v
 }
 
-// GetFreeProvider returns the FreeProvider field value if set, zero value otherwise.
+// GetFreeProvider returns the FreeProvider field value
 func (o *ValidationResponse) GetFreeProvider() bool {
-	if o == nil || IsNil(o.FreeProvider) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.FreeProvider
+
+	return o.FreeProvider
 }
 
-// GetFreeProviderOk returns a tuple with the FreeProvider field value if set, nil otherwise
+// GetFreeProviderOk returns a tuple with the FreeProvider field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetFreeProviderOk() (*bool, bool) {
-	if o == nil || IsNil(o.FreeProvider) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FreeProvider, true
+	return &o.FreeProvider, true
 }
 
-// HasFreeProvider returns a boolean if a field has been set.
-func (o *ValidationResponse) HasFreeProvider() bool {
-	if o != nil && !IsNil(o.FreeProvider) {
+// SetFreeProvider sets field value
+func (o *ValidationResponse) SetFreeProvider(v bool) {
+	o.FreeProvider = v
+}
+
+// GetDepth returns the Depth field value
+func (o *ValidationResponse) GetDepth() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Depth
+}
+
+// GetDepthOk returns a tuple with the Depth field value
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetDepthOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Depth, true
+}
+
+// SetDepth sets field value
+func (o *ValidationResponse) SetDepth(v string) {
+	o.Depth = v
+}
+
+// GetProcessedAt returns the ProcessedAt field value
+func (o *ValidationResponse) GetProcessedAt() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.ProcessedAt
+}
+
+// GetProcessedAtOk returns a tuple with the ProcessedAt field value
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetProcessedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ProcessedAt, true
+}
+
+// SetProcessedAt sets field value
+func (o *ValidationResponse) SetProcessedAt(v time.Time) {
+	o.ProcessedAt = v
+}
+
+// GetSuggestedEmail returns the SuggestedEmail field value if set, zero value otherwise.
+func (o *ValidationResponse) GetSuggestedEmail() string {
+	if o == nil || IsNil(o.SuggestedEmail) {
+		var ret string
+		return ret
+	}
+	return *o.SuggestedEmail
+}
+
+// GetSuggestedEmailOk returns a tuple with the SuggestedEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetSuggestedEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.SuggestedEmail) {
+		return nil, false
+	}
+	return o.SuggestedEmail, true
+}
+
+// HasSuggestedEmail returns a boolean if a field has been set.
+func (o *ValidationResponse) HasSuggestedEmail() bool {
+	if o != nil && !IsNil(o.SuggestedEmail) {
 		return true
 	}
 
 	return false
 }
 
-// SetFreeProvider gets a reference to the given bool and assigns it to the FreeProvider field.
-func (o *ValidationResponse) SetFreeProvider(v bool) {
-	o.FreeProvider = &v
+// SetSuggestedEmail gets a reference to the given string and assigns it to the SuggestedEmail field.
+func (o *ValidationResponse) SetSuggestedEmail(v string) {
+	o.SuggestedEmail = &v
+}
+
+// GetRetryAfterMs returns the RetryAfterMs field value if set, zero value otherwise.
+func (o *ValidationResponse) GetRetryAfterMs() int32 {
+	if o == nil || IsNil(o.RetryAfterMs) {
+		var ret int32
+		return ret
+	}
+	return *o.RetryAfterMs
+}
+
+// GetRetryAfterMsOk returns a tuple with the RetryAfterMs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetRetryAfterMsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RetryAfterMs) {
+		return nil, false
+	}
+	return o.RetryAfterMs, true
+}
+
+// HasRetryAfterMs returns a boolean if a field has been set.
+func (o *ValidationResponse) HasRetryAfterMs() bool {
+	if o != nil && !IsNil(o.RetryAfterMs) {
+		return true
+	}
+
+	return false
+}
+
+// SetRetryAfterMs gets a reference to the given int32 and assigns it to the RetryAfterMs field.
+func (o *ValidationResponse) SetRetryAfterMs(v int32) {
+	o.RetryAfterMs = &v
 }
 
 // GetSuppressionMatch returns the SuppressionMatch field value if set, zero value otherwise.
@@ -421,6 +576,38 @@ func (o *ValidationResponse) SetSuppressionMatch(v ValidationResponseSuppression
 	o.SuppressionMatch = &v
 }
 
+// GetPolicyApplied returns the PolicyApplied field value if set, zero value otherwise.
+func (o *ValidationResponse) GetPolicyApplied() ValidationResponsePolicyApplied {
+	if o == nil || IsNil(o.PolicyApplied) {
+		var ret ValidationResponsePolicyApplied
+		return ret
+	}
+	return *o.PolicyApplied
+}
+
+// GetPolicyAppliedOk returns a tuple with the PolicyApplied field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetPolicyAppliedOk() (*ValidationResponsePolicyApplied, bool) {
+	if o == nil || IsNil(o.PolicyApplied) {
+		return nil, false
+	}
+	return o.PolicyApplied, true
+}
+
+// HasPolicyApplied returns a boolean if a field has been set.
+func (o *ValidationResponse) HasPolicyApplied() bool {
+	if o != nil && !IsNil(o.PolicyApplied) {
+		return true
+	}
+
+	return false
+}
+
+// SetPolicyApplied gets a reference to the given ValidationResponsePolicyApplied and assigns it to the PolicyApplied field.
+func (o *ValidationResponse) SetPolicyApplied(v ValidationResponsePolicyApplied) {
+	o.PolicyApplied = &v
+}
+
 func (o ValidationResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -431,35 +618,40 @@ func (o ValidationResponse) MarshalJSON() ([]byte, error) {
 
 func (o ValidationResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.SchemaVersion) {
-		toSerialize["schema_version"] = o.SchemaVersion
-	}
+	toSerialize["schema_version"] = o.SchemaVersion
 	toSerialize["email"] = o.Email
 	toSerialize["status"] = o.Status
+	toSerialize["action"] = o.Action
 	if !IsNil(o.SubStatus) {
 		toSerialize["sub_status"] = o.SubStatus
 	}
-	toSerialize["action"] = o.Action
-	if !IsNil(o.Domain) {
-		toSerialize["domain"] = o.Domain
-	}
-	if !IsNil(o.MxFound) {
-		toSerialize["mx_found"] = o.MxFound
+	toSerialize["domain"] = o.Domain
+	toSerialize["mx_found"] = o.MxFound
+	if !IsNil(o.MxHost) {
+		toSerialize["mx_host"] = o.MxHost
 	}
 	if !IsNil(o.SmtpCheck) {
 		toSerialize["smtp_check"] = o.SmtpCheck
 	}
-	if !IsNil(o.Disposable) {
-		toSerialize["disposable"] = o.Disposable
+	if !IsNil(o.CatchAll) {
+		toSerialize["catch_all"] = o.CatchAll
 	}
-	if !IsNil(o.RoleAccount) {
-		toSerialize["role_account"] = o.RoleAccount
+	toSerialize["disposable"] = o.Disposable
+	toSerialize["role_account"] = o.RoleAccount
+	toSerialize["free_provider"] = o.FreeProvider
+	toSerialize["depth"] = o.Depth
+	toSerialize["processed_at"] = o.ProcessedAt
+	if !IsNil(o.SuggestedEmail) {
+		toSerialize["suggested_email"] = o.SuggestedEmail
 	}
-	if !IsNil(o.FreeProvider) {
-		toSerialize["free_provider"] = o.FreeProvider
+	if !IsNil(o.RetryAfterMs) {
+		toSerialize["retry_after_ms"] = o.RetryAfterMs
 	}
 	if !IsNil(o.SuppressionMatch) {
 		toSerialize["suppression_match"] = o.SuppressionMatch
+	}
+	if !IsNil(o.PolicyApplied) {
+		toSerialize["policy_applied"] = o.PolicyApplied
 	}
 	return toSerialize, nil
 }
@@ -469,9 +661,17 @@ func (o *ValidationResponse) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"schema_version",
 		"email",
 		"status",
 		"action",
+		"domain",
+		"mx_found",
+		"disposable",
+		"role_account",
+		"free_provider",
+		"depth",
+		"processed_at",
 	}
 
 	allProperties := make(map[string]interface{})

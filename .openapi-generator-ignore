@@ -26,3 +26,5 @@
 ci/**
 # Preserve GitHub Actions workflows
 .github/**
+# Preserve Go module path (generator adds /packageName suffix)
+go.mod

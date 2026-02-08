@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **Error** | **string** | Machine-readable error code | 
-**Message** | **string** | Human-readable error message | 
+**Message** | Pointer to **string** | Human-readable error message | [optional] 
 
 ## Methods
 
 ### NewErrorResponse
 
-`func NewErrorResponse(error_ string, message string, ) *ErrorResponse`
+`func NewErrorResponse(error_ string, ) *ErrorResponse`
 
 NewErrorResponse instantiates a new ErrorResponse object
 This constructor will assign default values to properties that have it defined,
@@ -91,6 +91,11 @@ and a boolean to check if the value has been set.
 
 SetMessage sets Message field to given value.
 
+### HasMessage
+
+`func (o *ErrorResponse) HasMessage() bool`
+
+HasMessage returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

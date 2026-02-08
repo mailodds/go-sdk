@@ -146,7 +146,6 @@ func (o *GetPresignedUploadRequest) UnmarshalJSON(data []byte) (err error) {
 	varGetPresignedUploadRequest := _GetPresignedUploadRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetPresignedUploadRequest)
 
 	if err != nil {

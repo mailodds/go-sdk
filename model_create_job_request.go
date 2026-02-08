@@ -261,7 +261,6 @@ func (o *CreateJobRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateJobRequest := _CreateJobRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateJobRequest)
 
 	if err != nil {
