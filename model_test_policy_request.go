@@ -136,6 +136,7 @@ func (o *TestPolicyRequest) UnmarshalJSON(data []byte) (err error) {
 	varTestPolicyRequest := _TestPolicyRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varTestPolicyRequest)
 
 	if err != nil {

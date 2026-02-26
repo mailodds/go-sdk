@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
 **Policy** | Pointer to [**Policy**](Policy.md) |  | [optional] 
 
 ## Methods
@@ -50,6 +51,31 @@ SetSchemaVersion sets SchemaVersion field to given value.
 `func (o *PolicyResponse) HasSchemaVersion() bool`
 
 HasSchemaVersion returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *PolicyResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *PolicyResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *PolicyResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *PolicyResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetPolicy
 

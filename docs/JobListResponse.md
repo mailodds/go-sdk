@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
 **Jobs** | Pointer to [**[]Job**](Job.md) |  | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
 
@@ -51,6 +52,31 @@ SetSchemaVersion sets SchemaVersion field to given value.
 `func (o *JobListResponse) HasSchemaVersion() bool`
 
 HasSchemaVersion returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *JobListResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *JobListResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *JobListResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *JobListResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetJobs
 

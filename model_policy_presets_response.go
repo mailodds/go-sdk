@@ -21,6 +21,8 @@ var _ MappedNullable = &PolicyPresetsResponse{}
 // PolicyPresetsResponse struct for PolicyPresetsResponse
 type PolicyPresetsResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Presets []PolicyPresetsResponsePresetsInner `json:"presets,omitempty"`
 }
 
@@ -73,6 +75,38 @@ func (o *PolicyPresetsResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
 }
 
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *PolicyPresetsResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PolicyPresetsResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *PolicyPresetsResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *PolicyPresetsResponse) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
 // GetPresets returns the Presets field value if set, zero value otherwise.
 func (o *PolicyPresetsResponse) GetPresets() []PolicyPresetsResponsePresetsInner {
 	if o == nil || IsNil(o.Presets) {
@@ -117,6 +151,9 @@ func (o PolicyPresetsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Presets) {
 		toSerialize["presets"] = o.Presets

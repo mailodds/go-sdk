@@ -21,6 +21,8 @@ var _ MappedNullable = &PresignedUploadResponse{}
 // PresignedUploadResponse struct for PresignedUploadResponse
 type PresignedUploadResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Upload *PresignedUploadResponseUpload `json:"upload,omitempty"`
 }
 
@@ -73,6 +75,38 @@ func (o *PresignedUploadResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
 }
 
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *PresignedUploadResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PresignedUploadResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *PresignedUploadResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *PresignedUploadResponse) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
 // GetUpload returns the Upload field value if set, zero value otherwise.
 func (o *PresignedUploadResponse) GetUpload() PresignedUploadResponseUpload {
 	if o == nil || IsNil(o.Upload) {
@@ -117,6 +151,9 @@ func (o PresignedUploadResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Upload) {
 		toSerialize["upload"] = o.Upload

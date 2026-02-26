@@ -22,6 +22,7 @@ var _ MappedNullable = &JobSummary{}
 type JobSummary struct {
 	Valid *int32 `json:"valid,omitempty"`
 	Invalid *int32 `json:"invalid,omitempty"`
+	CatchAll *int32 `json:"catch_all,omitempty"`
 	DoNotMail *int32 `json:"do_not_mail,omitempty"`
 	Unknown *int32 `json:"unknown,omitempty"`
 	CancelledPending *int32 `json:"cancelled_pending,omitempty"`
@@ -106,6 +107,38 @@ func (o *JobSummary) HasInvalid() bool {
 // SetInvalid gets a reference to the given int32 and assigns it to the Invalid field.
 func (o *JobSummary) SetInvalid(v int32) {
 	o.Invalid = &v
+}
+
+// GetCatchAll returns the CatchAll field value if set, zero value otherwise.
+func (o *JobSummary) GetCatchAll() int32 {
+	if o == nil || IsNil(o.CatchAll) {
+		var ret int32
+		return ret
+	}
+	return *o.CatchAll
+}
+
+// GetCatchAllOk returns a tuple with the CatchAll field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *JobSummary) GetCatchAllOk() (*int32, bool) {
+	if o == nil || IsNil(o.CatchAll) {
+		return nil, false
+	}
+	return o.CatchAll, true
+}
+
+// HasCatchAll returns a boolean if a field has been set.
+func (o *JobSummary) HasCatchAll() bool {
+	if o != nil && !IsNil(o.CatchAll) {
+		return true
+	}
+
+	return false
+}
+
+// SetCatchAll gets a reference to the given int32 and assigns it to the CatchAll field.
+func (o *JobSummary) SetCatchAll(v int32) {
+	o.CatchAll = &v
 }
 
 // GetDoNotMail returns the DoNotMail field value if set, zero value otherwise.
@@ -219,6 +252,9 @@ func (o JobSummary) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Invalid) {
 		toSerialize["invalid"] = o.Invalid
+	}
+	if !IsNil(o.CatchAll) {
+		toSerialize["catch_all"] = o.CatchAll
 	}
 	if !IsNil(o.DoNotMail) {
 		toSerialize["do_not_mail"] = o.DoNotMail

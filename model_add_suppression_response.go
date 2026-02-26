@@ -21,8 +21,16 @@ var _ MappedNullable = &AddSuppressionResponse{}
 // AddSuppressionResponse struct for AddSuppressionResponse
 type AddSuppressionResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
+	// Number of entries successfully added
 	Added *int32 `json:"added,omitempty"`
-	Skipped *int32 `json:"skipped,omitempty"`
+	// Number of duplicate entries skipped
+	Duplicates *int32 `json:"duplicates,omitempty"`
+	// Number of invalid entries rejected
+	Invalid *int32 `json:"invalid,omitempty"`
+	// Total entries in the request
+	Total *int32 `json:"total,omitempty"`
 }
 
 // NewAddSuppressionResponse instantiates a new AddSuppressionResponse object
@@ -74,6 +82,38 @@ func (o *AddSuppressionResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
 }
 
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *AddSuppressionResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddSuppressionResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *AddSuppressionResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *AddSuppressionResponse) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
 // GetAdded returns the Added field value if set, zero value otherwise.
 func (o *AddSuppressionResponse) GetAdded() int32 {
 	if o == nil || IsNil(o.Added) {
@@ -106,36 +146,100 @@ func (o *AddSuppressionResponse) SetAdded(v int32) {
 	o.Added = &v
 }
 
-// GetSkipped returns the Skipped field value if set, zero value otherwise.
-func (o *AddSuppressionResponse) GetSkipped() int32 {
-	if o == nil || IsNil(o.Skipped) {
+// GetDuplicates returns the Duplicates field value if set, zero value otherwise.
+func (o *AddSuppressionResponse) GetDuplicates() int32 {
+	if o == nil || IsNil(o.Duplicates) {
 		var ret int32
 		return ret
 	}
-	return *o.Skipped
+	return *o.Duplicates
 }
 
-// GetSkippedOk returns a tuple with the Skipped field value if set, nil otherwise
+// GetDuplicatesOk returns a tuple with the Duplicates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddSuppressionResponse) GetSkippedOk() (*int32, bool) {
-	if o == nil || IsNil(o.Skipped) {
+func (o *AddSuppressionResponse) GetDuplicatesOk() (*int32, bool) {
+	if o == nil || IsNil(o.Duplicates) {
 		return nil, false
 	}
-	return o.Skipped, true
+	return o.Duplicates, true
 }
 
-// HasSkipped returns a boolean if a field has been set.
-func (o *AddSuppressionResponse) HasSkipped() bool {
-	if o != nil && !IsNil(o.Skipped) {
+// HasDuplicates returns a boolean if a field has been set.
+func (o *AddSuppressionResponse) HasDuplicates() bool {
+	if o != nil && !IsNil(o.Duplicates) {
 		return true
 	}
 
 	return false
 }
 
-// SetSkipped gets a reference to the given int32 and assigns it to the Skipped field.
-func (o *AddSuppressionResponse) SetSkipped(v int32) {
-	o.Skipped = &v
+// SetDuplicates gets a reference to the given int32 and assigns it to the Duplicates field.
+func (o *AddSuppressionResponse) SetDuplicates(v int32) {
+	o.Duplicates = &v
+}
+
+// GetInvalid returns the Invalid field value if set, zero value otherwise.
+func (o *AddSuppressionResponse) GetInvalid() int32 {
+	if o == nil || IsNil(o.Invalid) {
+		var ret int32
+		return ret
+	}
+	return *o.Invalid
+}
+
+// GetInvalidOk returns a tuple with the Invalid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddSuppressionResponse) GetInvalidOk() (*int32, bool) {
+	if o == nil || IsNil(o.Invalid) {
+		return nil, false
+	}
+	return o.Invalid, true
+}
+
+// HasInvalid returns a boolean if a field has been set.
+func (o *AddSuppressionResponse) HasInvalid() bool {
+	if o != nil && !IsNil(o.Invalid) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvalid gets a reference to the given int32 and assigns it to the Invalid field.
+func (o *AddSuppressionResponse) SetInvalid(v int32) {
+	o.Invalid = &v
+}
+
+// GetTotal returns the Total field value if set, zero value otherwise.
+func (o *AddSuppressionResponse) GetTotal() int32 {
+	if o == nil || IsNil(o.Total) {
+		var ret int32
+		return ret
+	}
+	return *o.Total
+}
+
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddSuppressionResponse) GetTotalOk() (*int32, bool) {
+	if o == nil || IsNil(o.Total) {
+		return nil, false
+	}
+	return o.Total, true
+}
+
+// HasTotal returns a boolean if a field has been set.
+func (o *AddSuppressionResponse) HasTotal() bool {
+	if o != nil && !IsNil(o.Total) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *AddSuppressionResponse) SetTotal(v int32) {
+	o.Total = &v
 }
 
 func (o AddSuppressionResponse) MarshalJSON() ([]byte, error) {
@@ -151,11 +255,20 @@ func (o AddSuppressionResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
 	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	if !IsNil(o.Added) {
 		toSerialize["added"] = o.Added
 	}
-	if !IsNil(o.Skipped) {
-		toSerialize["skipped"] = o.Skipped
+	if !IsNil(o.Duplicates) {
+		toSerialize["duplicates"] = o.Duplicates
+	}
+	if !IsNil(o.Invalid) {
+		toSerialize["invalid"] = o.Invalid
+	}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
 	}
 	return toSerialize, nil
 }

@@ -24,6 +24,8 @@ var _ MappedNullable = &ValidationResponse{}
 // ValidationResponse Flat validation response. Conditional fields are omitted (not null) when not applicable.
 type ValidationResponse struct {
 	SchemaVersion string `json:"schema_version"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Email string `json:"email"`
 	// Validation status
 	Status string `json:"status"`
@@ -54,6 +56,14 @@ type ValidationResponse struct {
 	SuggestedEmail *string `json:"suggested_email,omitempty"`
 	// Suggested retry delay in milliseconds. Present only for retry_later action.
 	RetryAfterMs *int32 `json:"retry_after_ms,omitempty"`
+	// Whether the domain has an SPF record. Omitted for standard depth.
+	HasSpf *bool `json:"has_spf,omitempty"`
+	// Whether the domain has a DMARC record. Omitted for standard depth.
+	HasDmarc *bool `json:"has_dmarc,omitempty"`
+	// The domain's DMARC policy. Omitted when no DMARC record found.
+	DmarcPolicy *string `json:"dmarc_policy,omitempty"`
+	// Whether the domain's MX IP is on a DNS blocklist (Spamhaus ZEN). Omitted for standard depth.
+	DnsblListed *bool `json:"dnsbl_listed,omitempty"`
 	SuppressionMatch *ValidationResponseSuppressionMatch `json:"suppression_match,omitempty"`
 	PolicyApplied *ValidationResponsePolicyApplied `json:"policy_applied,omitempty"`
 }
@@ -110,6 +120,38 @@ func (o *ValidationResponse) GetSchemaVersionOk() (*string, bool) {
 // SetSchemaVersion sets field value
 func (o *ValidationResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *ValidationResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *ValidationResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *ValidationResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetEmail returns the Email field value
@@ -544,6 +586,134 @@ func (o *ValidationResponse) SetRetryAfterMs(v int32) {
 	o.RetryAfterMs = &v
 }
 
+// GetHasSpf returns the HasSpf field value if set, zero value otherwise.
+func (o *ValidationResponse) GetHasSpf() bool {
+	if o == nil || IsNil(o.HasSpf) {
+		var ret bool
+		return ret
+	}
+	return *o.HasSpf
+}
+
+// GetHasSpfOk returns a tuple with the HasSpf field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetHasSpfOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasSpf) {
+		return nil, false
+	}
+	return o.HasSpf, true
+}
+
+// HasHasSpf returns a boolean if a field has been set.
+func (o *ValidationResponse) HasHasSpf() bool {
+	if o != nil && !IsNil(o.HasSpf) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasSpf gets a reference to the given bool and assigns it to the HasSpf field.
+func (o *ValidationResponse) SetHasSpf(v bool) {
+	o.HasSpf = &v
+}
+
+// GetHasDmarc returns the HasDmarc field value if set, zero value otherwise.
+func (o *ValidationResponse) GetHasDmarc() bool {
+	if o == nil || IsNil(o.HasDmarc) {
+		var ret bool
+		return ret
+	}
+	return *o.HasDmarc
+}
+
+// GetHasDmarcOk returns a tuple with the HasDmarc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetHasDmarcOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasDmarc) {
+		return nil, false
+	}
+	return o.HasDmarc, true
+}
+
+// HasHasDmarc returns a boolean if a field has been set.
+func (o *ValidationResponse) HasHasDmarc() bool {
+	if o != nil && !IsNil(o.HasDmarc) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasDmarc gets a reference to the given bool and assigns it to the HasDmarc field.
+func (o *ValidationResponse) SetHasDmarc(v bool) {
+	o.HasDmarc = &v
+}
+
+// GetDmarcPolicy returns the DmarcPolicy field value if set, zero value otherwise.
+func (o *ValidationResponse) GetDmarcPolicy() string {
+	if o == nil || IsNil(o.DmarcPolicy) {
+		var ret string
+		return ret
+	}
+	return *o.DmarcPolicy
+}
+
+// GetDmarcPolicyOk returns a tuple with the DmarcPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetDmarcPolicyOk() (*string, bool) {
+	if o == nil || IsNil(o.DmarcPolicy) {
+		return nil, false
+	}
+	return o.DmarcPolicy, true
+}
+
+// HasDmarcPolicy returns a boolean if a field has been set.
+func (o *ValidationResponse) HasDmarcPolicy() bool {
+	if o != nil && !IsNil(o.DmarcPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetDmarcPolicy gets a reference to the given string and assigns it to the DmarcPolicy field.
+func (o *ValidationResponse) SetDmarcPolicy(v string) {
+	o.DmarcPolicy = &v
+}
+
+// GetDnsblListed returns the DnsblListed field value if set, zero value otherwise.
+func (o *ValidationResponse) GetDnsblListed() bool {
+	if o == nil || IsNil(o.DnsblListed) {
+		var ret bool
+		return ret
+	}
+	return *o.DnsblListed
+}
+
+// GetDnsblListedOk returns a tuple with the DnsblListed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetDnsblListedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DnsblListed) {
+		return nil, false
+	}
+	return o.DnsblListed, true
+}
+
+// HasDnsblListed returns a boolean if a field has been set.
+func (o *ValidationResponse) HasDnsblListed() bool {
+	if o != nil && !IsNil(o.DnsblListed) {
+		return true
+	}
+
+	return false
+}
+
+// SetDnsblListed gets a reference to the given bool and assigns it to the DnsblListed field.
+func (o *ValidationResponse) SetDnsblListed(v bool) {
+	o.DnsblListed = &v
+}
+
 // GetSuppressionMatch returns the SuppressionMatch field value if set, zero value otherwise.
 func (o *ValidationResponse) GetSuppressionMatch() ValidationResponseSuppressionMatch {
 	if o == nil || IsNil(o.SuppressionMatch) {
@@ -619,6 +789,9 @@ func (o ValidationResponse) MarshalJSON() ([]byte, error) {
 func (o ValidationResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["schema_version"] = o.SchemaVersion
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["email"] = o.Email
 	toSerialize["status"] = o.Status
 	toSerialize["action"] = o.Action
@@ -646,6 +819,18 @@ func (o ValidationResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RetryAfterMs) {
 		toSerialize["retry_after_ms"] = o.RetryAfterMs
+	}
+	if !IsNil(o.HasSpf) {
+		toSerialize["has_spf"] = o.HasSpf
+	}
+	if !IsNil(o.HasDmarc) {
+		toSerialize["has_dmarc"] = o.HasDmarc
+	}
+	if !IsNil(o.DmarcPolicy) {
+		toSerialize["dmarc_policy"] = o.DmarcPolicy
+	}
+	if !IsNil(o.DnsblListed) {
+		toSerialize["dnsbl_listed"] = o.DnsblListed
 	}
 	if !IsNil(o.SuppressionMatch) {
 		toSerialize["suppression_match"] = o.SuppressionMatch
@@ -691,6 +876,7 @@ func (o *ValidationResponse) UnmarshalJSON(data []byte) (err error) {
 	varValidationResponse := _ValidationResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varValidationResponse)
 
 	if err != nil {

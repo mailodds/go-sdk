@@ -2,5 +2,4 @@ module github.com/mailodds/go-sdk
 
 go 1.23
 
-require (
-)
+require gopkg.in/validator.v2 v2.0.1 // indirect

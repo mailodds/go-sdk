@@ -21,6 +21,8 @@ var _ MappedNullable = &SuppressionListResponse{}
 // SuppressionListResponse struct for SuppressionListResponse
 type SuppressionListResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Entries []SuppressionEntry `json:"entries,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
@@ -72,6 +74,38 @@ func (o *SuppressionListResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *SuppressionListResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *SuppressionListResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SuppressionListResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *SuppressionListResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *SuppressionListResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetEntries returns the Entries field value if set, zero value otherwise.
@@ -150,6 +184,9 @@ func (o SuppressionListResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Entries) {
 		toSerialize["entries"] = o.Entries

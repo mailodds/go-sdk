@@ -5,8 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
-**Added** | Pointer to **int32** |  | [optional] 
-**Skipped** | Pointer to **int32** |  | [optional] 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
+**Added** | Pointer to **int32** | Number of entries successfully added | [optional] 
+**Duplicates** | Pointer to **int32** | Number of duplicate entries skipped | [optional] 
+**Invalid** | Pointer to **int32** | Number of invalid entries rejected | [optional] 
+**Total** | Pointer to **int32** | Total entries in the request | [optional] 
 
 ## Methods
 
@@ -52,6 +55,31 @@ SetSchemaVersion sets SchemaVersion field to given value.
 
 HasSchemaVersion returns a boolean if a field has been set.
 
+### GetRequestId
+
+`func (o *AddSuppressionResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *AddSuppressionResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *AddSuppressionResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *AddSuppressionResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
+
 ### GetAdded
 
 `func (o *AddSuppressionResponse) GetAdded() int32`
@@ -77,30 +105,80 @@ SetAdded sets Added field to given value.
 
 HasAdded returns a boolean if a field has been set.
 
-### GetSkipped
+### GetDuplicates
 
-`func (o *AddSuppressionResponse) GetSkipped() int32`
+`func (o *AddSuppressionResponse) GetDuplicates() int32`
 
-GetSkipped returns the Skipped field if non-nil, zero value otherwise.
+GetDuplicates returns the Duplicates field if non-nil, zero value otherwise.
 
-### GetSkippedOk
+### GetDuplicatesOk
 
-`func (o *AddSuppressionResponse) GetSkippedOk() (*int32, bool)`
+`func (o *AddSuppressionResponse) GetDuplicatesOk() (*int32, bool)`
 
-GetSkippedOk returns a tuple with the Skipped field if it's non-nil, zero value otherwise
+GetDuplicatesOk returns a tuple with the Duplicates field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSkipped
+### SetDuplicates
 
-`func (o *AddSuppressionResponse) SetSkipped(v int32)`
+`func (o *AddSuppressionResponse) SetDuplicates(v int32)`
 
-SetSkipped sets Skipped field to given value.
+SetDuplicates sets Duplicates field to given value.
 
-### HasSkipped
+### HasDuplicates
 
-`func (o *AddSuppressionResponse) HasSkipped() bool`
+`func (o *AddSuppressionResponse) HasDuplicates() bool`
 
-HasSkipped returns a boolean if a field has been set.
+HasDuplicates returns a boolean if a field has been set.
+
+### GetInvalid
+
+`func (o *AddSuppressionResponse) GetInvalid() int32`
+
+GetInvalid returns the Invalid field if non-nil, zero value otherwise.
+
+### GetInvalidOk
+
+`func (o *AddSuppressionResponse) GetInvalidOk() (*int32, bool)`
+
+GetInvalidOk returns a tuple with the Invalid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInvalid
+
+`func (o *AddSuppressionResponse) SetInvalid(v int32)`
+
+SetInvalid sets Invalid field to given value.
+
+### HasInvalid
+
+`func (o *AddSuppressionResponse) HasInvalid() bool`
+
+HasInvalid returns a boolean if a field has been set.
+
+### GetTotal
+
+`func (o *AddSuppressionResponse) GetTotal() int32`
+
+GetTotal returns the Total field if non-nil, zero value otherwise.
+
+### GetTotalOk
+
+`func (o *AddSuppressionResponse) GetTotalOk() (*int32, bool)`
+
+GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotal
+
+`func (o *AddSuppressionResponse) SetTotal(v int32)`
+
+SetTotal sets Total field to given value.
+
+### HasTotal
+
+`func (o *AddSuppressionResponse) HasTotal() bool`
+
+HasTotal returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

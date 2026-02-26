@@ -149,6 +149,7 @@ func (o *CreateJobFromS3Request) UnmarshalJSON(data []byte) (err error) {
 	varCreateJobFromS3Request := _CreateJobFromS3Request{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateJobFromS3Request)
 
 	if err != nil {

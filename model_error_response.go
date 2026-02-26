@@ -23,6 +23,8 @@ var _ MappedNullable = &ErrorResponse{}
 // ErrorResponse struct for ErrorResponse
 type ErrorResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	// Machine-readable error code
 	Error string `json:"error"`
 	// Human-readable error message
@@ -79,6 +81,38 @@ func (o *ErrorResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *ErrorResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *ErrorResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ErrorResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *ErrorResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *ErrorResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetError returns the Error field value
@@ -150,6 +184,9 @@ func (o ErrorResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
 	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["error"] = o.Error
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message
@@ -182,6 +219,7 @@ func (o *ErrorResponse) UnmarshalJSON(data []byte) (err error) {
 	varErrorResponse := _ErrorResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varErrorResponse)
 
 	if err != nil {

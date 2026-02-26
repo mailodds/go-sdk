@@ -21,6 +21,8 @@ var _ MappedNullable = &PolicyTestResponse{}
 // PolicyTestResponse struct for PolicyTestResponse
 type PolicyTestResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	// Original validation result before policy
 	Original map[string]interface{} `json:"original,omitempty"`
 	// Result after policy applied
@@ -77,6 +79,38 @@ func (o *PolicyTestResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *PolicyTestResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *PolicyTestResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PolicyTestResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *PolicyTestResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *PolicyTestResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetOriginal returns the Original field value if set, zero value otherwise.
@@ -220,6 +254,9 @@ func (o PolicyTestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Original) {
 		toSerialize["original"] = o.Original

@@ -21,6 +21,8 @@ var _ MappedNullable = &ResultsResponse{}
 // ResultsResponse struct for ResultsResponse
 type ResultsResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Results []ValidationResult `json:"results,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
@@ -72,6 +74,38 @@ func (o *ResultsResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *ResultsResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *ResultsResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ResultsResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *ResultsResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *ResultsResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetResults returns the Results field value if set, zero value otherwise.
@@ -150,6 +184,9 @@ func (o ResultsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Results) {
 		toSerialize["results"] = o.Results

@@ -21,6 +21,8 @@ var _ MappedNullable = &RemoveSuppression200Response{}
 // RemoveSuppression200Response struct for RemoveSuppression200Response
 type RemoveSuppression200Response struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Removed *int32 `json:"removed,omitempty"`
 }
 
@@ -73,6 +75,38 @@ func (o *RemoveSuppression200Response) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
 }
 
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *RemoveSuppression200Response) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RemoveSuppression200Response) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *RemoveSuppression200Response) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *RemoveSuppression200Response) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
 // GetRemoved returns the Removed field value if set, zero value otherwise.
 func (o *RemoveSuppression200Response) GetRemoved() int32 {
 	if o == nil || IsNil(o.Removed) {
@@ -117,6 +151,9 @@ func (o RemoveSuppression200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Removed) {
 		toSerialize["removed"] = o.Removed

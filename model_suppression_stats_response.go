@@ -21,6 +21,8 @@ var _ MappedNullable = &SuppressionStatsResponse{}
 // SuppressionStatsResponse struct for SuppressionStatsResponse
 type SuppressionStatsResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Total *int32 `json:"total,omitempty"`
 	ByType *SuppressionStatsResponseByType `json:"by_type,omitempty"`
 }
@@ -72,6 +74,38 @@ func (o *SuppressionStatsResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *SuppressionStatsResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *SuppressionStatsResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SuppressionStatsResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *SuppressionStatsResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *SuppressionStatsResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
@@ -150,6 +184,9 @@ func (o SuppressionStatsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Total) {
 		toSerialize["total"] = o.Total

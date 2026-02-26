@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
 **Original** | Pointer to **map[string]interface{}** | Original validation result before policy | [optional] 
 **Modified** | Pointer to **map[string]interface{}** | Result after policy applied | [optional] 
 **MatchedRule** | Pointer to **map[string]interface{}** | The rule that matched, or null if none matched | [optional] 
@@ -53,6 +54,31 @@ SetSchemaVersion sets SchemaVersion field to given value.
 `func (o *PolicyTestResponse) HasSchemaVersion() bool`
 
 HasSchemaVersion returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *PolicyTestResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *PolicyTestResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *PolicyTestResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *PolicyTestResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetOriginal
 

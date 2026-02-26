@@ -21,6 +21,8 @@ var _ MappedNullable = &SuppressionCheckResponse{}
 // SuppressionCheckResponse struct for SuppressionCheckResponse
 type SuppressionCheckResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Email *string `json:"email,omitempty"`
 	Suppressed *bool `json:"suppressed,omitempty"`
 	MatchType *string `json:"match_type,omitempty"`
@@ -74,6 +76,38 @@ func (o *SuppressionCheckResponse) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *SuppressionCheckResponse) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *SuppressionCheckResponse) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SuppressionCheckResponse) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *SuppressionCheckResponse) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *SuppressionCheckResponse) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetEmail returns the Email field value if set, zero value otherwise.
@@ -216,6 +250,9 @@ func (o SuppressionCheckResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Email) {
 		toSerialize["email"] = o.Email

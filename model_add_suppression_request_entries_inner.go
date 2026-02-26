@@ -172,6 +172,7 @@ func (o *AddSuppressionRequestEntriesInner) UnmarshalJSON(data []byte) (err erro
 	varAddSuppressionRequestEntriesInner := _AddSuppressionRequestEntriesInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAddSuppressionRequestEntriesInner)
 
 	if err != nil {

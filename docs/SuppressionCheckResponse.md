@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
 **Email** | Pointer to **string** |  | [optional] 
 **Suppressed** | Pointer to **bool** |  | [optional] 
 **MatchType** | Pointer to **string** |  | [optional] 
@@ -53,6 +54,31 @@ SetSchemaVersion sets SchemaVersion field to given value.
 `func (o *SuppressionCheckResponse) HasSchemaVersion() bool`
 
 HasSchemaVersion returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *SuppressionCheckResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *SuppressionCheckResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *SuppressionCheckResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *SuppressionCheckResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetEmail
 

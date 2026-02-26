@@ -21,6 +21,8 @@ var _ MappedNullable = &ValidateBatch200Response{}
 // ValidateBatch200Response struct for ValidateBatch200Response
 type ValidateBatch200Response struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
+	// Unique request identifier
+	RequestId *string `json:"request_id,omitempty"`
 	Total *int32 `json:"total,omitempty"`
 	Summary *ValidateBatch200ResponseSummary `json:"summary,omitempty"`
 	Results []ValidationResponse `json:"results,omitempty"`
@@ -73,6 +75,38 @@ func (o *ValidateBatch200Response) HasSchemaVersion() bool {
 // SetSchemaVersion gets a reference to the given string and assigns it to the SchemaVersion field.
 func (o *ValidateBatch200Response) SetSchemaVersion(v string) {
 	o.SchemaVersion = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *ValidateBatch200Response) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidateBatch200Response) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *ValidateBatch200Response) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *ValidateBatch200Response) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
@@ -183,6 +217,9 @@ func (o ValidateBatch200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.SchemaVersion) {
 		toSerialize["schema_version"] = o.SchemaVersion
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.Total) {
 		toSerialize["total"] = o.Total

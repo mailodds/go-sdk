@@ -33,7 +33,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -103,7 +103,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -169,7 +169,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -235,7 +235,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -305,7 +305,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -375,7 +375,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -445,7 +445,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -523,7 +523,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {
@@ -589,7 +589,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk"
+	openapiclient "github.com/mailodds/go-sdk/mailodds"
 )
 
 func main() {

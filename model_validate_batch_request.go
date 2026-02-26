@@ -186,6 +186,7 @@ func (o *ValidateBatchRequest) UnmarshalJSON(data []byte) (err error) {
 	varValidateBatchRequest := _ValidateBatchRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varValidateBatchRequest)
 
 	if err != nil {

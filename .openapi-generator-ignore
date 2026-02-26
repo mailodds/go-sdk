@@ -28,3 +28,5 @@ ci/**
 .github/**
 # Preserve Go module path (generator adds /packageName suffix)
 go.mod
+# Preserve DisallowUnknownFields removal (forward compatibility)
+utils.go

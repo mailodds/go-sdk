@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | **string** |  | 
+**RequestId** | Pointer to **string** | Unique request identifier | [optional] 
 **Email** | **string** |  | 
 **Status** | **string** | Validation status | 
 **Action** | **string** | Recommended action | 
@@ -21,6 +22,10 @@ Name | Type | Description | Notes
 **ProcessedAt** | **time.Time** | ISO 8601 timestamp of validation | 
 **SuggestedEmail** | Pointer to **string** | Typo correction suggestion. Omitted when no typo detected. | [optional] 
 **RetryAfterMs** | Pointer to **int32** | Suggested retry delay in milliseconds. Present only for retry_later action. | [optional] 
+**HasSpf** | Pointer to **bool** | Whether the domain has an SPF record. Omitted for standard depth. | [optional] 
+**HasDmarc** | Pointer to **bool** | Whether the domain has a DMARC record. Omitted for standard depth. | [optional] 
+**DmarcPolicy** | Pointer to **string** | The domain&#39;s DMARC policy. Omitted when no DMARC record found. | [optional] 
+**DnsblListed** | Pointer to **bool** | Whether the domain&#39;s MX IP is on a DNS blocklist (Spamhaus ZEN). Omitted for standard depth. | [optional] 
 **SuppressionMatch** | Pointer to [**ValidationResponseSuppressionMatch**](ValidationResponseSuppressionMatch.md) |  | [optional] 
 **PolicyApplied** | Pointer to [**ValidationResponsePolicyApplied**](ValidationResponsePolicyApplied.md) |  | [optional] 
 
@@ -62,6 +67,31 @@ and a boolean to check if the value has been set.
 
 SetSchemaVersion sets SchemaVersion field to given value.
 
+
+### GetRequestId
+
+`func (o *ValidationResponse) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *ValidationResponse) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *ValidationResponse) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *ValidationResponse) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetEmail
 
@@ -412,6 +442,106 @@ SetRetryAfterMs sets RetryAfterMs field to given value.
 `func (o *ValidationResponse) HasRetryAfterMs() bool`
 
 HasRetryAfterMs returns a boolean if a field has been set.
+
+### GetHasSpf
+
+`func (o *ValidationResponse) GetHasSpf() bool`
+
+GetHasSpf returns the HasSpf field if non-nil, zero value otherwise.
+
+### GetHasSpfOk
+
+`func (o *ValidationResponse) GetHasSpfOk() (*bool, bool)`
+
+GetHasSpfOk returns a tuple with the HasSpf field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasSpf
+
+`func (o *ValidationResponse) SetHasSpf(v bool)`
+
+SetHasSpf sets HasSpf field to given value.
+
+### HasHasSpf
+
+`func (o *ValidationResponse) HasHasSpf() bool`
+
+HasHasSpf returns a boolean if a field has been set.
+
+### GetHasDmarc
+
+`func (o *ValidationResponse) GetHasDmarc() bool`
+
+GetHasDmarc returns the HasDmarc field if non-nil, zero value otherwise.
+
+### GetHasDmarcOk
+
+`func (o *ValidationResponse) GetHasDmarcOk() (*bool, bool)`
+
+GetHasDmarcOk returns a tuple with the HasDmarc field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasDmarc
+
+`func (o *ValidationResponse) SetHasDmarc(v bool)`
+
+SetHasDmarc sets HasDmarc field to given value.
+
+### HasHasDmarc
+
+`func (o *ValidationResponse) HasHasDmarc() bool`
+
+HasHasDmarc returns a boolean if a field has been set.
+
+### GetDmarcPolicy
+
+`func (o *ValidationResponse) GetDmarcPolicy() string`
+
+GetDmarcPolicy returns the DmarcPolicy field if non-nil, zero value otherwise.
+
+### GetDmarcPolicyOk
+
+`func (o *ValidationResponse) GetDmarcPolicyOk() (*string, bool)`
+
+GetDmarcPolicyOk returns a tuple with the DmarcPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDmarcPolicy
+
+`func (o *ValidationResponse) SetDmarcPolicy(v string)`
+
+SetDmarcPolicy sets DmarcPolicy field to given value.
+
+### HasDmarcPolicy
+
+`func (o *ValidationResponse) HasDmarcPolicy() bool`
+
+HasDmarcPolicy returns a boolean if a field has been set.
+
+### GetDnsblListed
+
+`func (o *ValidationResponse) GetDnsblListed() bool`
+
+GetDnsblListed returns the DnsblListed field if non-nil, zero value otherwise.
+
+### GetDnsblListedOk
+
+`func (o *ValidationResponse) GetDnsblListedOk() (*bool, bool)`
+
+GetDnsblListedOk returns a tuple with the DnsblListed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDnsblListed
+
+`func (o *ValidationResponse) SetDnsblListed(v bool)`
+
+SetDnsblListed sets DnsblListed field to given value.
+
+### HasDnsblListed
+
+`func (o *ValidationResponse) HasDnsblListed() bool`
+
+HasDnsblListed returns a boolean if a field has been set.
 
 ### GetSuppressionMatch
 

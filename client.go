@@ -52,7 +52,13 @@ type APIClient struct {
 
 	BulkValidationAPI *BulkValidationAPIService
 
+	EmailSendingAPI *EmailSendingAPIService
+
 	EmailValidationAPI *EmailValidationAPIService
+
+	SendingDomainsAPI *SendingDomainsAPIService
+
+	SubscriberListsAPI *SubscriberListsAPIService
 
 	SuppressionListsAPI *SuppressionListsAPIService
 
@@ -78,7 +84,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.BulkValidationAPI = (*BulkValidationAPIService)(&c.common)
+	c.EmailSendingAPI = (*EmailSendingAPIService)(&c.common)
 	c.EmailValidationAPI = (*EmailValidationAPIService)(&c.common)
+	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
+	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)
 	c.ValidationPoliciesAPI = (*ValidationPoliciesAPIService)(&c.common)

@@ -56,7 +56,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```go
-import mailodds "github.com/mailodds/go-sdk"
+import mailodds "github.com/mailodds/go-sdk/mailodds"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
@@ -121,8 +121,25 @@ Class | Method | HTTP request | Description
 *BulkValidationAPI* | [**GetJobResults**](docs/BulkValidationAPI.md#getjobresults) | **Get** /v1/jobs/{job_id}/results | Get job results
 *BulkValidationAPI* | [**GetPresignedUpload**](docs/BulkValidationAPI.md#getpresignedupload) | **Post** /v1/jobs/upload/presigned | Get S3 presigned upload URL
 *BulkValidationAPI* | [**ListJobs**](docs/BulkValidationAPI.md#listjobs) | **Get** /v1/jobs | List validation jobs
+*EmailSendingAPI* | [**DeliverBatch**](docs/EmailSendingAPI.md#deliverbatch) | **Post** /v1/deliver/batch | Send to multiple recipients (max 100)
+*EmailSendingAPI* | [**DeliverEmail**](docs/EmailSendingAPI.md#deliveremail) | **Post** /v1/deliver | Send a single email
 *EmailValidationAPI* | [**ValidateBatch**](docs/EmailValidationAPI.md#validatebatch) | **Post** /v1/validate/batch | Validate multiple emails (sync)
 *EmailValidationAPI* | [**ValidateEmail**](docs/EmailValidationAPI.md#validateemail) | **Post** /v1/validate | Validate single email
+*SendingDomainsAPI* | [**CreateSendingDomain**](docs/SendingDomainsAPI.md#createsendingdomain) | **Post** /v1/sending-domains | Add a sending domain
+*SendingDomainsAPI* | [**DeleteSendingDomain**](docs/SendingDomainsAPI.md#deletesendingdomain) | **Delete** /v1/sending-domains/{domain_id} | Delete a sending domain
+*SendingDomainsAPI* | [**GetSendingDomain**](docs/SendingDomainsAPI.md#getsendingdomain) | **Get** /v1/sending-domains/{domain_id} | Get a sending domain
+*SendingDomainsAPI* | [**GetSendingDomainIdentityScore**](docs/SendingDomainsAPI.md#getsendingdomainidentityscore) | **Get** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score
+*SendingDomainsAPI* | [**GetSendingStats**](docs/SendingDomainsAPI.md#getsendingstats) | **Get** /v1/sending-stats | Get sending statistics
+*SendingDomainsAPI* | [**ListSendingDomains**](docs/SendingDomainsAPI.md#listsendingdomains) | **Get** /v1/sending-domains | List sending domains
+*SendingDomainsAPI* | [**VerifySendingDomain**](docs/SendingDomainsAPI.md#verifysendingdomain) | **Post** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
+*SubscriberListsAPI* | [**ConfirmSubscription**](docs/SubscriberListsAPI.md#confirmsubscription) | **Get** /v1/confirm/{token} | Confirm subscription
+*SubscriberListsAPI* | [**CreateList**](docs/SubscriberListsAPI.md#createlist) | **Post** /v1/lists | Create a subscriber list
+*SubscriberListsAPI* | [**DeleteList**](docs/SubscriberListsAPI.md#deletelist) | **Delete** /v1/lists/{list_id} | Delete a subscriber list
+*SubscriberListsAPI* | [**GetList**](docs/SubscriberListsAPI.md#getlist) | **Get** /v1/lists/{list_id} | Get a subscriber list
+*SubscriberListsAPI* | [**GetLists**](docs/SubscriberListsAPI.md#getlists) | **Get** /v1/lists | List subscriber lists
+*SubscriberListsAPI* | [**GetSubscribers**](docs/SubscriberListsAPI.md#getsubscribers) | **Get** /v1/lists/{list_id}/subscribers | List subscribers
+*SubscriberListsAPI* | [**Subscribe**](docs/SubscriberListsAPI.md#subscribe) | **Post** /v1/subscribe/{list_id} | Subscribe to a list
+*SubscriberListsAPI* | [**UnsubscribeSubscriber**](docs/SubscriberListsAPI.md#unsubscribesubscriber) | **Delete** /v1/lists/{list_id}/subscribers/{subscriber_id} | Unsubscribe a subscriber
 *SuppressionListsAPI* | [**AddSuppression**](docs/SuppressionListsAPI.md#addsuppression) | **Post** /v1/suppression | Add suppression entries
 *SuppressionListsAPI* | [**CheckSuppression**](docs/SuppressionListsAPI.md#checksuppression) | **Post** /v1/suppression/check | Check suppression status
 *SuppressionListsAPI* | [**GetSuppressionStats**](docs/SuppressionListsAPI.md#getsuppressionstats) | **Get** /v1/suppression/stats | Get suppression statistics
@@ -148,21 +165,43 @@ Class | Method | HTTP request | Description
  - [AddSuppressionRequest](docs/AddSuppressionRequest.md)
  - [AddSuppressionRequestEntriesInner](docs/AddSuppressionRequestEntriesInner.md)
  - [AddSuppressionResponse](docs/AddSuppressionResponse.md)
+ - [BatchDeliverRequest](docs/BatchDeliverRequest.md)
+ - [BatchDeliverRequestStructuredData](docs/BatchDeliverRequestStructuredData.md)
+ - [BatchDeliverResponse](docs/BatchDeliverResponse.md)
+ - [BatchDeliverResponseDelivery](docs/BatchDeliverResponseDelivery.md)
+ - [BatchDeliverResponseRejectedInner](docs/BatchDeliverResponseRejectedInner.md)
  - [CheckSuppressionRequest](docs/CheckSuppressionRequest.md)
+ - [ConfirmSubscription200Response](docs/ConfirmSubscription200Response.md)
  - [CreateJobFromS3Request](docs/CreateJobFromS3Request.md)
  - [CreateJobRequest](docs/CreateJobRequest.md)
+ - [CreateList201Response](docs/CreateList201Response.md)
+ - [CreateListRequest](docs/CreateListRequest.md)
  - [CreatePolicyFromPresetRequest](docs/CreatePolicyFromPresetRequest.md)
  - [CreatePolicyRequest](docs/CreatePolicyRequest.md)
+ - [CreateSendingDomain201Response](docs/CreateSendingDomain201Response.md)
+ - [CreateSendingDomainRequest](docs/CreateSendingDomainRequest.md)
  - [DeleteJob200Response](docs/DeleteJob200Response.md)
  - [DeletePolicy200Response](docs/DeletePolicy200Response.md)
  - [DeletePolicyRule200Response](docs/DeletePolicyRule200Response.md)
+ - [DeliverRequest](docs/DeliverRequest.md)
+ - [DeliverRequestOptions](docs/DeliverRequestOptions.md)
+ - [DeliverRequestStructuredData](docs/DeliverRequestStructuredData.md)
+ - [DeliverRequestToInner](docs/DeliverRequestToInner.md)
+ - [DeliverResponse](docs/DeliverResponse.md)
+ - [DeliverResponseDelivery](docs/DeliverResponseDelivery.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [GetLists200Response](docs/GetLists200Response.md)
  - [GetPresignedUploadRequest](docs/GetPresignedUploadRequest.md)
+ - [GetSendingDomainIdentityScore200Response](docs/GetSendingDomainIdentityScore200Response.md)
+ - [GetSendingStats200Response](docs/GetSendingStats200Response.md)
+ - [GetSendingStats200ResponseStats](docs/GetSendingStats200ResponseStats.md)
+ - [GetSubscribers200Response](docs/GetSubscribers200Response.md)
  - [HealthCheck200Response](docs/HealthCheck200Response.md)
  - [Job](docs/Job.md)
  - [JobListResponse](docs/JobListResponse.md)
  - [JobResponse](docs/JobResponse.md)
  - [JobSummary](docs/JobSummary.md)
+ - [ListSendingDomains200Response](docs/ListSendingDomains200Response.md)
  - [Pagination](docs/Pagination.md)
  - [Policy](docs/Policy.md)
  - [PolicyListResponse](docs/PolicyListResponse.md)
@@ -178,6 +217,16 @@ Class | Method | HTTP request | Description
  - [RemoveSuppression200Response](docs/RemoveSuppression200Response.md)
  - [RemoveSuppressionRequest](docs/RemoveSuppressionRequest.md)
  - [ResultsResponse](docs/ResultsResponse.md)
+ - [SendingDomain](docs/SendingDomain.md)
+ - [SendingDomainDnsRecords](docs/SendingDomainDnsRecords.md)
+ - [SendingDomainDnsRecordsNs](docs/SendingDomainDnsRecordsNs.md)
+ - [SendingDomainIdentityScore](docs/SendingDomainIdentityScore.md)
+ - [SendingDomainIdentityScoreChecks](docs/SendingDomainIdentityScoreChecks.md)
+ - [SendingDomainIdentityScoreChecksDkim](docs/SendingDomainIdentityScoreChecksDkim.md)
+ - [SendingDomainIdentityScoreChecksDmarc](docs/SendingDomainIdentityScoreChecksDmarc.md)
+ - [SubscribeRequest](docs/SubscribeRequest.md)
+ - [Subscriber](docs/Subscriber.md)
+ - [SubscriberList](docs/SubscriberList.md)
  - [SuppressionCheckResponse](docs/SuppressionCheckResponse.md)
  - [SuppressionEntry](docs/SuppressionEntry.md)
  - [SuppressionListResponse](docs/SuppressionListResponse.md)
@@ -190,6 +239,7 @@ Class | Method | HTTP request | Description
  - [TelemetrySummaryTotals](docs/TelemetrySummaryTotals.md)
  - [TestPolicyRequest](docs/TestPolicyRequest.md)
  - [TestPolicyRequestTestResult](docs/TestPolicyRequestTestResult.md)
+ - [UnsubscribeSubscriber200Response](docs/UnsubscribeSubscriber200Response.md)
  - [UpdatePolicyRequest](docs/UpdatePolicyRequest.md)
  - [ValidateBatch200Response](docs/ValidateBatch200Response.md)
  - [ValidateBatch200ResponseSummary](docs/ValidateBatch200ResponseSummary.md)

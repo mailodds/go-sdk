@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Valid** | Pointer to **int32** |  | [optional] 
 **Invalid** | Pointer to **int32** |  | [optional] 
+**CatchAll** | Pointer to **int32** |  | [optional] 
 **DoNotMail** | Pointer to **int32** |  | [optional] 
 **Unknown** | Pointer to **int32** |  | [optional] 
 **CancelledPending** | Pointer to **int32** |  | [optional] 
@@ -78,6 +79,31 @@ SetInvalid sets Invalid field to given value.
 `func (o *JobSummary) HasInvalid() bool`
 
 HasInvalid returns a boolean if a field has been set.
+
+### GetCatchAll
+
+`func (o *JobSummary) GetCatchAll() int32`
+
+GetCatchAll returns the CatchAll field if non-nil, zero value otherwise.
+
+### GetCatchAllOk
+
+`func (o *JobSummary) GetCatchAllOk() (*int32, bool)`
+
+GetCatchAllOk returns a tuple with the CatchAll field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCatchAll
+
+`func (o *JobSummary) SetCatchAll(v int32)`
+
+SetCatchAll sets CatchAll field to given value.
+
+### HasCatchAll
+
+`func (o *JobSummary) HasCatchAll() bool`
+
+HasCatchAll returns a boolean if a field has been set.
 
 ### GetDoNotMail
 
