@@ -6,8 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **RequestId** | Pointer to **string** | Unique request identifier | [optional] 
-**Jobs** | Pointer to [**[]Job**](Job.md) |  | [optional] 
-**Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
+**Data** | Pointer to [**[]Job**](Job.md) | List of jobs | [optional] 
+**NextCursor** | Pointer to **NullableString** | Cursor for next page. Null when no more results. | [optional] 
+**HasMore** | Pointer to **bool** | Whether more results exist beyond this page | [optional] 
 
 ## Methods
 
@@ -78,55 +79,90 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetJobs
+### GetData
 
-`func (o *JobListResponse) GetJobs() []Job`
+`func (o *JobListResponse) GetData() []Job`
 
-GetJobs returns the Jobs field if non-nil, zero value otherwise.
+GetData returns the Data field if non-nil, zero value otherwise.
 
-### GetJobsOk
+### GetDataOk
 
-`func (o *JobListResponse) GetJobsOk() (*[]Job, bool)`
+`func (o *JobListResponse) GetDataOk() (*[]Job, bool)`
 
-GetJobsOk returns a tuple with the Jobs field if it's non-nil, zero value otherwise
+GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJobs
+### SetData
 
-`func (o *JobListResponse) SetJobs(v []Job)`
+`func (o *JobListResponse) SetData(v []Job)`
 
-SetJobs sets Jobs field to given value.
+SetData sets Data field to given value.
 
-### HasJobs
+### HasData
 
-`func (o *JobListResponse) HasJobs() bool`
+`func (o *JobListResponse) HasData() bool`
 
-HasJobs returns a boolean if a field has been set.
+HasData returns a boolean if a field has been set.
 
-### GetPagination
+### GetNextCursor
 
-`func (o *JobListResponse) GetPagination() Pagination`
+`func (o *JobListResponse) GetNextCursor() string`
 
-GetPagination returns the Pagination field if non-nil, zero value otherwise.
+GetNextCursor returns the NextCursor field if non-nil, zero value otherwise.
 
-### GetPaginationOk
+### GetNextCursorOk
 
-`func (o *JobListResponse) GetPaginationOk() (*Pagination, bool)`
+`func (o *JobListResponse) GetNextCursorOk() (*string, bool)`
 
-GetPaginationOk returns a tuple with the Pagination field if it's non-nil, zero value otherwise
+GetNextCursorOk returns a tuple with the NextCursor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPagination
+### SetNextCursor
 
-`func (o *JobListResponse) SetPagination(v Pagination)`
+`func (o *JobListResponse) SetNextCursor(v string)`
 
-SetPagination sets Pagination field to given value.
+SetNextCursor sets NextCursor field to given value.
 
-### HasPagination
+### HasNextCursor
 
-`func (o *JobListResponse) HasPagination() bool`
+`func (o *JobListResponse) HasNextCursor() bool`
 
-HasPagination returns a boolean if a field has been set.
+HasNextCursor returns a boolean if a field has been set.
+
+### SetNextCursorNil
+
+`func (o *JobListResponse) SetNextCursorNil(b bool)`
+
+ SetNextCursorNil sets the value for NextCursor to be an explicit nil
+
+### UnsetNextCursor
+`func (o *JobListResponse) UnsetNextCursor()`
+
+UnsetNextCursor ensures that no value is present for NextCursor, not even an explicit nil
+### GetHasMore
+
+`func (o *JobListResponse) GetHasMore() bool`
+
+GetHasMore returns the HasMore field if non-nil, zero value otherwise.
+
+### GetHasMoreOk
+
+`func (o *JobListResponse) GetHasMoreOk() (*bool, bool)`
+
+GetHasMoreOk returns a tuple with the HasMore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasMore
+
+`func (o *JobListResponse) SetHasMore(v bool)`
+
+SetHasMore sets HasMore field to given value.
+
+### HasHasMore
+
+`func (o *JobListResponse) HasHasMore() bool`
+
+HasHasMore returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

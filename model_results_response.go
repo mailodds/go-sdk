@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -23,7 +23,9 @@ type ResultsResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
 	// Unique request identifier
 	RequestId *string `json:"request_id,omitempty"`
-	Results []ValidationResult `json:"results,omitempty"`
+	Job *Job `json:"job,omitempty"`
+	// Validation results for this page
+	Data []ValidationResult `json:"data,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
 
@@ -108,36 +110,68 @@ func (o *ResultsResponse) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetResults returns the Results field value if set, zero value otherwise.
-func (o *ResultsResponse) GetResults() []ValidationResult {
-	if o == nil || IsNil(o.Results) {
-		var ret []ValidationResult
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *ResultsResponse) GetJob() Job {
+	if o == nil || IsNil(o.Job) {
+		var ret Job
 		return ret
 	}
-	return o.Results
+	return *o.Job
 }
 
-// GetResultsOk returns a tuple with the Results field value if set, nil otherwise
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ResultsResponse) GetResultsOk() ([]ValidationResult, bool) {
-	if o == nil || IsNil(o.Results) {
+func (o *ResultsResponse) GetJobOk() (*Job, bool) {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
-	return o.Results, true
+	return o.Job, true
 }
 
-// HasResults returns a boolean if a field has been set.
-func (o *ResultsResponse) HasResults() bool {
-	if o != nil && !IsNil(o.Results) {
+// HasJob returns a boolean if a field has been set.
+func (o *ResultsResponse) HasJob() bool {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
 	return false
 }
 
-// SetResults gets a reference to the given []ValidationResult and assigns it to the Results field.
-func (o *ResultsResponse) SetResults(v []ValidationResult) {
-	o.Results = v
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *ResultsResponse) SetJob(v Job) {
+	o.Job = &v
+}
+
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *ResultsResponse) GetData() []ValidationResult {
+	if o == nil || IsNil(o.Data) {
+		var ret []ValidationResult
+		return ret
+	}
+	return o.Data
+}
+
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ResultsResponse) GetDataOk() ([]ValidationResult, bool) {
+	if o == nil || IsNil(o.Data) {
+		return nil, false
+	}
+	return o.Data, true
+}
+
+// HasData returns a boolean if a field has been set.
+func (o *ResultsResponse) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given []ValidationResult and assigns it to the Data field.
+func (o *ResultsResponse) SetData(v []ValidationResult) {
+	o.Data = v
 }
 
 // GetPagination returns the Pagination field value if set, zero value otherwise.
@@ -188,8 +222,11 @@ func (o ResultsResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.Results) {
-		toSerialize["results"] = o.Results
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
 	}
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination

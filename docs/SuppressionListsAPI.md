@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddSuppression**](SuppressionListsAPI.md#AddSuppression) | **Post** /v1/suppression | Add suppression entries
 [**CheckSuppression**](SuppressionListsAPI.md#CheckSuppression) | **Post** /v1/suppression/check | Check suppression status
+[**GetSuppressionAuditLog**](SuppressionListsAPI.md#GetSuppressionAuditLog) | **Get** /v1/suppression/audit | Get suppression audit log
 [**GetSuppressionStats**](SuppressionListsAPI.md#GetSuppressionStats) | **Get** /v1/suppression/stats | Get suppression statistics
 [**ListSuppression**](SuppressionListsAPI.md#ListSuppression) | **Get** /v1/suppression | List suppression entries
 [**RemoveSuppression**](SuppressionListsAPI.md#RemoveSuppression) | **Delete** /v1/suppression | Remove suppression entries
@@ -29,7 +30,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -95,7 +96,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -144,6 +145,74 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetSuppressionAuditLog
+
+> SuppressionAuditResponse GetSuppressionAuditLog(ctx).Page(page).Limit(limit).Execute()
+
+Get suppression audit log
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	page := int32(56) // int32 |  (optional) (default to 1)
+	limit := int32(56) // int32 |  (optional) (default to 20)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SuppressionListsAPI.GetSuppressionAuditLog(context.Background()).Page(page).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SuppressionListsAPI.GetSuppressionAuditLog``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSuppressionAuditLog`: SuppressionAuditResponse
+	fmt.Fprintf(os.Stdout, "Response from `SuppressionListsAPI.GetSuppressionAuditLog`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSuppressionAuditLogRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int32** |  | [default to 1]
+ **limit** | **int32** |  | [default to 20]
+
+### Return type
+
+[**SuppressionAuditResponse**](SuppressionAuditResponse.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetSuppressionStats
 
 > SuppressionStatsResponse GetSuppressionStats(ctx).Execute()
@@ -161,7 +230,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -207,7 +276,7 @@ Other parameters are passed through a pointer to a apiGetSuppressionStatsRequest
 
 ## ListSuppression
 
-> SuppressionListResponse ListSuppression(ctx).Page(page).PerPage(perPage).Type_(type_).Search(search).Execute()
+> SuppressionListResponse ListSuppression(ctx).Page(page).PerPage(perPage).Type_(type_).Search(search).Source(source).Execute()
 
 List suppression entries
 
@@ -222,7 +291,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -230,10 +299,11 @@ func main() {
 	perPage := int32(56) // int32 |  (optional) (default to 50)
 	type_ := "type__example" // string |  (optional)
 	search := "search_example" // string |  (optional)
+	source := "source_example" // string | Filter by entry source (e.g. api, bounce, complaint) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SuppressionListsAPI.ListSuppression(context.Background()).Page(page).PerPage(perPage).Type_(type_).Search(search).Execute()
+	resp, r, err := apiClient.SuppressionListsAPI.ListSuppression(context.Background()).Page(page).PerPage(perPage).Type_(type_).Search(search).Source(source).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SuppressionListsAPI.ListSuppression``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -258,6 +328,7 @@ Name | Type | Description  | Notes
  **perPage** | **int32** |  | [default to 50]
  **type_** | **string** |  | 
  **search** | **string** |  | 
+ **source** | **string** | Filter by entry source (e.g. api, bounce, complaint) | 
 
 ### Return type
 
@@ -294,7 +365,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {

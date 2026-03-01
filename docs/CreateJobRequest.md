@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Emails** | **[]string** | List of emails to validate | 
 **Dedup** | Pointer to **bool** | Remove duplicate emails | [optional] [default to false]
 **Metadata** | Pointer to **map[string]interface{}** | Custom metadata for the job | [optional] 
-**WebhookUrl** | Pointer to **string** | URL for completion webhook | [optional] 
+**WebhookUrl** | Pointer to **string** | URL for completion webhook. Payloads are signed with HMAC-SHA256 if a webhook secret is configured (see Webhooks section). | [optional] 
 **IdempotencyKey** | Pointer to **string** | Unique key for idempotent requests | [optional] 
 
 ## Methods

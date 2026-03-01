@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -23,8 +23,12 @@ type JobListResponse struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
 	// Unique request identifier
 	RequestId *string `json:"request_id,omitempty"`
-	Jobs []Job `json:"jobs,omitempty"`
-	Pagination *Pagination `json:"pagination,omitempty"`
+	// List of jobs
+	Data []Job `json:"data,omitempty"`
+	// Cursor for next page. Null when no more results.
+	NextCursor NullableString `json:"next_cursor,omitempty"`
+	// Whether more results exist beyond this page
+	HasMore *bool `json:"has_more,omitempty"`
 }
 
 // NewJobListResponse instantiates a new JobListResponse object
@@ -108,68 +112,110 @@ func (o *JobListResponse) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetJobs returns the Jobs field value if set, zero value otherwise.
-func (o *JobListResponse) GetJobs() []Job {
-	if o == nil || IsNil(o.Jobs) {
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *JobListResponse) GetData() []Job {
+	if o == nil || IsNil(o.Data) {
 		var ret []Job
 		return ret
 	}
-	return o.Jobs
+	return o.Data
 }
 
-// GetJobsOk returns a tuple with the Jobs field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *JobListResponse) GetJobsOk() ([]Job, bool) {
-	if o == nil || IsNil(o.Jobs) {
+func (o *JobListResponse) GetDataOk() ([]Job, bool) {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
-	return o.Jobs, true
+	return o.Data, true
 }
 
-// HasJobs returns a boolean if a field has been set.
-func (o *JobListResponse) HasJobs() bool {
-	if o != nil && !IsNil(o.Jobs) {
+// HasData returns a boolean if a field has been set.
+func (o *JobListResponse) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
 	return false
 }
 
-// SetJobs gets a reference to the given []Job and assigns it to the Jobs field.
-func (o *JobListResponse) SetJobs(v []Job) {
-	o.Jobs = v
+// SetData gets a reference to the given []Job and assigns it to the Data field.
+func (o *JobListResponse) SetData(v []Job) {
+	o.Data = v
 }
 
-// GetPagination returns the Pagination field value if set, zero value otherwise.
-func (o *JobListResponse) GetPagination() Pagination {
-	if o == nil || IsNil(o.Pagination) {
-		var ret Pagination
+// GetNextCursor returns the NextCursor field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *JobListResponse) GetNextCursor() string {
+	if o == nil || IsNil(o.NextCursor.Get()) {
+		var ret string
 		return ret
 	}
-	return *o.Pagination
+	return *o.NextCursor.Get()
 }
 
-// GetPaginationOk returns a tuple with the Pagination field value if set, nil otherwise
+// GetNextCursorOk returns a tuple with the NextCursor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *JobListResponse) GetPaginationOk() (*Pagination, bool) {
-	if o == nil || IsNil(o.Pagination) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *JobListResponse) GetNextCursorOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Pagination, true
+	return o.NextCursor.Get(), o.NextCursor.IsSet()
 }
 
-// HasPagination returns a boolean if a field has been set.
-func (o *JobListResponse) HasPagination() bool {
-	if o != nil && !IsNil(o.Pagination) {
+// HasNextCursor returns a boolean if a field has been set.
+func (o *JobListResponse) HasNextCursor() bool {
+	if o != nil && o.NextCursor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPagination gets a reference to the given Pagination and assigns it to the Pagination field.
-func (o *JobListResponse) SetPagination(v Pagination) {
-	o.Pagination = &v
+// SetNextCursor gets a reference to the given NullableString and assigns it to the NextCursor field.
+func (o *JobListResponse) SetNextCursor(v string) {
+	o.NextCursor.Set(&v)
+}
+// SetNextCursorNil sets the value for NextCursor to be an explicit nil
+func (o *JobListResponse) SetNextCursorNil() {
+	o.NextCursor.Set(nil)
+}
+
+// UnsetNextCursor ensures that no value is present for NextCursor, not even an explicit nil
+func (o *JobListResponse) UnsetNextCursor() {
+	o.NextCursor.Unset()
+}
+
+// GetHasMore returns the HasMore field value if set, zero value otherwise.
+func (o *JobListResponse) GetHasMore() bool {
+	if o == nil || IsNil(o.HasMore) {
+		var ret bool
+		return ret
+	}
+	return *o.HasMore
+}
+
+// GetHasMoreOk returns a tuple with the HasMore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *JobListResponse) GetHasMoreOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasMore) {
+		return nil, false
+	}
+	return o.HasMore, true
+}
+
+// HasHasMore returns a boolean if a field has been set.
+func (o *JobListResponse) HasHasMore() bool {
+	if o != nil && !IsNil(o.HasMore) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasMore gets a reference to the given bool and assigns it to the HasMore field.
+func (o *JobListResponse) SetHasMore(v bool) {
+	o.HasMore = &v
 }
 
 func (o JobListResponse) MarshalJSON() ([]byte, error) {
@@ -188,11 +234,14 @@ func (o JobListResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.Jobs) {
-		toSerialize["jobs"] = o.Jobs
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
 	}
-	if !IsNil(o.Pagination) {
-		toSerialize["pagination"] = o.Pagination
+	if o.NextCursor.IsSet() {
+		toSerialize["next_cursor"] = o.NextCursor.Get()
+	}
+	if !IsNil(o.HasMore) {
+		toSerialize["has_more"] = o.HasMore
 	}
 	return toSerialize, nil
 }

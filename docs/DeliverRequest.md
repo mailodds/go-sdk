@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **Tags** | Pointer to **[]string** | Tags for categorization | [optional] 
 **CampaignType** | Pointer to **string** | Campaign type for JSON-LD auto-generation | [optional] 
 **StructuredData** | Pointer to [**DeliverRequestStructuredData**](DeliverRequestStructuredData.md) |  | [optional] 
+**SchemaData** | Pointer to **map[string]string** | Key-value pairs for campaign_type JSON-LD resolution (e.g., order_number, tracking_url) | [optional] 
+**AutoDetectSchema** | Pointer to **bool** | Auto-detect JSON-LD structured data type from subject line | [optional] [default to false]
+**AiSummary** | Pointer to **string** | Hidden text summary for AI email assistants (max 500 characters) | [optional] 
 **Options** | Pointer to [**DeliverRequestOptions**](DeliverRequestOptions.md) |  | [optional] 
 
 ## Methods
@@ -290,6 +293,81 @@ SetStructuredData sets StructuredData field to given value.
 `func (o *DeliverRequest) HasStructuredData() bool`
 
 HasStructuredData returns a boolean if a field has been set.
+
+### GetSchemaData
+
+`func (o *DeliverRequest) GetSchemaData() map[string]string`
+
+GetSchemaData returns the SchemaData field if non-nil, zero value otherwise.
+
+### GetSchemaDataOk
+
+`func (o *DeliverRequest) GetSchemaDataOk() (*map[string]string, bool)`
+
+GetSchemaDataOk returns a tuple with the SchemaData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSchemaData
+
+`func (o *DeliverRequest) SetSchemaData(v map[string]string)`
+
+SetSchemaData sets SchemaData field to given value.
+
+### HasSchemaData
+
+`func (o *DeliverRequest) HasSchemaData() bool`
+
+HasSchemaData returns a boolean if a field has been set.
+
+### GetAutoDetectSchema
+
+`func (o *DeliverRequest) GetAutoDetectSchema() bool`
+
+GetAutoDetectSchema returns the AutoDetectSchema field if non-nil, zero value otherwise.
+
+### GetAutoDetectSchemaOk
+
+`func (o *DeliverRequest) GetAutoDetectSchemaOk() (*bool, bool)`
+
+GetAutoDetectSchemaOk returns a tuple with the AutoDetectSchema field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoDetectSchema
+
+`func (o *DeliverRequest) SetAutoDetectSchema(v bool)`
+
+SetAutoDetectSchema sets AutoDetectSchema field to given value.
+
+### HasAutoDetectSchema
+
+`func (o *DeliverRequest) HasAutoDetectSchema() bool`
+
+HasAutoDetectSchema returns a boolean if a field has been set.
+
+### GetAiSummary
+
+`func (o *DeliverRequest) GetAiSummary() string`
+
+GetAiSummary returns the AiSummary field if non-nil, zero value otherwise.
+
+### GetAiSummaryOk
+
+`func (o *DeliverRequest) GetAiSummaryOk() (*string, bool)`
+
+GetAiSummaryOk returns a tuple with the AiSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAiSummary
+
+`func (o *DeliverRequest) SetAiSummary(v string)`
+
+SetAiSummary sets AiSummary field to given value.
+
+### HasAiSummary
+
+`func (o *DeliverRequest) HasAiSummary() bool`
+
+HasAiSummary returns a boolean if a field has been set.
 
 ### GetOptions
 

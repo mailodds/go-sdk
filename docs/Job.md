@@ -4,21 +4,26 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** |  | [optional] 
-**Status** | Pointer to **string** |  | [optional] 
-**TotalCount** | Pointer to **int32** |  | [optional] 
-**ProcessedCount** | Pointer to **int32** |  | [optional] 
-**ProgressPercent** | Pointer to **int32** |  | [optional] 
+**Id** | **string** |  | 
+**Name** | **string** | Job name (from metadata or auto-generated) | 
+**Status** | **string** |  | 
+**TotalCount** | **int32** |  | 
+**ProcessedCount** | **int32** |  | 
 **Summary** | Pointer to [**JobSummary**](JobSummary.md) |  | [optional] 
-**CreatedAt** | Pointer to **time.Time** |  | [optional] 
-**CompletedAt** | Pointer to **time.Time** |  | [optional] 
-**Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
+**CreatedAt** | **time.Time** |  | 
+**StartedAt** | Pointer to **time.Time** | When processing began. Omitted if not yet started. | [optional] 
+**CompletedAt** | Pointer to **time.Time** | Omitted if not yet completed. | [optional] 
+**ResultsExpireAt** | **time.Time** | When job results will be purged | 
+**Metadata** | Pointer to **map[string]interface{}** | Custom metadata attached at creation | [optional] 
+**ErrorMessage** | Pointer to **string** | Error details. Present only for failed jobs. | [optional] 
+**RequestId** | Pointer to **string** | Request ID from the job creation request | [optional] 
+**Artifacts** | Pointer to [**JobArtifacts**](JobArtifacts.md) |  | [optional] 
 
 ## Methods
 
 ### NewJob
 
-`func NewJob() *Job`
+`func NewJob(id string, name string, status string, totalCount int32, processedCount int32, createdAt time.Time, resultsExpireAt time.Time, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -52,11 +57,26 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
-### HasId
 
-`func (o *Job) HasId() bool`
+### GetName
 
-HasId returns a boolean if a field has been set.
+`func (o *Job) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *Job) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *Job) SetName(v string)`
+
+SetName sets Name field to given value.
+
 
 ### GetStatus
 
@@ -77,11 +97,6 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
-### HasStatus
-
-`func (o *Job) HasStatus() bool`
-
-HasStatus returns a boolean if a field has been set.
 
 ### GetTotalCount
 
@@ -102,11 +117,6 @@ and a boolean to check if the value has been set.
 
 SetTotalCount sets TotalCount field to given value.
 
-### HasTotalCount
-
-`func (o *Job) HasTotalCount() bool`
-
-HasTotalCount returns a boolean if a field has been set.
 
 ### GetProcessedCount
 
@@ -127,36 +137,6 @@ and a boolean to check if the value has been set.
 
 SetProcessedCount sets ProcessedCount field to given value.
 
-### HasProcessedCount
-
-`func (o *Job) HasProcessedCount() bool`
-
-HasProcessedCount returns a boolean if a field has been set.
-
-### GetProgressPercent
-
-`func (o *Job) GetProgressPercent() int32`
-
-GetProgressPercent returns the ProgressPercent field if non-nil, zero value otherwise.
-
-### GetProgressPercentOk
-
-`func (o *Job) GetProgressPercentOk() (*int32, bool)`
-
-GetProgressPercentOk returns a tuple with the ProgressPercent field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProgressPercent
-
-`func (o *Job) SetProgressPercent(v int32)`
-
-SetProgressPercent sets ProgressPercent field to given value.
-
-### HasProgressPercent
-
-`func (o *Job) HasProgressPercent() bool`
-
-HasProgressPercent returns a boolean if a field has been set.
 
 ### GetSummary
 
@@ -202,11 +182,31 @@ and a boolean to check if the value has been set.
 
 SetCreatedAt sets CreatedAt field to given value.
 
-### HasCreatedAt
 
-`func (o *Job) HasCreatedAt() bool`
+### GetStartedAt
 
-HasCreatedAt returns a boolean if a field has been set.
+`func (o *Job) GetStartedAt() time.Time`
+
+GetStartedAt returns the StartedAt field if non-nil, zero value otherwise.
+
+### GetStartedAtOk
+
+`func (o *Job) GetStartedAtOk() (*time.Time, bool)`
+
+GetStartedAtOk returns a tuple with the StartedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStartedAt
+
+`func (o *Job) SetStartedAt(v time.Time)`
+
+SetStartedAt sets StartedAt field to given value.
+
+### HasStartedAt
+
+`func (o *Job) HasStartedAt() bool`
+
+HasStartedAt returns a boolean if a field has been set.
 
 ### GetCompletedAt
 
@@ -233,6 +233,26 @@ SetCompletedAt sets CompletedAt field to given value.
 
 HasCompletedAt returns a boolean if a field has been set.
 
+### GetResultsExpireAt
+
+`func (o *Job) GetResultsExpireAt() time.Time`
+
+GetResultsExpireAt returns the ResultsExpireAt field if non-nil, zero value otherwise.
+
+### GetResultsExpireAtOk
+
+`func (o *Job) GetResultsExpireAtOk() (*time.Time, bool)`
+
+GetResultsExpireAtOk returns a tuple with the ResultsExpireAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResultsExpireAt
+
+`func (o *Job) SetResultsExpireAt(v time.Time)`
+
+SetResultsExpireAt sets ResultsExpireAt field to given value.
+
+
 ### GetMetadata
 
 `func (o *Job) GetMetadata() map[string]interface{}`
@@ -257,6 +277,81 @@ SetMetadata sets Metadata field to given value.
 `func (o *Job) HasMetadata() bool`
 
 HasMetadata returns a boolean if a field has been set.
+
+### GetErrorMessage
+
+`func (o *Job) GetErrorMessage() string`
+
+GetErrorMessage returns the ErrorMessage field if non-nil, zero value otherwise.
+
+### GetErrorMessageOk
+
+`func (o *Job) GetErrorMessageOk() (*string, bool)`
+
+GetErrorMessageOk returns a tuple with the ErrorMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetErrorMessage
+
+`func (o *Job) SetErrorMessage(v string)`
+
+SetErrorMessage sets ErrorMessage field to given value.
+
+### HasErrorMessage
+
+`func (o *Job) HasErrorMessage() bool`
+
+HasErrorMessage returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *Job) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *Job) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *Job) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *Job) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
+
+### GetArtifacts
+
+`func (o *Job) GetArtifacts() JobArtifacts`
+
+GetArtifacts returns the Artifacts field if non-nil, zero value otherwise.
+
+### GetArtifactsOk
+
+`func (o *Job) GetArtifactsOk() (*JobArtifacts, bool)`
+
+GetArtifactsOk returns a tuple with the Artifacts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArtifacts
+
+`func (o *Job) SetArtifacts(v JobArtifacts)`
+
+SetArtifacts sets Artifacts field to given value.
+
+### HasArtifacts
+
+`func (o *Job) HasArtifacts() bool`
+
+HasArtifacts returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

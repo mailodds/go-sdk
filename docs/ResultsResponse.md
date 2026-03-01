@@ -6,7 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **RequestId** | Pointer to **string** | Unique request identifier | [optional] 
-**Results** | Pointer to [**[]ValidationResult**](ValidationResult.md) |  | [optional] 
+**Job** | Pointer to [**Job**](Job.md) |  | [optional] 
+**Data** | Pointer to [**[]ValidationResult**](ValidationResult.md) | Validation results for this page | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
 
 ## Methods
@@ -78,30 +79,55 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetResults
+### GetJob
 
-`func (o *ResultsResponse) GetResults() []ValidationResult`
+`func (o *ResultsResponse) GetJob() Job`
 
-GetResults returns the Results field if non-nil, zero value otherwise.
+GetJob returns the Job field if non-nil, zero value otherwise.
 
-### GetResultsOk
+### GetJobOk
 
-`func (o *ResultsResponse) GetResultsOk() (*[]ValidationResult, bool)`
+`func (o *ResultsResponse) GetJobOk() (*Job, bool)`
 
-GetResultsOk returns a tuple with the Results field if it's non-nil, zero value otherwise
+GetJobOk returns a tuple with the Job field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetResults
+### SetJob
 
-`func (o *ResultsResponse) SetResults(v []ValidationResult)`
+`func (o *ResultsResponse) SetJob(v Job)`
 
-SetResults sets Results field to given value.
+SetJob sets Job field to given value.
 
-### HasResults
+### HasJob
 
-`func (o *ResultsResponse) HasResults() bool`
+`func (o *ResultsResponse) HasJob() bool`
 
-HasResults returns a boolean if a field has been set.
+HasJob returns a boolean if a field has been set.
+
+### GetData
+
+`func (o *ResultsResponse) GetData() []ValidationResult`
+
+GetData returns the Data field if non-nil, zero value otherwise.
+
+### GetDataOk
+
+`func (o *ResultsResponse) GetDataOk() (*[]ValidationResult, bool)`
+
+GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetData
+
+`func (o *ResultsResponse) SetData(v []ValidationResult)`
+
+SetData sets Data field to given value.
+
+### HasData
+
+`func (o *ResultsResponse) HasData() bool`
+
+HasData returns a boolean if a field has been set.
 
 ### GetPagination
 

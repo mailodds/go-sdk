@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -14,26 +14,43 @@ package mailodds
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ValidationResult type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResult{}
 
-// ValidationResult struct for ValidationResult
+// ValidationResult Individual result from a bulk validation job
 type ValidationResult struct {
-	Email *string `json:"email,omitempty"`
-	Status *string `json:"status,omitempty"`
+	Email string `json:"email"`
+	Status string `json:"status"`
+	// Detailed reason. Omitted when none.
 	SubStatus *string `json:"sub_status,omitempty"`
-	Action *string `json:"action,omitempty"`
-	ProcessedAt *time.Time `json:"processed_at,omitempty"`
+	Action string `json:"action"`
+	// Email domain
+	Domain string `json:"domain"`
+	// Primary MX hostname. Omitted when not resolved.
+	MxHost *string `json:"mx_host,omitempty"`
+	// Detailed check results (JSONB). Omitted when not available.
+	Checks map[string]interface{} `json:"checks,omitempty"`
+	Suppression *ValidationResultSuppression `json:"suppression,omitempty"`
+	ProcessedAt time.Time `json:"processed_at"`
 }
+
+type _ValidationResult ValidationResult
 
 // NewValidationResult instantiates a new ValidationResult object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewValidationResult() *ValidationResult {
+func NewValidationResult(email string, status string, action string, domain string, processedAt time.Time) *ValidationResult {
 	this := ValidationResult{}
+	this.Email = email
+	this.Status = status
+	this.Action = action
+	this.Domain = domain
+	this.ProcessedAt = processedAt
 	return &this
 }
 
@@ -45,68 +62,52 @@ func NewValidationResultWithDefaults() *ValidationResult {
 	return &this
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value
 func (o *ValidationResult) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Email
+
+	return o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResult) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return &o.Email, true
 }
 
-// HasEmail returns a boolean if a field has been set.
-func (o *ValidationResult) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
+// SetEmail sets field value
 func (o *ValidationResult) SetEmail(v string) {
-	o.Email = &v
+	o.Email = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *ValidationResult) GetStatus() string {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResult) GetStatusOk() (*string, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *ValidationResult) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given string and assigns it to the Status field.
+// SetStatus sets field value
 func (o *ValidationResult) SetStatus(v string) {
-	o.Status = &v
+	o.Status = v
 }
 
 // GetSubStatus returns the SubStatus field value if set, zero value otherwise.
@@ -141,68 +142,172 @@ func (o *ValidationResult) SetSubStatus(v string) {
 	o.SubStatus = &v
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
+// GetAction returns the Action field value
 func (o *ValidationResult) GetAction() string {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Action
+
+	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResult) GetActionOk() (*string, bool) {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Action, true
+	return &o.Action, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *ValidationResult) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
+// SetAction sets field value
+func (o *ValidationResult) SetAction(v string) {
+	o.Action = v
+}
+
+// GetDomain returns the Domain field value
+func (o *ValidationResult) GetDomain() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Domain
+}
+
+// GetDomainOk returns a tuple with the Domain field value
+// and a boolean to check if the value has been set.
+func (o *ValidationResult) GetDomainOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Domain, true
+}
+
+// SetDomain sets field value
+func (o *ValidationResult) SetDomain(v string) {
+	o.Domain = v
+}
+
+// GetMxHost returns the MxHost field value if set, zero value otherwise.
+func (o *ValidationResult) GetMxHost() string {
+	if o == nil || IsNil(o.MxHost) {
+		var ret string
+		return ret
+	}
+	return *o.MxHost
+}
+
+// GetMxHostOk returns a tuple with the MxHost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResult) GetMxHostOk() (*string, bool) {
+	if o == nil || IsNil(o.MxHost) {
+		return nil, false
+	}
+	return o.MxHost, true
+}
+
+// HasMxHost returns a boolean if a field has been set.
+func (o *ValidationResult) HasMxHost() bool {
+	if o != nil && !IsNil(o.MxHost) {
 		return true
 	}
 
 	return false
 }
 
-// SetAction gets a reference to the given string and assigns it to the Action field.
-func (o *ValidationResult) SetAction(v string) {
-	o.Action = &v
+// SetMxHost gets a reference to the given string and assigns it to the MxHost field.
+func (o *ValidationResult) SetMxHost(v string) {
+	o.MxHost = &v
 }
 
-// GetProcessedAt returns the ProcessedAt field value if set, zero value otherwise.
+// GetChecks returns the Checks field value if set, zero value otherwise.
+func (o *ValidationResult) GetChecks() map[string]interface{} {
+	if o == nil || IsNil(o.Checks) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Checks
+}
+
+// GetChecksOk returns a tuple with the Checks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResult) GetChecksOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Checks) {
+		return map[string]interface{}{}, false
+	}
+	return o.Checks, true
+}
+
+// HasChecks returns a boolean if a field has been set.
+func (o *ValidationResult) HasChecks() bool {
+	if o != nil && !IsNil(o.Checks) {
+		return true
+	}
+
+	return false
+}
+
+// SetChecks gets a reference to the given map[string]interface{} and assigns it to the Checks field.
+func (o *ValidationResult) SetChecks(v map[string]interface{}) {
+	o.Checks = v
+}
+
+// GetSuppression returns the Suppression field value if set, zero value otherwise.
+func (o *ValidationResult) GetSuppression() ValidationResultSuppression {
+	if o == nil || IsNil(o.Suppression) {
+		var ret ValidationResultSuppression
+		return ret
+	}
+	return *o.Suppression
+}
+
+// GetSuppressionOk returns a tuple with the Suppression field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationResult) GetSuppressionOk() (*ValidationResultSuppression, bool) {
+	if o == nil || IsNil(o.Suppression) {
+		return nil, false
+	}
+	return o.Suppression, true
+}
+
+// HasSuppression returns a boolean if a field has been set.
+func (o *ValidationResult) HasSuppression() bool {
+	if o != nil && !IsNil(o.Suppression) {
+		return true
+	}
+
+	return false
+}
+
+// SetSuppression gets a reference to the given ValidationResultSuppression and assigns it to the Suppression field.
+func (o *ValidationResult) SetSuppression(v ValidationResultSuppression) {
+	o.Suppression = &v
+}
+
+// GetProcessedAt returns the ProcessedAt field value
 func (o *ValidationResult) GetProcessedAt() time.Time {
-	if o == nil || IsNil(o.ProcessedAt) {
+	if o == nil {
 		var ret time.Time
 		return ret
 	}
-	return *o.ProcessedAt
+
+	return o.ProcessedAt
 }
 
-// GetProcessedAtOk returns a tuple with the ProcessedAt field value if set, nil otherwise
+// GetProcessedAtOk returns a tuple with the ProcessedAt field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResult) GetProcessedAtOk() (*time.Time, bool) {
-	if o == nil || IsNil(o.ProcessedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ProcessedAt, true
+	return &o.ProcessedAt, true
 }
 
-// HasProcessedAt returns a boolean if a field has been set.
-func (o *ValidationResult) HasProcessedAt() bool {
-	if o != nil && !IsNil(o.ProcessedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetProcessedAt gets a reference to the given time.Time and assigns it to the ProcessedAt field.
+// SetProcessedAt sets field value
 func (o *ValidationResult) SetProcessedAt(v time.Time) {
-	o.ProcessedAt = &v
+	o.ProcessedAt = v
 }
 
 func (o ValidationResult) MarshalJSON() ([]byte, error) {
@@ -215,22 +320,65 @@ func (o ValidationResult) MarshalJSON() ([]byte, error) {
 
 func (o ValidationResult) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
+	toSerialize["email"] = o.Email
+	toSerialize["status"] = o.Status
 	if !IsNil(o.SubStatus) {
 		toSerialize["sub_status"] = o.SubStatus
 	}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
+	toSerialize["action"] = o.Action
+	toSerialize["domain"] = o.Domain
+	if !IsNil(o.MxHost) {
+		toSerialize["mx_host"] = o.MxHost
 	}
-	if !IsNil(o.ProcessedAt) {
-		toSerialize["processed_at"] = o.ProcessedAt
+	if !IsNil(o.Checks) {
+		toSerialize["checks"] = o.Checks
 	}
+	if !IsNil(o.Suppression) {
+		toSerialize["suppression"] = o.Suppression
+	}
+	toSerialize["processed_at"] = o.ProcessedAt
 	return toSerialize, nil
+}
+
+func (o *ValidationResult) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"email",
+		"status",
+		"action",
+		"domain",
+		"processed_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varValidationResult := _ValidationResult{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varValidationResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ValidationResult(varValidationResult)
+
+	return err
 }
 
 type NullableValidationResult struct {

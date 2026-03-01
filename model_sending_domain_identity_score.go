@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -13,6 +13,8 @@ package mailodds
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the SendingDomainIdentityScore type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,30 @@ var _ MappedNullable = &SendingDomainIdentityScore{}
 
 // SendingDomainIdentityScore struct for SendingDomainIdentityScore
 type SendingDomainIdentityScore struct {
-	// Composite score 0-100
-	OverallScore *float32 `json:"overall_score,omitempty"`
-	Checks *SendingDomainIdentityScoreChecks `json:"checks,omitempty"`
+	// Total points earned across all checks
+	Score int32 `json:"score"`
+	// Maximum possible score (100)
+	MaxScore int32 `json:"max_score"`
+	// Score as percentage (same as score since max is 100)
+	Percentage int32 `json:"percentage"`
+	Breakdown SendingDomainIdentityScoreBreakdown `json:"breakdown"`
+	// Letter grade (A+, A, B, C, D, F)
+	Grade string `json:"grade"`
 }
+
+type _SendingDomainIdentityScore SendingDomainIdentityScore
 
 // NewSendingDomainIdentityScore instantiates a new SendingDomainIdentityScore object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSendingDomainIdentityScore() *SendingDomainIdentityScore {
+func NewSendingDomainIdentityScore(score int32, maxScore int32, percentage int32, breakdown SendingDomainIdentityScoreBreakdown, grade string) *SendingDomainIdentityScore {
 	this := SendingDomainIdentityScore{}
+	this.Score = score
+	this.MaxScore = maxScore
+	this.Percentage = percentage
+	this.Breakdown = breakdown
+	this.Grade = grade
 	return &this
 }
 
@@ -42,68 +57,124 @@ func NewSendingDomainIdentityScoreWithDefaults() *SendingDomainIdentityScore {
 	return &this
 }
 
-// GetOverallScore returns the OverallScore field value if set, zero value otherwise.
-func (o *SendingDomainIdentityScore) GetOverallScore() float32 {
-	if o == nil || IsNil(o.OverallScore) {
-		var ret float32
+// GetScore returns the Score field value
+func (o *SendingDomainIdentityScore) GetScore() int32 {
+	if o == nil {
+		var ret int32
 		return ret
 	}
-	return *o.OverallScore
+
+	return o.Score
 }
 
-// GetOverallScoreOk returns a tuple with the OverallScore field value if set, nil otherwise
+// GetScoreOk returns a tuple with the Score field value
 // and a boolean to check if the value has been set.
-func (o *SendingDomainIdentityScore) GetOverallScoreOk() (*float32, bool) {
-	if o == nil || IsNil(o.OverallScore) {
+func (o *SendingDomainIdentityScore) GetScoreOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.OverallScore, true
+	return &o.Score, true
 }
 
-// HasOverallScore returns a boolean if a field has been set.
-func (o *SendingDomainIdentityScore) HasOverallScore() bool {
-	if o != nil && !IsNil(o.OverallScore) {
-		return true
-	}
-
-	return false
+// SetScore sets field value
+func (o *SendingDomainIdentityScore) SetScore(v int32) {
+	o.Score = v
 }
 
-// SetOverallScore gets a reference to the given float32 and assigns it to the OverallScore field.
-func (o *SendingDomainIdentityScore) SetOverallScore(v float32) {
-	o.OverallScore = &v
-}
-
-// GetChecks returns the Checks field value if set, zero value otherwise.
-func (o *SendingDomainIdentityScore) GetChecks() SendingDomainIdentityScoreChecks {
-	if o == nil || IsNil(o.Checks) {
-		var ret SendingDomainIdentityScoreChecks
+// GetMaxScore returns the MaxScore field value
+func (o *SendingDomainIdentityScore) GetMaxScore() int32 {
+	if o == nil {
+		var ret int32
 		return ret
 	}
-	return *o.Checks
+
+	return o.MaxScore
 }
 
-// GetChecksOk returns a tuple with the Checks field value if set, nil otherwise
+// GetMaxScoreOk returns a tuple with the MaxScore field value
 // and a boolean to check if the value has been set.
-func (o *SendingDomainIdentityScore) GetChecksOk() (*SendingDomainIdentityScoreChecks, bool) {
-	if o == nil || IsNil(o.Checks) {
+func (o *SendingDomainIdentityScore) GetMaxScoreOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Checks, true
+	return &o.MaxScore, true
 }
 
-// HasChecks returns a boolean if a field has been set.
-func (o *SendingDomainIdentityScore) HasChecks() bool {
-	if o != nil && !IsNil(o.Checks) {
-		return true
+// SetMaxScore sets field value
+func (o *SendingDomainIdentityScore) SetMaxScore(v int32) {
+	o.MaxScore = v
+}
+
+// GetPercentage returns the Percentage field value
+func (o *SendingDomainIdentityScore) GetPercentage() int32 {
+	if o == nil {
+		var ret int32
+		return ret
 	}
 
-	return false
+	return o.Percentage
 }
 
-// SetChecks gets a reference to the given SendingDomainIdentityScoreChecks and assigns it to the Checks field.
-func (o *SendingDomainIdentityScore) SetChecks(v SendingDomainIdentityScoreChecks) {
-	o.Checks = &v
+// GetPercentageOk returns a tuple with the Percentage field value
+// and a boolean to check if the value has been set.
+func (o *SendingDomainIdentityScore) GetPercentageOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Percentage, true
+}
+
+// SetPercentage sets field value
+func (o *SendingDomainIdentityScore) SetPercentage(v int32) {
+	o.Percentage = v
+}
+
+// GetBreakdown returns the Breakdown field value
+func (o *SendingDomainIdentityScore) GetBreakdown() SendingDomainIdentityScoreBreakdown {
+	if o == nil {
+		var ret SendingDomainIdentityScoreBreakdown
+		return ret
+	}
+
+	return o.Breakdown
+}
+
+// GetBreakdownOk returns a tuple with the Breakdown field value
+// and a boolean to check if the value has been set.
+func (o *SendingDomainIdentityScore) GetBreakdownOk() (*SendingDomainIdentityScoreBreakdown, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Breakdown, true
+}
+
+// SetBreakdown sets field value
+func (o *SendingDomainIdentityScore) SetBreakdown(v SendingDomainIdentityScoreBreakdown) {
+	o.Breakdown = v
+}
+
+// GetGrade returns the Grade field value
+func (o *SendingDomainIdentityScore) GetGrade() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Grade
+}
+
+// GetGradeOk returns a tuple with the Grade field value
+// and a boolean to check if the value has been set.
+func (o *SendingDomainIdentityScore) GetGradeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Grade, true
+}
+
+// SetGrade sets field value
+func (o *SendingDomainIdentityScore) SetGrade(v string) {
+	o.Grade = v
 }
 
 func (o SendingDomainIdentityScore) MarshalJSON() ([]byte, error) {
@@ -116,13 +187,53 @@ func (o SendingDomainIdentityScore) MarshalJSON() ([]byte, error) {
 
 func (o SendingDomainIdentityScore) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.OverallScore) {
-		toSerialize["overall_score"] = o.OverallScore
-	}
-	if !IsNil(o.Checks) {
-		toSerialize["checks"] = o.Checks
-	}
+	toSerialize["score"] = o.Score
+	toSerialize["max_score"] = o.MaxScore
+	toSerialize["percentage"] = o.Percentage
+	toSerialize["breakdown"] = o.Breakdown
+	toSerialize["grade"] = o.Grade
 	return toSerialize, nil
+}
+
+func (o *SendingDomainIdentityScore) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"score",
+		"max_score",
+		"percentage",
+		"breakdown",
+		"grade",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSendingDomainIdentityScore := _SendingDomainIdentityScore{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSendingDomainIdentityScore)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SendingDomainIdentityScore(varSendingDomainIdentityScore)
+
+	return err
 }
 
 type NullableSendingDomainIdentityScore struct {

@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -14,6 +14,8 @@ package mailodds
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Job type satisfies the MappedNullable interface at compile time
@@ -21,23 +23,44 @@ var _ MappedNullable = &Job{}
 
 // Job struct for Job
 type Job struct {
-	Id *string `json:"id,omitempty"`
-	Status *string `json:"status,omitempty"`
-	TotalCount *int32 `json:"total_count,omitempty"`
-	ProcessedCount *int32 `json:"processed_count,omitempty"`
-	ProgressPercent *int32 `json:"progress_percent,omitempty"`
+	Id string `json:"id"`
+	// Job name (from metadata or auto-generated)
+	Name string `json:"name"`
+	Status string `json:"status"`
+	TotalCount int32 `json:"total_count"`
+	ProcessedCount int32 `json:"processed_count"`
 	Summary *JobSummary `json:"summary,omitempty"`
-	CreatedAt *time.Time `json:"created_at,omitempty"`
+	CreatedAt time.Time `json:"created_at"`
+	// When processing began. Omitted if not yet started.
+	StartedAt *time.Time `json:"started_at,omitempty"`
+	// Omitted if not yet completed.
 	CompletedAt *time.Time `json:"completed_at,omitempty"`
+	// When job results will be purged
+	ResultsExpireAt time.Time `json:"results_expire_at"`
+	// Custom metadata attached at creation
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	// Error details. Present only for failed jobs.
+	ErrorMessage *string `json:"error_message,omitempty"`
+	// Request ID from the job creation request
+	RequestId *string `json:"request_id,omitempty"`
+	Artifacts *JobArtifacts `json:"artifacts,omitempty"`
 }
+
+type _Job Job
 
 // NewJob instantiates a new Job object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewJob() *Job {
+func NewJob(id string, name string, status string, totalCount int32, processedCount int32, createdAt time.Time, resultsExpireAt time.Time) *Job {
 	this := Job{}
+	this.Id = id
+	this.Name = name
+	this.Status = status
+	this.TotalCount = totalCount
+	this.ProcessedCount = processedCount
+	this.CreatedAt = createdAt
+	this.ResultsExpireAt = resultsExpireAt
 	return &this
 }
 
@@ -49,164 +72,124 @@ func NewJobWithDefaults() *Job {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *Job) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *Job) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Job) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *Job) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
-func (o *Job) GetStatus() string {
-	if o == nil || IsNil(o.Status) {
+// GetName returns the Name field value
+func (o *Job) GetName() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Status
+
+	return o.Name
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *Job) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *Job) SetName(v string) {
+	o.Name = v
+}
+
+// GetStatus returns the Status field value
+func (o *Job) GetStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *Job) GetStatusOk() (*string, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *Job) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given string and assigns it to the Status field.
+// SetStatus sets field value
 func (o *Job) SetStatus(v string) {
-	o.Status = &v
+	o.Status = v
 }
 
-// GetTotalCount returns the TotalCount field value if set, zero value otherwise.
+// GetTotalCount returns the TotalCount field value
 func (o *Job) GetTotalCount() int32 {
-	if o == nil || IsNil(o.TotalCount) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.TotalCount
+
+	return o.TotalCount
 }
 
-// GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
+// GetTotalCountOk returns a tuple with the TotalCount field value
 // and a boolean to check if the value has been set.
 func (o *Job) GetTotalCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.TotalCount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TotalCount, true
+	return &o.TotalCount, true
 }
 
-// HasTotalCount returns a boolean if a field has been set.
-func (o *Job) HasTotalCount() bool {
-	if o != nil && !IsNil(o.TotalCount) {
-		return true
-	}
-
-	return false
-}
-
-// SetTotalCount gets a reference to the given int32 and assigns it to the TotalCount field.
+// SetTotalCount sets field value
 func (o *Job) SetTotalCount(v int32) {
-	o.TotalCount = &v
+	o.TotalCount = v
 }
 
-// GetProcessedCount returns the ProcessedCount field value if set, zero value otherwise.
+// GetProcessedCount returns the ProcessedCount field value
 func (o *Job) GetProcessedCount() int32 {
-	if o == nil || IsNil(o.ProcessedCount) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.ProcessedCount
+
+	return o.ProcessedCount
 }
 
-// GetProcessedCountOk returns a tuple with the ProcessedCount field value if set, nil otherwise
+// GetProcessedCountOk returns a tuple with the ProcessedCount field value
 // and a boolean to check if the value has been set.
 func (o *Job) GetProcessedCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.ProcessedCount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ProcessedCount, true
+	return &o.ProcessedCount, true
 }
 
-// HasProcessedCount returns a boolean if a field has been set.
-func (o *Job) HasProcessedCount() bool {
-	if o != nil && !IsNil(o.ProcessedCount) {
-		return true
-	}
-
-	return false
-}
-
-// SetProcessedCount gets a reference to the given int32 and assigns it to the ProcessedCount field.
+// SetProcessedCount sets field value
 func (o *Job) SetProcessedCount(v int32) {
-	o.ProcessedCount = &v
-}
-
-// GetProgressPercent returns the ProgressPercent field value if set, zero value otherwise.
-func (o *Job) GetProgressPercent() int32 {
-	if o == nil || IsNil(o.ProgressPercent) {
-		var ret int32
-		return ret
-	}
-	return *o.ProgressPercent
-}
-
-// GetProgressPercentOk returns a tuple with the ProgressPercent field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Job) GetProgressPercentOk() (*int32, bool) {
-	if o == nil || IsNil(o.ProgressPercent) {
-		return nil, false
-	}
-	return o.ProgressPercent, true
-}
-
-// HasProgressPercent returns a boolean if a field has been set.
-func (o *Job) HasProgressPercent() bool {
-	if o != nil && !IsNil(o.ProgressPercent) {
-		return true
-	}
-
-	return false
-}
-
-// SetProgressPercent gets a reference to the given int32 and assigns it to the ProgressPercent field.
-func (o *Job) SetProgressPercent(v int32) {
-	o.ProgressPercent = &v
+	o.ProcessedCount = v
 }
 
 // GetSummary returns the Summary field value if set, zero value otherwise.
@@ -241,36 +224,60 @@ func (o *Job) SetSummary(v JobSummary) {
 	o.Summary = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *Job) GetCreatedAt() time.Time {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Job) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Job) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
+// SetCreatedAt sets field value
+func (o *Job) SetCreatedAt(v time.Time) {
+	o.CreatedAt = v
+}
+
+// GetStartedAt returns the StartedAt field value if set, zero value otherwise.
+func (o *Job) GetStartedAt() time.Time {
+	if o == nil || IsNil(o.StartedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.StartedAt
+}
+
+// GetStartedAtOk returns a tuple with the StartedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetStartedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.StartedAt) {
+		return nil, false
+	}
+	return o.StartedAt, true
+}
+
+// HasStartedAt returns a boolean if a field has been set.
+func (o *Job) HasStartedAt() bool {
+	if o != nil && !IsNil(o.StartedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
-func (o *Job) SetCreatedAt(v time.Time) {
-	o.CreatedAt = &v
+// SetStartedAt gets a reference to the given time.Time and assigns it to the StartedAt field.
+func (o *Job) SetStartedAt(v time.Time) {
+	o.StartedAt = &v
 }
 
 // GetCompletedAt returns the CompletedAt field value if set, zero value otherwise.
@@ -305,6 +312,30 @@ func (o *Job) SetCompletedAt(v time.Time) {
 	o.CompletedAt = &v
 }
 
+// GetResultsExpireAt returns the ResultsExpireAt field value
+func (o *Job) GetResultsExpireAt() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.ResultsExpireAt
+}
+
+// GetResultsExpireAtOk returns a tuple with the ResultsExpireAt field value
+// and a boolean to check if the value has been set.
+func (o *Job) GetResultsExpireAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ResultsExpireAt, true
+}
+
+// SetResultsExpireAt sets field value
+func (o *Job) SetResultsExpireAt(v time.Time) {
+	o.ResultsExpireAt = v
+}
+
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
 func (o *Job) GetMetadata() map[string]interface{} {
 	if o == nil || IsNil(o.Metadata) {
@@ -337,6 +368,102 @@ func (o *Job) SetMetadata(v map[string]interface{}) {
 	o.Metadata = v
 }
 
+// GetErrorMessage returns the ErrorMessage field value if set, zero value otherwise.
+func (o *Job) GetErrorMessage() string {
+	if o == nil || IsNil(o.ErrorMessage) {
+		var ret string
+		return ret
+	}
+	return *o.ErrorMessage
+}
+
+// GetErrorMessageOk returns a tuple with the ErrorMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetErrorMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.ErrorMessage) {
+		return nil, false
+	}
+	return o.ErrorMessage, true
+}
+
+// HasErrorMessage returns a boolean if a field has been set.
+func (o *Job) HasErrorMessage() bool {
+	if o != nil && !IsNil(o.ErrorMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetErrorMessage gets a reference to the given string and assigns it to the ErrorMessage field.
+func (o *Job) SetErrorMessage(v string) {
+	o.ErrorMessage = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *Job) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *Job) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *Job) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
+// GetArtifacts returns the Artifacts field value if set, zero value otherwise.
+func (o *Job) GetArtifacts() JobArtifacts {
+	if o == nil || IsNil(o.Artifacts) {
+		var ret JobArtifacts
+		return ret
+	}
+	return *o.Artifacts
+}
+
+// GetArtifactsOk returns a tuple with the Artifacts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetArtifactsOk() (*JobArtifacts, bool) {
+	if o == nil || IsNil(o.Artifacts) {
+		return nil, false
+	}
+	return o.Artifacts, true
+}
+
+// HasArtifacts returns a boolean if a field has been set.
+func (o *Job) HasArtifacts() bool {
+	if o != nil && !IsNil(o.Artifacts) {
+		return true
+	}
+
+	return false
+}
+
+// SetArtifacts gets a reference to the given JobArtifacts and assigns it to the Artifacts field.
+func (o *Job) SetArtifacts(v JobArtifacts) {
+	o.Artifacts = &v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -347,34 +474,78 @@ func (o Job) MarshalJSON() ([]byte, error) {
 
 func (o Job) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
-	if !IsNil(o.TotalCount) {
-		toSerialize["total_count"] = o.TotalCount
-	}
-	if !IsNil(o.ProcessedCount) {
-		toSerialize["processed_count"] = o.ProcessedCount
-	}
-	if !IsNil(o.ProgressPercent) {
-		toSerialize["progress_percent"] = o.ProgressPercent
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
+	toSerialize["status"] = o.Status
+	toSerialize["total_count"] = o.TotalCount
+	toSerialize["processed_count"] = o.ProcessedCount
 	if !IsNil(o.Summary) {
 		toSerialize["summary"] = o.Summary
 	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
+	toSerialize["created_at"] = o.CreatedAt
+	if !IsNil(o.StartedAt) {
+		toSerialize["started_at"] = o.StartedAt
 	}
 	if !IsNil(o.CompletedAt) {
 		toSerialize["completed_at"] = o.CompletedAt
 	}
+	toSerialize["results_expire_at"] = o.ResultsExpireAt
 	if !IsNil(o.Metadata) {
 		toSerialize["metadata"] = o.Metadata
 	}
+	if !IsNil(o.ErrorMessage) {
+		toSerialize["error_message"] = o.ErrorMessage
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
+	if !IsNil(o.Artifacts) {
+		toSerialize["artifacts"] = o.Artifacts
+	}
 	return toSerialize, nil
+}
+
+func (o *Job) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"name",
+		"status",
+		"total_count",
+		"processed_count",
+		"created_at",
+		"results_expire_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varJob := _Job{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varJob)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Job(varJob)
+
+	return err
 }
 
 type NullableJob struct {

@@ -1,7 +1,7 @@
 /*
 MailOdds Email Validation API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -43,6 +43,12 @@ type DeliverRequest struct {
 	// Campaign type for JSON-LD auto-generation
 	CampaignType *string `json:"campaign_type,omitempty"`
 	StructuredData *DeliverRequestStructuredData `json:"structured_data,omitempty"`
+	// Key-value pairs for campaign_type JSON-LD resolution (e.g., order_number, tracking_url)
+	SchemaData *map[string]string `json:"schema_data,omitempty"`
+	// Auto-detect JSON-LD structured data type from subject line
+	AutoDetectSchema *bool `json:"auto_detect_schema,omitempty"`
+	// Hidden text summary for AI email assistants (max 500 characters)
+	AiSummary *string `json:"ai_summary,omitempty"`
 	Options *DeliverRequestOptions `json:"options,omitempty"`
 }
 
@@ -58,6 +64,8 @@ func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string, 
 	this.From = from
 	this.Subject = subject
 	this.DomainId = domainId
+	var autoDetectSchema bool = false
+	this.AutoDetectSchema = &autoDetectSchema
 	return &this
 }
 
@@ -66,6 +74,8 @@ func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string, 
 // but it doesn't guarantee that properties required by API are set
 func NewDeliverRequestWithDefaults() *DeliverRequest {
 	this := DeliverRequest{}
+	var autoDetectSchema bool = false
+	this.AutoDetectSchema = &autoDetectSchema
 	return &this
 }
 
@@ -389,6 +399,102 @@ func (o *DeliverRequest) SetStructuredData(v DeliverRequestStructuredData) {
 	o.StructuredData = &v
 }
 
+// GetSchemaData returns the SchemaData field value if set, zero value otherwise.
+func (o *DeliverRequest) GetSchemaData() map[string]string {
+	if o == nil || IsNil(o.SchemaData) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.SchemaData
+}
+
+// GetSchemaDataOk returns a tuple with the SchemaData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliverRequest) GetSchemaDataOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.SchemaData) {
+		return nil, false
+	}
+	return o.SchemaData, true
+}
+
+// HasSchemaData returns a boolean if a field has been set.
+func (o *DeliverRequest) HasSchemaData() bool {
+	if o != nil && !IsNil(o.SchemaData) {
+		return true
+	}
+
+	return false
+}
+
+// SetSchemaData gets a reference to the given map[string]string and assigns it to the SchemaData field.
+func (o *DeliverRequest) SetSchemaData(v map[string]string) {
+	o.SchemaData = &v
+}
+
+// GetAutoDetectSchema returns the AutoDetectSchema field value if set, zero value otherwise.
+func (o *DeliverRequest) GetAutoDetectSchema() bool {
+	if o == nil || IsNil(o.AutoDetectSchema) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoDetectSchema
+}
+
+// GetAutoDetectSchemaOk returns a tuple with the AutoDetectSchema field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliverRequest) GetAutoDetectSchemaOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutoDetectSchema) {
+		return nil, false
+	}
+	return o.AutoDetectSchema, true
+}
+
+// HasAutoDetectSchema returns a boolean if a field has been set.
+func (o *DeliverRequest) HasAutoDetectSchema() bool {
+	if o != nil && !IsNil(o.AutoDetectSchema) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoDetectSchema gets a reference to the given bool and assigns it to the AutoDetectSchema field.
+func (o *DeliverRequest) SetAutoDetectSchema(v bool) {
+	o.AutoDetectSchema = &v
+}
+
+// GetAiSummary returns the AiSummary field value if set, zero value otherwise.
+func (o *DeliverRequest) GetAiSummary() string {
+	if o == nil || IsNil(o.AiSummary) {
+		var ret string
+		return ret
+	}
+	return *o.AiSummary
+}
+
+// GetAiSummaryOk returns a tuple with the AiSummary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliverRequest) GetAiSummaryOk() (*string, bool) {
+	if o == nil || IsNil(o.AiSummary) {
+		return nil, false
+	}
+	return o.AiSummary, true
+}
+
+// HasAiSummary returns a boolean if a field has been set.
+func (o *DeliverRequest) HasAiSummary() bool {
+	if o != nil && !IsNil(o.AiSummary) {
+		return true
+	}
+
+	return false
+}
+
+// SetAiSummary gets a reference to the given string and assigns it to the AiSummary field.
+func (o *DeliverRequest) SetAiSummary(v string) {
+	o.AiSummary = &v
+}
+
 // GetOptions returns the Options field value if set, zero value otherwise.
 func (o *DeliverRequest) GetOptions() DeliverRequestOptions {
 	if o == nil || IsNil(o.Options) {
@@ -455,6 +561,15 @@ func (o DeliverRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.StructuredData) {
 		toSerialize["structured_data"] = o.StructuredData
+	}
+	if !IsNil(o.SchemaData) {
+		toSerialize["schema_data"] = o.SchemaData
+	}
+	if !IsNil(o.AutoDetectSchema) {
+		toSerialize["auto_detect_schema"] = o.AutoDetectSchema
+	}
+	if !IsNil(o.AiSummary) {
+		toSerialize["ai_summary"] = o.AiSummary
 	}
 	if !IsNil(o.Options) {
 		toSerialize["options"] = o.Options
