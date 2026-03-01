@@ -106,6 +106,60 @@ ctx = context.WithValue(context.Background(), mailodds.ContextOperationServerVar
 })
 ```
 
+## Sending Email
+
+### Send a Single Email
+
+```go
+import (
+    "context"
+    "fmt"
+    mailodds "github.com/mailodds/go-sdk/mailodds"
+)
+
+auth := context.WithValue(context.Background(), mailodds.ContextAccessToken, "YOUR_API_KEY")
+
+sendingApi := client.EmailSendingAPI
+
+request := mailodds.DeliverRequest{
+    To:       []mailodds.DeliverRequestToInner{{Email: "recipient@example.com", Name: mailodds.PtrString("Jane")}},
+    From:     "you@yourdomain.com",
+    Subject:  "Hello from MailOdds",
+    Html:     mailodds.PtrString("<h1>Welcome!</h1><p>Your order has been confirmed.</p>"),
+    DomainId: "your-domain-uuid",
+}
+
+result, _, err := sendingApi.DeliverEmail(auth).DeliverRequest(request).Execute()
+if err != nil {
+    fmt.Printf("Error: %v\n", err)
+} else {
+    fmt.Println(result.Delivery.GetMessageId())
+}
+```
+
+### Managing Sending Domains
+
+```go
+domainsApi := client.SendingDomainsAPI
+
+// List sending domains
+domains, _, err := domainsApi.ListSendingDomains(auth).Execute()
+if err == nil {
+    for _, domain := range domains.GetDomains() {
+        fmt.Printf("%s: %s\n", domain.GetDomain(), domain.GetStatus())
+    }
+}
+
+// Add a new sending domain
+domainReq := mailodds.CreateSendingDomainRequest{Domain: "yourdomain.com"}
+newDomain, _, err := domainsApi.CreateSendingDomain(auth).CreateSendingDomainRequest(domainReq).Execute()
+if err == nil {
+    fmt.Println(newDomain.GetDnsRecords()) // DKIM records to add
+}
+```
+
+For batch sending, scheduled delivery, and campaign management, see the [API documentation](https://mailodds.com/docs).
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api.mailodds.com/v1*
