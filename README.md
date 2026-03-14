@@ -1,8 +1,6 @@
 # Go API client for mailodds
 
-MailOdds provides email validation services to help maintain clean email lists 
-and improve deliverability. The API performs multiple validation checks including 
-format verification, domain validation, MX record checking, and disposable email detection.
+MailOdds is an email platform for validation, sending, campaigns, deliverability monitoring, and analytics. The API performs multi-layer validation checks, delivers transactional and campaign email with DKIM dual signing, and tracks engagement with privacy-first analytics.
 
 ## Authentication
 
@@ -111,7 +109,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```go
-import mailodds "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+import mailodds "github.com/mailodds/go-sdk/mailodds"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
@@ -167,6 +165,14 @@ All URIs are relative to *https://api.mailodds.com/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*BlacklistMonitoringAPI* | [**AddBlacklistMonitor**](docs/BlacklistMonitoringAPI.md#addblacklistmonitor) | **Post** /v1/blacklist-monitors | Add blacklist monitor
+*BlacklistMonitoringAPI* | [**GetBlacklistHistory**](docs/BlacklistMonitoringAPI.md#getblacklisthistory) | **Get** /v1/blacklist-monitors/{monitor_id}/history | Get blacklist check history
+*BlacklistMonitoringAPI* | [**ListBlacklistMonitors**](docs/BlacklistMonitoringAPI.md#listblacklistmonitors) | **Get** /v1/blacklist-monitors | List blacklist monitors
+*BlacklistMonitoringAPI* | [**RunBlacklistCheck**](docs/BlacklistMonitoringAPI.md#runblacklistcheck) | **Post** /v1/blacklist-monitors/{monitor_id}/check | Run blacklist check
+*BounceAnalysisAPI* | [**CreateBounceAnalysis**](docs/BounceAnalysisAPI.md#createbounceanalysis) | **Post** /v1/bounce-analyses | Analyze bounce logs
+*BounceAnalysisAPI* | [**CrossReferenceBounces**](docs/BounceAnalysisAPI.md#crossreferencebounces) | **Get** /v1/bounce-analyses/{analysis_id}/cross-reference | Cross-reference bounces with validation logs
+*BounceAnalysisAPI* | [**GetBounceAnalysis**](docs/BounceAnalysisAPI.md#getbounceanalysis) | **Get** /v1/bounce-analyses/{analysis_id} | Get bounce analysis
+*BounceAnalysisAPI* | [**GetBounceRecords**](docs/BounceAnalysisAPI.md#getbouncerecords) | **Get** /v1/bounce-analyses/{analysis_id}/records | Get bounce records
 *BulkValidationAPI* | [**CancelJob**](docs/BulkValidationAPI.md#canceljob) | **Post** /v1/jobs/{job_id}/cancel | Cancel a job
 *BulkValidationAPI* | [**CreateJob**](docs/BulkValidationAPI.md#createjob) | **Post** /v1/jobs | Create bulk validation job (JSON)
 *BulkValidationAPI* | [**CreateJobFromS3**](docs/BulkValidationAPI.md#createjobfroms3) | **Post** /v1/jobs/upload/s3 | Create job from S3 upload
@@ -176,10 +182,38 @@ Class | Method | HTTP request | Description
 *BulkValidationAPI* | [**GetJobResults**](docs/BulkValidationAPI.md#getjobresults) | **Get** /v1/jobs/{job_id}/results | Get job results
 *BulkValidationAPI* | [**GetPresignedUpload**](docs/BulkValidationAPI.md#getpresignedupload) | **Post** /v1/jobs/upload/presigned | Get S3 presigned upload URL
 *BulkValidationAPI* | [**ListJobs**](docs/BulkValidationAPI.md#listjobs) | **Get** /v1/jobs | List validation jobs
+*CampaignAnalyticsAPI* | [**GetCampaignABResults**](docs/CampaignAnalyticsAPI.md#getcampaignabresults) | **Get** /v1/campaigns/{campaign_id}/ab-results | Get A/B test results
+*CampaignAnalyticsAPI* | [**GetCampaignAttribution**](docs/CampaignAnalyticsAPI.md#getcampaignattribution) | **Get** /v1/campaigns/{campaign_id}/conversions/attribution | Get campaign attribution
+*CampaignAnalyticsAPI* | [**GetCampaignDeliveryConfidence**](docs/CampaignAnalyticsAPI.md#getcampaigndeliveryconfidence) | **Get** /v1/campaigns/{campaign_id}/delivery-confidence | Get pre-send delivery confidence
+*CampaignAnalyticsAPI* | [**GetCampaignFunnel**](docs/CampaignAnalyticsAPI.md#getcampaignfunnel) | **Get** /v1/campaigns/{campaign_id}/funnel | Get campaign funnel
+*CampaignAnalyticsAPI* | [**GetCampaignProviderIntelligence**](docs/CampaignAnalyticsAPI.md#getcampaignproviderintelligence) | **Get** /v1/campaigns/{campaign_id}/provider-intelligence | Get provider intelligence
+*CampaignsAPI* | [**CancelCampaign**](docs/CampaignsAPI.md#cancelcampaign) | **Post** /v1/campaigns/{campaign_id}/cancel | Cancel a campaign
+*CampaignsAPI* | [**CreateCampaign**](docs/CampaignsAPI.md#createcampaign) | **Post** /v1/campaigns | Create a campaign
+*CampaignsAPI* | [**CreateCampaignVariant**](docs/CampaignsAPI.md#createcampaignvariant) | **Post** /v1/campaigns/{campaign_id}/variants | Create A/B variant
+*CampaignsAPI* | [**GetCampaign**](docs/CampaignsAPI.md#getcampaign) | **Get** /v1/campaigns/{campaign_id} | Get campaign with stats
+*CampaignsAPI* | [**ListCampaigns**](docs/CampaignsAPI.md#listcampaigns) | **Get** /v1/campaigns | List campaigns
+*CampaignsAPI* | [**ScheduleCampaign**](docs/CampaignsAPI.md#schedulecampaign) | **Post** /v1/campaigns/{campaign_id}/schedule | Schedule a campaign
+*CampaignsAPI* | [**SendCampaign**](docs/CampaignsAPI.md#sendcampaign) | **Post** /v1/campaigns/{campaign_id}/send | Send a campaign
+*ContactListsAPI* | [**AppendToContactList**](docs/ContactListsAPI.md#appendtocontactlist) | **Post** /v1/contact-lists/{list_id}/append | Append to contact list
+*ContactListsAPI* | [**CreateContactList**](docs/ContactListsAPI.md#createcontactlist) | **Post** /v1/contact-lists | Create contact list
+*ContactListsAPI* | [**GetInactiveContactsReport**](docs/ContactListsAPI.md#getinactivecontactsreport) | **Get** /v1/contacts/inactive-report | Get inactive contacts report
+*ContactListsAPI* | [**ListContactLists**](docs/ContactListsAPI.md#listcontactlists) | **Get** /v1/contact-lists | List contact lists
+*ContactListsAPI* | [**QueryContactList**](docs/ContactListsAPI.md#querycontactlist) | **Post** /v1/contact-lists/{list_id}/query | Query contact list
+*ContentClassificationAPI* | [**ClassifyContent**](docs/ContentClassificationAPI.md#classifycontent) | **Post** /v1/content-check | Classify email content
+*DMARCMonitoringAPI* | [**AddDmarcDomain**](docs/DMARCMonitoringAPI.md#adddmarcdomain) | **Post** /v1/dmarc-domains | Add DMARC domain
+*DMARCMonitoringAPI* | [**GetDmarcDomain**](docs/DMARCMonitoringAPI.md#getdmarcdomain) | **Get** /v1/dmarc-domains/{domain_id} | Get DMARC domain
+*DMARCMonitoringAPI* | [**GetDmarcRecommendation**](docs/DMARCMonitoringAPI.md#getdmarcrecommendation) | **Get** /v1/dmarc-domains/{domain_id}/recommendation | Get DMARC policy recommendation
+*DMARCMonitoringAPI* | [**GetDmarcSources**](docs/DMARCMonitoringAPI.md#getdmarcsources) | **Get** /v1/dmarc-domains/{domain_id}/sources | Get DMARC sending sources
+*DMARCMonitoringAPI* | [**GetDmarcTrend**](docs/DMARCMonitoringAPI.md#getdmarctrend) | **Get** /v1/dmarc-domains/{domain_id}/trend | Get DMARC trend
+*DMARCMonitoringAPI* | [**ListDmarcDomains**](docs/DMARCMonitoringAPI.md#listdmarcdomains) | **Get** /v1/dmarc-domains | List DMARC domains
+*DMARCMonitoringAPI* | [**VerifyDmarcDomain**](docs/DMARCMonitoringAPI.md#verifydmarcdomain) | **Post** /v1/dmarc-domains/{domain_id}/verify | Verify DMARC DNS records
 *EmailSendingAPI* | [**DeliverBatch**](docs/EmailSendingAPI.md#deliverbatch) | **Post** /v1/deliver/batch | Send to multiple recipients (max 100)
 *EmailSendingAPI* | [**DeliverEmail**](docs/EmailSendingAPI.md#deliveremail) | **Post** /v1/deliver | Send a single email
 *EmailValidationAPI* | [**ValidateBatch**](docs/EmailValidationAPI.md#validatebatch) | **Post** /v1/validate/batch | Validate multiple emails (sync)
 *EmailValidationAPI* | [**ValidateEmail**](docs/EmailValidationAPI.md#validateemail) | **Post** /v1/validate | Validate single email
+*MessageEventsAPI* | [**GetMessageEvents**](docs/MessageEventsAPI.md#getmessageevents) | **Get** /v1/message-events | Get message events
+*SenderHealthAPI* | [**GetSenderHealth**](docs/SenderHealthAPI.md#getsenderhealth) | **Get** /v1/sender-health | Get sender health score
+*SenderHealthAPI* | [**GetSenderHealthTrend**](docs/SenderHealthAPI.md#getsenderhealthtrend) | **Get** /v1/sender-health/trend | Get sender health trend
 *SendingDomainsAPI* | [**CreateSendingDomain**](docs/SendingDomainsAPI.md#createsendingdomain) | **Post** /v1/sending-domains | Add a sending domain
 *SendingDomainsAPI* | [**DeleteSendingDomain**](docs/SendingDomainsAPI.md#deletesendingdomain) | **Delete** /v1/sending-domains/{domain_id} | Delete a sending domain
 *SendingDomainsAPI* | [**GetSendingDomain**](docs/SendingDomainsAPI.md#getsendingdomain) | **Get** /v1/sending-domains/{domain_id} | Get a sending domain
@@ -187,6 +221,12 @@ Class | Method | HTTP request | Description
 *SendingDomainsAPI* | [**GetSendingStats**](docs/SendingDomainsAPI.md#getsendingstats) | **Get** /v1/sending-stats | Get sending statistics
 *SendingDomainsAPI* | [**ListSendingDomains**](docs/SendingDomainsAPI.md#listsendingdomains) | **Get** /v1/sending-domains | List sending domains
 *SendingDomainsAPI* | [**VerifySendingDomain**](docs/SendingDomainsAPI.md#verifysendingdomain) | **Post** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
+*ServerTestsAPI* | [**GetServerTest**](docs/ServerTestsAPI.md#getservertest) | **Get** /v1/server-tests/{test_id} | Get server test
+*ServerTestsAPI* | [**ListServerTests**](docs/ServerTestsAPI.md#listservertests) | **Get** /v1/server-tests | List server tests
+*ServerTestsAPI* | [**RunServerTest**](docs/ServerTestsAPI.md#runservertest) | **Post** /v1/server-tests | Run server test
+*SpamChecksAPI* | [**GetSpamCheck**](docs/SpamChecksAPI.md#getspamcheck) | **Get** /v1/spam-checks/{check_id} | Get spam check
+*SpamChecksAPI* | [**ListSpamChecks**](docs/SpamChecksAPI.md#listspamchecks) | **Get** /v1/spam-checks | List spam checks
+*SpamChecksAPI* | [**RunSpamCheck**](docs/SpamChecksAPI.md#runspamcheck) | **Post** /v1/spam-checks | Run spam check
 *SubscriberListsAPI* | [**ConfirmSubscription**](docs/SubscriberListsAPI.md#confirmsubscription) | **Get** /v1/confirm/{token} | Confirm subscription
 *SubscriberListsAPI* | [**CreateList**](docs/SubscriberListsAPI.md#createlist) | **Post** /v1/lists | Create a subscriber list
 *SubscriberListsAPI* | [**DeleteList**](docs/SubscriberListsAPI.md#deletelist) | **Delete** /v1/lists/{list_id} | Delete a subscriber list
@@ -217,17 +257,43 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AddBlacklistMonitor201Response](docs/AddBlacklistMonitor201Response.md)
+ - [AddBlacklistMonitorRequest](docs/AddBlacklistMonitorRequest.md)
+ - [AddDmarcDomain201Response](docs/AddDmarcDomain201Response.md)
+ - [AddDmarcDomainRequest](docs/AddDmarcDomainRequest.md)
  - [AddPolicyRule201Response](docs/AddPolicyRule201Response.md)
  - [AddSuppressionRequest](docs/AddSuppressionRequest.md)
  - [AddSuppressionRequestEntriesInner](docs/AddSuppressionRequestEntriesInner.md)
  - [AddSuppressionResponse](docs/AddSuppressionResponse.md)
+ - [AppendToContactList200Response](docs/AppendToContactList200Response.md)
+ - [AppendToContactListRequest](docs/AppendToContactListRequest.md)
  - [BatchDeliverRequest](docs/BatchDeliverRequest.md)
  - [BatchDeliverRequestStructuredData](docs/BatchDeliverRequestStructuredData.md)
  - [BatchDeliverResponse](docs/BatchDeliverResponse.md)
  - [BatchDeliverResponseDelivery](docs/BatchDeliverResponseDelivery.md)
  - [BatchDeliverResponseRejectedInner](docs/BatchDeliverResponseRejectedInner.md)
+ - [BlacklistMonitor](docs/BlacklistMonitor.md)
+ - [BlacklistMonitorLatestCheck](docs/BlacklistMonitorLatestCheck.md)
+ - [BounceAnalysisResponse](docs/BounceAnalysisResponse.md)
+ - [BounceAnalysisResponseAnalysis](docs/BounceAnalysisResponseAnalysis.md)
+ - [BounceAnalysisResponseAnalysisCategories](docs/BounceAnalysisResponseAnalysisCategories.md)
+ - [BounceAnalysisResponseAnalysisTopDomainsInner](docs/BounceAnalysisResponseAnalysisTopDomainsInner.md)
+ - [Campaign](docs/Campaign.md)
+ - [CampaignResponse](docs/CampaignResponse.md)
+ - [CampaignStats](docs/CampaignStats.md)
+ - [CampaignVariant](docs/CampaignVariant.md)
  - [CheckSuppressionRequest](docs/CheckSuppressionRequest.md)
+ - [ClassifyContent200Response](docs/ClassifyContent200Response.md)
+ - [ClassifyContent200ResponseContentCheck](docs/ClassifyContent200ResponseContentCheck.md)
+ - [ClassifyContent200ResponseContentCheckCategoriesInner](docs/ClassifyContent200ResponseContentCheckCategoriesInner.md)
+ - [ClassifyContentRequest](docs/ClassifyContentRequest.md)
  - [ConfirmSubscription200Response](docs/ConfirmSubscription200Response.md)
+ - [ContactList](docs/ContactList.md)
+ - [CreateBounceAnalysisRequest](docs/CreateBounceAnalysisRequest.md)
+ - [CreateCampaignRequest](docs/CreateCampaignRequest.md)
+ - [CreateCampaignVariant201Response](docs/CreateCampaignVariant201Response.md)
+ - [CreateContactList201Response](docs/CreateContactList201Response.md)
+ - [CreateContactListRequest](docs/CreateContactListRequest.md)
  - [CreateJobFromS3Request](docs/CreateJobFromS3Request.md)
  - [CreateJobRequest](docs/CreateJobRequest.md)
  - [CreateList201Response](docs/CreateList201Response.md)
@@ -236,6 +302,10 @@ Class | Method | HTTP request | Description
  - [CreatePolicyRequest](docs/CreatePolicyRequest.md)
  - [CreateSendingDomain201Response](docs/CreateSendingDomain201Response.md)
  - [CreateSendingDomainRequest](docs/CreateSendingDomainRequest.md)
+ - [CreateVariantRequest](docs/CreateVariantRequest.md)
+ - [CrossReferenceBounces200Response](docs/CrossReferenceBounces200Response.md)
+ - [CrossReferenceBounces200ResponseCrossReference](docs/CrossReferenceBounces200ResponseCrossReference.md)
+ - [CrossReferenceBounces200ResponseCrossReferenceEntriesInner](docs/CrossReferenceBounces200ResponseCrossReferenceEntriesInner.md)
  - [DeleteJob200Response](docs/DeleteJob200Response.md)
  - [DeletePolicy200Response](docs/DeletePolicy200Response.md)
  - [DeletePolicyRule200Response](docs/DeletePolicyRule200Response.md)
@@ -245,9 +315,51 @@ Class | Method | HTTP request | Description
  - [DeliverRequestToInner](docs/DeliverRequestToInner.md)
  - [DeliverResponse](docs/DeliverResponse.md)
  - [DeliverResponseDelivery](docs/DeliverResponseDelivery.md)
+ - [DmarcDomain](docs/DmarcDomain.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [GetBlacklistHistory200Response](docs/GetBlacklistHistory200Response.md)
+ - [GetBlacklistHistory200ResponseChecksInner](docs/GetBlacklistHistory200ResponseChecksInner.md)
+ - [GetBounceRecords200Response](docs/GetBounceRecords200Response.md)
+ - [GetBounceRecords200ResponseRecordsInner](docs/GetBounceRecords200ResponseRecordsInner.md)
+ - [GetCampaignABResults200Response](docs/GetCampaignABResults200Response.md)
+ - [GetCampaignABResults200ResponseVariantsInner](docs/GetCampaignABResults200ResponseVariantsInner.md)
+ - [GetCampaignABResults200ResponseWinner](docs/GetCampaignABResults200ResponseWinner.md)
+ - [GetCampaignAttribution200Response](docs/GetCampaignAttribution200Response.md)
+ - [GetCampaignAttribution200ResponseAttribution](docs/GetCampaignAttribution200ResponseAttribution.md)
+ - [GetCampaignAttribution200ResponseAttributionFirstTouch](docs/GetCampaignAttribution200ResponseAttributionFirstTouch.md)
+ - [GetCampaignDeliveryConfidence200Response](docs/GetCampaignDeliveryConfidence200Response.md)
+ - [GetCampaignDeliveryConfidence200ResponseFactors](docs/GetCampaignDeliveryConfidence200ResponseFactors.md)
+ - [GetCampaignDeliveryConfidence200ResponseFactorsDomainAuth](docs/GetCampaignDeliveryConfidence200ResponseFactorsDomainAuth.md)
+ - [GetCampaignDeliveryConfidence200ResponseFactorsListQuality](docs/GetCampaignDeliveryConfidence200ResponseFactorsListQuality.md)
+ - [GetCampaignDeliveryConfidence200ResponseFactorsSenderReputation](docs/GetCampaignDeliveryConfidence200ResponseFactorsSenderReputation.md)
+ - [GetCampaignFunnel200Response](docs/GetCampaignFunnel200Response.md)
+ - [GetCampaignFunnel200ResponseFunnel](docs/GetCampaignFunnel200ResponseFunnel.md)
+ - [GetCampaignFunnel200ResponseRates](docs/GetCampaignFunnel200ResponseRates.md)
+ - [GetCampaignProviderIntelligence200Response](docs/GetCampaignProviderIntelligence200Response.md)
+ - [GetCampaignProviderIntelligence200ResponseProvidersInner](docs/GetCampaignProviderIntelligence200ResponseProvidersInner.md)
+ - [GetDmarcDomain200Response](docs/GetDmarcDomain200Response.md)
+ - [GetDmarcDomain200ResponseDomain](docs/GetDmarcDomain200ResponseDomain.md)
+ - [GetDmarcDomain200ResponseDomainAllOfSummary](docs/GetDmarcDomain200ResponseDomainAllOfSummary.md)
+ - [GetDmarcRecommendation200Response](docs/GetDmarcRecommendation200Response.md)
+ - [GetDmarcRecommendation200ResponseRecommendation](docs/GetDmarcRecommendation200ResponseRecommendation.md)
+ - [GetDmarcSources200Response](docs/GetDmarcSources200Response.md)
+ - [GetDmarcSources200ResponseSourcesInner](docs/GetDmarcSources200ResponseSourcesInner.md)
+ - [GetDmarcTrend200Response](docs/GetDmarcTrend200Response.md)
+ - [GetDmarcTrend200ResponseTrendInner](docs/GetDmarcTrend200ResponseTrendInner.md)
+ - [GetInactiveContactsReport200Response](docs/GetInactiveContactsReport200Response.md)
+ - [GetInactiveContactsReport200ResponseByListInner](docs/GetInactiveContactsReport200ResponseByListInner.md)
  - [GetLists200Response](docs/GetLists200Response.md)
+ - [GetMessageEvents200Response](docs/GetMessageEvents200Response.md)
+ - [GetMessageEvents200ResponseClicksInner](docs/GetMessageEvents200ResponseClicksInner.md)
+ - [GetMessageEvents200ResponseEventsInner](docs/GetMessageEvents200ResponseEventsInner.md)
+ - [GetMessageEvents200ResponseSummary](docs/GetMessageEvents200ResponseSummary.md)
  - [GetPresignedUploadRequest](docs/GetPresignedUploadRequest.md)
+ - [GetSenderHealth200Response](docs/GetSenderHealth200Response.md)
+ - [GetSenderHealth200ResponseComponents](docs/GetSenderHealth200ResponseComponents.md)
+ - [GetSenderHealth200ResponseComponentsDeliveryRate](docs/GetSenderHealth200ResponseComponentsDeliveryRate.md)
+ - [GetSenderHealth200ResponseVolume](docs/GetSenderHealth200ResponseVolume.md)
+ - [GetSenderHealthTrend200Response](docs/GetSenderHealthTrend200Response.md)
+ - [GetSenderHealthTrend200ResponseDataPointsInner](docs/GetSenderHealthTrend200ResponseDataPointsInner.md)
  - [GetSendingDomainIdentityScore200Response](docs/GetSendingDomainIdentityScore200Response.md)
  - [GetSendingStats200Response](docs/GetSendingStats200Response.md)
  - [GetSendingStats200ResponseStats](docs/GetSendingStats200ResponseStats.md)
@@ -259,7 +371,13 @@ Class | Method | HTTP request | Description
  - [JobListResponse](docs/JobListResponse.md)
  - [JobResponse](docs/JobResponse.md)
  - [JobSummary](docs/JobSummary.md)
+ - [ListBlacklistMonitors200Response](docs/ListBlacklistMonitors200Response.md)
+ - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
+ - [ListContactLists200Response](docs/ListContactLists200Response.md)
+ - [ListDmarcDomains200Response](docs/ListDmarcDomains200Response.md)
  - [ListSendingDomains200Response](docs/ListSendingDomains200Response.md)
+ - [ListServerTests200Response](docs/ListServerTests200Response.md)
+ - [ListSpamChecks200Response](docs/ListSpamChecks200Response.md)
  - [Pagination](docs/Pagination.md)
  - [Policy](docs/Policy.md)
  - [PolicyListResponse](docs/PolicyListResponse.md)
@@ -272,14 +390,31 @@ Class | Method | HTTP request | Description
  - [PolicyTestResponse](docs/PolicyTestResponse.md)
  - [PresignedUploadResponse](docs/PresignedUploadResponse.md)
  - [PresignedUploadResponseUpload](docs/PresignedUploadResponseUpload.md)
+ - [QueryContactList200Response](docs/QueryContactList200Response.md)
+ - [QueryContactList200ResponseEmailsInner](docs/QueryContactList200ResponseEmailsInner.md)
+ - [QueryContactListRequest](docs/QueryContactListRequest.md)
+ - [QueryContactListRequestFiltersInner](docs/QueryContactListRequestFiltersInner.md)
  - [RemoveSuppression200Response](docs/RemoveSuppression200Response.md)
  - [RemoveSuppressionRequest](docs/RemoveSuppressionRequest.md)
  - [ResultsResponse](docs/ResultsResponse.md)
+ - [RunBlacklistCheck200Response](docs/RunBlacklistCheck200Response.md)
+ - [RunBlacklistCheck200ResponseCheck](docs/RunBlacklistCheck200ResponseCheck.md)
+ - [RunServerTest201Response](docs/RunServerTest201Response.md)
+ - [RunServerTestRequest](docs/RunServerTestRequest.md)
+ - [RunSpamCheck201Response](docs/RunSpamCheck201Response.md)
+ - [RunSpamCheckRequest](docs/RunSpamCheckRequest.md)
+ - [ScheduleCampaignRequest](docs/ScheduleCampaignRequest.md)
  - [SendingDomain](docs/SendingDomain.md)
  - [SendingDomainDnsRecords](docs/SendingDomainDnsRecords.md)
  - [SendingDomainDnsRecordsNs](docs/SendingDomainDnsRecordsNs.md)
  - [SendingDomainIdentityScore](docs/SendingDomainIdentityScore.md)
  - [SendingDomainIdentityScoreBreakdown](docs/SendingDomainIdentityScoreBreakdown.md)
+ - [ServerTest](docs/ServerTest.md)
+ - [ServerTestDnsChecks](docs/ServerTestDnsChecks.md)
+ - [ServerTestMxRecordsInner](docs/ServerTestMxRecordsInner.md)
+ - [ServerTestSmtpCheck](docs/ServerTestSmtpCheck.md)
+ - [SpamCheck](docs/SpamCheck.md)
+ - [SpamCheckChecks](docs/SpamCheckChecks.md)
  - [SubscribeRequest](docs/SubscribeRequest.md)
  - [Subscriber](docs/Subscriber.md)
  - [SubscriberList](docs/SubscriberList.md)

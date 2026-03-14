@@ -1,7 +1,7 @@
 /*
-MailOdds Email Validation API
+MailOdds Email Platform API
 
-MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
+MailOdds is an email platform for validation, sending, campaigns, deliverability monitoring, and analytics. The API performs multi-layer validation checks, delivers transactional and campaign email with DKIM dual signing, and tracks engagement with privacy-first analytics.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
 
 API version: 1.0.0
 Contact: support@mailodds.com
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the MailOdds Email Validation API API v1.0.0
+// APIClient manages communication with the MailOdds Email Platform API API v1.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -50,13 +50,35 @@ type APIClient struct {
 
 	// API Services
 
+	BlacklistMonitoringAPI *BlacklistMonitoringAPIService
+
+	BounceAnalysisAPI *BounceAnalysisAPIService
+
 	BulkValidationAPI *BulkValidationAPIService
+
+	CampaignAnalyticsAPI *CampaignAnalyticsAPIService
+
+	CampaignsAPI *CampaignsAPIService
+
+	ContactListsAPI *ContactListsAPIService
+
+	ContentClassificationAPI *ContentClassificationAPIService
+
+	DMARCMonitoringAPI *DMARCMonitoringAPIService
 
 	EmailSendingAPI *EmailSendingAPIService
 
 	EmailValidationAPI *EmailValidationAPIService
 
+	MessageEventsAPI *MessageEventsAPIService
+
+	SenderHealthAPI *SenderHealthAPIService
+
 	SendingDomainsAPI *SendingDomainsAPIService
+
+	ServerTestsAPI *ServerTestsAPIService
+
+	SpamChecksAPI *SpamChecksAPIService
 
 	SubscriberListsAPI *SubscriberListsAPIService
 
@@ -83,10 +105,21 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.BlacklistMonitoringAPI = (*BlacklistMonitoringAPIService)(&c.common)
+	c.BounceAnalysisAPI = (*BounceAnalysisAPIService)(&c.common)
 	c.BulkValidationAPI = (*BulkValidationAPIService)(&c.common)
+	c.CampaignAnalyticsAPI = (*CampaignAnalyticsAPIService)(&c.common)
+	c.CampaignsAPI = (*CampaignsAPIService)(&c.common)
+	c.ContactListsAPI = (*ContactListsAPIService)(&c.common)
+	c.ContentClassificationAPI = (*ContentClassificationAPIService)(&c.common)
+	c.DMARCMonitoringAPI = (*DMARCMonitoringAPIService)(&c.common)
 	c.EmailSendingAPI = (*EmailSendingAPIService)(&c.common)
 	c.EmailValidationAPI = (*EmailValidationAPIService)(&c.common)
+	c.MessageEventsAPI = (*MessageEventsAPIService)(&c.common)
+	c.SenderHealthAPI = (*SenderHealthAPIService)(&c.common)
 	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
+	c.ServerTestsAPI = (*ServerTestsAPIService)(&c.common)
+	c.SpamChecksAPI = (*SpamChecksAPIService)(&c.common)
 	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)
