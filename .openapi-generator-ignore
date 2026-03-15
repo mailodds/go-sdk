@@ -30,3 +30,4 @@ ci/**
 go.mod
 # Preserve DisallowUnknownFields removal (forward compatibility)
 utils.go
+README.md
