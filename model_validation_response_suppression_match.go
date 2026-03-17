@@ -18,7 +18,7 @@ import (
 // checks if the ValidationResponseSuppressionMatch type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResponseSuppressionMatch{}
 
-// ValidationResponseSuppressionMatch Present only when email matched a suppression list entry.
+// ValidationResponseSuppressionMatch Present only when email matched a suppression list entry. Null otherwise.
 type ValidationResponseSuppressionMatch struct {
 	MatchType *string `json:"match_type,omitempty"`
 	MatchValue *string `json:"match_value,omitempty"`

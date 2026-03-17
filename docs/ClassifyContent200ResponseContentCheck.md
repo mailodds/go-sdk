@@ -4,10 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Score** | Pointer to **float32** | Overall content quality score (0-100) | [optional] 
-**Verdict** | Pointer to **string** | Overall verdict | [optional] 
-**Categories** | Pointer to [**[]ClassifyContent200ResponseContentCheckCategoriesInner**](ClassifyContent200ResponseContentCheckCategoriesInner.md) |  | [optional] 
+**Status** | Pointer to **string** | Overall content status | [optional] 
+**Flag** | Pointer to **bool** | Whether the content is flagged | [optional] 
+**Reason** | Pointer to **string** | Human-readable reason for the status | [optional] 
+**Priority** | Pointer to **int32** | Priority level (1&#x3D;lowest, 5&#x3D;highest) | [optional] 
 **Suggestions** | Pointer to **[]string** | Improvement suggestions | [optional] 
+**DurationMs** | Pointer to **int32** | Classification duration in milliseconds | [optional] 
 
 ## Methods
 
@@ -28,80 +30,105 @@ NewClassifyContent200ResponseContentCheckWithDefaults instantiates a new Classif
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetScore
+### GetStatus
 
-`func (o *ClassifyContent200ResponseContentCheck) GetScore() float32`
+`func (o *ClassifyContent200ResponseContentCheck) GetStatus() string`
 
-GetScore returns the Score field if non-nil, zero value otherwise.
+GetStatus returns the Status field if non-nil, zero value otherwise.
 
-### GetScoreOk
+### GetStatusOk
 
-`func (o *ClassifyContent200ResponseContentCheck) GetScoreOk() (*float32, bool)`
+`func (o *ClassifyContent200ResponseContentCheck) GetStatusOk() (*string, bool)`
 
-GetScoreOk returns a tuple with the Score field if it's non-nil, zero value otherwise
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetScore
+### SetStatus
 
-`func (o *ClassifyContent200ResponseContentCheck) SetScore(v float32)`
+`func (o *ClassifyContent200ResponseContentCheck) SetStatus(v string)`
 
-SetScore sets Score field to given value.
+SetStatus sets Status field to given value.
 
-### HasScore
+### HasStatus
 
-`func (o *ClassifyContent200ResponseContentCheck) HasScore() bool`
+`func (o *ClassifyContent200ResponseContentCheck) HasStatus() bool`
 
-HasScore returns a boolean if a field has been set.
+HasStatus returns a boolean if a field has been set.
 
-### GetVerdict
+### GetFlag
 
-`func (o *ClassifyContent200ResponseContentCheck) GetVerdict() string`
+`func (o *ClassifyContent200ResponseContentCheck) GetFlag() bool`
 
-GetVerdict returns the Verdict field if non-nil, zero value otherwise.
+GetFlag returns the Flag field if non-nil, zero value otherwise.
 
-### GetVerdictOk
+### GetFlagOk
 
-`func (o *ClassifyContent200ResponseContentCheck) GetVerdictOk() (*string, bool)`
+`func (o *ClassifyContent200ResponseContentCheck) GetFlagOk() (*bool, bool)`
 
-GetVerdictOk returns a tuple with the Verdict field if it's non-nil, zero value otherwise
+GetFlagOk returns a tuple with the Flag field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVerdict
+### SetFlag
 
-`func (o *ClassifyContent200ResponseContentCheck) SetVerdict(v string)`
+`func (o *ClassifyContent200ResponseContentCheck) SetFlag(v bool)`
 
-SetVerdict sets Verdict field to given value.
+SetFlag sets Flag field to given value.
 
-### HasVerdict
+### HasFlag
 
-`func (o *ClassifyContent200ResponseContentCheck) HasVerdict() bool`
+`func (o *ClassifyContent200ResponseContentCheck) HasFlag() bool`
 
-HasVerdict returns a boolean if a field has been set.
+HasFlag returns a boolean if a field has been set.
 
-### GetCategories
+### GetReason
 
-`func (o *ClassifyContent200ResponseContentCheck) GetCategories() []ClassifyContent200ResponseContentCheckCategoriesInner`
+`func (o *ClassifyContent200ResponseContentCheck) GetReason() string`
 
-GetCategories returns the Categories field if non-nil, zero value otherwise.
+GetReason returns the Reason field if non-nil, zero value otherwise.
 
-### GetCategoriesOk
+### GetReasonOk
 
-`func (o *ClassifyContent200ResponseContentCheck) GetCategoriesOk() (*[]ClassifyContent200ResponseContentCheckCategoriesInner, bool)`
+`func (o *ClassifyContent200ResponseContentCheck) GetReasonOk() (*string, bool)`
 
-GetCategoriesOk returns a tuple with the Categories field if it's non-nil, zero value otherwise
+GetReasonOk returns a tuple with the Reason field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCategories
+### SetReason
 
-`func (o *ClassifyContent200ResponseContentCheck) SetCategories(v []ClassifyContent200ResponseContentCheckCategoriesInner)`
+`func (o *ClassifyContent200ResponseContentCheck) SetReason(v string)`
 
-SetCategories sets Categories field to given value.
+SetReason sets Reason field to given value.
 
-### HasCategories
+### HasReason
 
-`func (o *ClassifyContent200ResponseContentCheck) HasCategories() bool`
+`func (o *ClassifyContent200ResponseContentCheck) HasReason() bool`
 
-HasCategories returns a boolean if a field has been set.
+HasReason returns a boolean if a field has been set.
+
+### GetPriority
+
+`func (o *ClassifyContent200ResponseContentCheck) GetPriority() int32`
+
+GetPriority returns the Priority field if non-nil, zero value otherwise.
+
+### GetPriorityOk
+
+`func (o *ClassifyContent200ResponseContentCheck) GetPriorityOk() (*int32, bool)`
+
+GetPriorityOk returns a tuple with the Priority field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPriority
+
+`func (o *ClassifyContent200ResponseContentCheck) SetPriority(v int32)`
+
+SetPriority sets Priority field to given value.
+
+### HasPriority
+
+`func (o *ClassifyContent200ResponseContentCheck) HasPriority() bool`
+
+HasPriority returns a boolean if a field has been set.
 
 ### GetSuggestions
 
@@ -127,6 +154,31 @@ SetSuggestions sets Suggestions field to given value.
 `func (o *ClassifyContent200ResponseContentCheck) HasSuggestions() bool`
 
 HasSuggestions returns a boolean if a field has been set.
+
+### GetDurationMs
+
+`func (o *ClassifyContent200ResponseContentCheck) GetDurationMs() int32`
+
+GetDurationMs returns the DurationMs field if non-nil, zero value otherwise.
+
+### GetDurationMsOk
+
+`func (o *ClassifyContent200ResponseContentCheck) GetDurationMsOk() (*int32, bool)`
+
+GetDurationMsOk returns a tuple with the DurationMs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDurationMs
+
+`func (o *ClassifyContent200ResponseContentCheck) SetDurationMs(v int32)`
+
+SetDurationMs sets DurationMs field to given value.
+
+### HasDurationMs
+
+`func (o *ClassifyContent200ResponseContentCheck) HasDurationMs() bool`
+
+HasDurationMs returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

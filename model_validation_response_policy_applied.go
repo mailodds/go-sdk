@@ -18,7 +18,7 @@ import (
 // checks if the ValidationResponsePolicyApplied type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResponsePolicyApplied{}
 
-// ValidationResponsePolicyApplied Present when a validation policy modified the result.
+// ValidationResponsePolicyApplied Present when a validation policy modified the result. Null when no policy is applied.
 type ValidationResponsePolicyApplied struct {
 	PolicyId *int32 `json:"policy_id,omitempty"`
 	PolicyName *string `json:"policy_name,omitempty"`

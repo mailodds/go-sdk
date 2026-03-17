@@ -5,6 +5,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddDmarcDomain**](DMARCMonitoringAPI.md#AddDmarcDomain) | **Post** /v1/dmarc-domains | Add DMARC domain
+[**DeleteDmarcDomain**](DMARCMonitoringAPI.md#DeleteDmarcDomain) | **Delete** /v1/dmarc-domains/{domain_id} | Delete a DMARC domain
 [**GetDmarcDomain**](DMARCMonitoringAPI.md#GetDmarcDomain) | **Get** /v1/dmarc-domains/{domain_id} | Get DMARC domain
 [**GetDmarcRecommendation**](DMARCMonitoringAPI.md#GetDmarcRecommendation) | **Get** /v1/dmarc-domains/{domain_id}/recommendation | Get DMARC policy recommendation
 [**GetDmarcSources**](DMARCMonitoringAPI.md#GetDmarcSources) | **Get** /v1/dmarc-domains/{domain_id}/sources | Get DMARC sending sources
@@ -31,7 +32,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -80,6 +81,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteDmarcDomain
+
+> DeletePolicyRule200Response DeleteDmarcDomain(ctx, domainId).Execute()
+
+Delete a DMARC domain
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	domainId := "domainId_example" // string | DMARC domain UUID
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DMARCMonitoringAPI.DeleteDmarcDomain(context.Background(), domainId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DMARCMonitoringAPI.DeleteDmarcDomain``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDmarcDomain`: DeletePolicyRule200Response
+	fmt.Fprintf(os.Stdout, "Response from `DMARCMonitoringAPI.DeleteDmarcDomain`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**domainId** | **string** | DMARC domain UUID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDmarcDomainRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetDmarcDomain
 
 > GetDmarcDomain200Response GetDmarcDomain(ctx, domainId).Days(days).Execute()
@@ -97,7 +168,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -169,7 +240,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -239,7 +310,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -315,7 +386,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -387,7 +458,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -448,7 +519,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {

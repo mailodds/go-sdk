@@ -95,10 +95,44 @@ func NewConfiguration() *Configuration {
 		Servers:          ServerConfigurations{
 			{
 				URL: "https://api.mailodds.com/v1",
-				Description: "Production server",
+				Description: "Production server (API v1 endpoints)",
+			},
+			{
+				URL: "https://api.mailodds.com",
+				Description: "Production server (OAuth and discovery endpoints)",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{
+			"OAuth20APIService.CreateToken": {
+				{
+					URL: "https://api.mailodds.com",
+					Description: "Server root",
+				},
+			},
+			"OAuth20APIService.GetJwks": {
+				{
+					URL: "https://api.mailodds.com",
+					Description: "Server root",
+				},
+			},
+			"OAuth20APIService.IntrospectToken": {
+				{
+					URL: "https://api.mailodds.com",
+					Description: "Server root",
+				},
+			},
+			"OAuth20APIService.OauthServerMetadata": {
+				{
+					URL: "https://api.mailodds.com",
+					Description: "Server root",
+				},
+			},
+			"OAuth20APIService.RevokeToken": {
+				{
+					URL: "https://api.mailodds.com",
+					Description: "Server root",
+				},
+			},
 		},
 	}
 	return cfg

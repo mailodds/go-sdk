@@ -50,6 +50,10 @@ type APIClient struct {
 
 	// API Services
 
+	AgentControlPlaneAPI *AgentControlPlaneAPIService
+
+	AlertRulesAPI *AlertRulesAPIService
+
 	BlacklistMonitoringAPI *BlacklistMonitoringAPIService
 
 	BounceAnalysisAPI *BounceAnalysisAPIService
@@ -66,11 +70,29 @@ type APIClient struct {
 
 	DMARCMonitoringAPI *DMARCMonitoringAPIService
 
+	DomainInsightsAPI *DomainInsightsAPIService
+
 	EmailSendingAPI *EmailSendingAPIService
 
 	EmailValidationAPI *EmailValidationAPIService
 
+	EngagementAPI *EngagementAPIService
+
+	EventsAPI *EventsAPIService
+
+	InboundProcessingAPI *InboundProcessingAPIService
+
 	MessageEventsAPI *MessageEventsAPIService
+
+	OAuth20API *OAuth20APIService
+
+	OutOfOfficeAPI *OutOfOfficeAPIService
+
+	PixelSettingsAPI *PixelSettingsAPIService
+
+	ProductsAPI *ProductsAPIService
+
+	ReputationAPI *ReputationAPIService
 
 	SenderHealthAPI *SenderHealthAPIService
 
@@ -80,6 +102,8 @@ type APIClient struct {
 
 	SpamChecksAPI *SpamChecksAPIService
 
+	StoreConnectionsAPI *StoreConnectionsAPIService
+
 	SubscriberListsAPI *SubscriberListsAPIService
 
 	SuppressionListsAPI *SuppressionListsAPIService
@@ -87,6 +111,8 @@ type APIClient struct {
 	SystemAPI *SystemAPIService
 
 	ValidationPoliciesAPI *ValidationPoliciesAPIService
+
+	WebhookCLIAPI *WebhookCLIAPIService
 }
 
 type service struct {
@@ -105,6 +131,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.AgentControlPlaneAPI = (*AgentControlPlaneAPIService)(&c.common)
+	c.AlertRulesAPI = (*AlertRulesAPIService)(&c.common)
 	c.BlacklistMonitoringAPI = (*BlacklistMonitoringAPIService)(&c.common)
 	c.BounceAnalysisAPI = (*BounceAnalysisAPIService)(&c.common)
 	c.BulkValidationAPI = (*BulkValidationAPIService)(&c.common)
@@ -113,17 +141,28 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ContactListsAPI = (*ContactListsAPIService)(&c.common)
 	c.ContentClassificationAPI = (*ContentClassificationAPIService)(&c.common)
 	c.DMARCMonitoringAPI = (*DMARCMonitoringAPIService)(&c.common)
+	c.DomainInsightsAPI = (*DomainInsightsAPIService)(&c.common)
 	c.EmailSendingAPI = (*EmailSendingAPIService)(&c.common)
 	c.EmailValidationAPI = (*EmailValidationAPIService)(&c.common)
+	c.EngagementAPI = (*EngagementAPIService)(&c.common)
+	c.EventsAPI = (*EventsAPIService)(&c.common)
+	c.InboundProcessingAPI = (*InboundProcessingAPIService)(&c.common)
 	c.MessageEventsAPI = (*MessageEventsAPIService)(&c.common)
+	c.OAuth20API = (*OAuth20APIService)(&c.common)
+	c.OutOfOfficeAPI = (*OutOfOfficeAPIService)(&c.common)
+	c.PixelSettingsAPI = (*PixelSettingsAPIService)(&c.common)
+	c.ProductsAPI = (*ProductsAPIService)(&c.common)
+	c.ReputationAPI = (*ReputationAPIService)(&c.common)
 	c.SenderHealthAPI = (*SenderHealthAPIService)(&c.common)
 	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
 	c.ServerTestsAPI = (*ServerTestsAPIService)(&c.common)
 	c.SpamChecksAPI = (*SpamChecksAPIService)(&c.common)
+	c.StoreConnectionsAPI = (*StoreConnectionsAPIService)(&c.common)
 	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)
 	c.ValidationPoliciesAPI = (*ValidationPoliciesAPIService)(&c.common)
+	c.WebhookCLIAPI = (*WebhookCLIAPIService)(&c.common)
 
 	return c
 }

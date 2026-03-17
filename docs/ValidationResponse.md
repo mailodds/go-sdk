@@ -26,8 +26,8 @@ Name | Type | Description | Notes
 **HasDmarc** | Pointer to **bool** | Whether the domain has a DMARC record. Omitted for standard depth. | [optional] 
 **DmarcPolicy** | Pointer to **string** | The domain&#39;s DMARC policy. Omitted when no DMARC record found. | [optional] 
 **DnsblListed** | Pointer to **bool** | Whether the domain&#39;s MX IP is on a DNS blocklist (Spamhaus ZEN). Omitted for standard depth. | [optional] 
-**SuppressionMatch** | Pointer to [**ValidationResponseSuppressionMatch**](ValidationResponseSuppressionMatch.md) |  | [optional] 
-**PolicyApplied** | Pointer to [**ValidationResponsePolicyApplied**](ValidationResponsePolicyApplied.md) |  | [optional] 
+**SuppressionMatch** | Pointer to [**NullableValidationResponseSuppressionMatch**](ValidationResponseSuppressionMatch.md) |  | [optional] 
+**PolicyApplied** | Pointer to [**NullableValidationResponsePolicyApplied**](ValidationResponsePolicyApplied.md) |  | [optional] 
 
 ## Methods
 
@@ -568,6 +568,16 @@ SetSuppressionMatch sets SuppressionMatch field to given value.
 
 HasSuppressionMatch returns a boolean if a field has been set.
 
+### SetSuppressionMatchNil
+
+`func (o *ValidationResponse) SetSuppressionMatchNil(b bool)`
+
+ SetSuppressionMatchNil sets the value for SuppressionMatch to be an explicit nil
+
+### UnsetSuppressionMatch
+`func (o *ValidationResponse) UnsetSuppressionMatch()`
+
+UnsetSuppressionMatch ensures that no value is present for SuppressionMatch, not even an explicit nil
 ### GetPolicyApplied
 
 `func (o *ValidationResponse) GetPolicyApplied() ValidationResponsePolicyApplied`
@@ -593,6 +603,16 @@ SetPolicyApplied sets PolicyApplied field to given value.
 
 HasPolicyApplied returns a boolean if a field has been set.
 
+### SetPolicyAppliedNil
+
+`func (o *ValidationResponse) SetPolicyAppliedNil(b bool)`
+
+ SetPolicyAppliedNil sets the value for PolicyApplied to be an explicit nil
+
+### UnsetPolicyApplied
+`func (o *ValidationResponse) UnsetPolicyApplied()`
+
+UnsetPolicyApplied ensures that no value is present for PolicyApplied, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

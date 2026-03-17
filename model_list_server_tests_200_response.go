@@ -22,7 +22,7 @@ var _ MappedNullable = &ListServerTests200Response{}
 type ListServerTests200Response struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
 	RequestId *string `json:"request_id,omitempty"`
-	Tests []ServerTest `json:"tests,omitempty"`
+	Data []ServerTest `json:"data,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
 
@@ -107,36 +107,36 @@ func (o *ListServerTests200Response) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetTests returns the Tests field value if set, zero value otherwise.
-func (o *ListServerTests200Response) GetTests() []ServerTest {
-	if o == nil || IsNil(o.Tests) {
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *ListServerTests200Response) GetData() []ServerTest {
+	if o == nil || IsNil(o.Data) {
 		var ret []ServerTest
 		return ret
 	}
-	return o.Tests
+	return o.Data
 }
 
-// GetTestsOk returns a tuple with the Tests field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListServerTests200Response) GetTestsOk() ([]ServerTest, bool) {
-	if o == nil || IsNil(o.Tests) {
+func (o *ListServerTests200Response) GetDataOk() ([]ServerTest, bool) {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
-	return o.Tests, true
+	return o.Data, true
 }
 
-// HasTests returns a boolean if a field has been set.
-func (o *ListServerTests200Response) HasTests() bool {
-	if o != nil && !IsNil(o.Tests) {
+// HasData returns a boolean if a field has been set.
+func (o *ListServerTests200Response) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
 	return false
 }
 
-// SetTests gets a reference to the given []ServerTest and assigns it to the Tests field.
-func (o *ListServerTests200Response) SetTests(v []ServerTest) {
-	o.Tests = v
+// SetData gets a reference to the given []ServerTest and assigns it to the Data field.
+func (o *ListServerTests200Response) SetData(v []ServerTest) {
+	o.Data = v
 }
 
 // GetPagination returns the Pagination field value if set, zero value otherwise.
@@ -187,8 +187,8 @@ func (o ListServerTests200Response) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.Tests) {
-		toSerialize["tests"] = o.Tests
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
 	}
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination

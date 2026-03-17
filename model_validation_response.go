@@ -64,8 +64,8 @@ type ValidationResponse struct {
 	DmarcPolicy *string `json:"dmarc_policy,omitempty"`
 	// Whether the domain's MX IP is on a DNS blocklist (Spamhaus ZEN). Omitted for standard depth.
 	DnsblListed *bool `json:"dnsbl_listed,omitempty"`
-	SuppressionMatch *ValidationResponseSuppressionMatch `json:"suppression_match,omitempty"`
-	PolicyApplied *ValidationResponsePolicyApplied `json:"policy_applied,omitempty"`
+	SuppressionMatch NullableValidationResponseSuppressionMatch `json:"suppression_match,omitempty"`
+	PolicyApplied NullableValidationResponsePolicyApplied `json:"policy_applied,omitempty"`
 }
 
 type _ValidationResponse ValidationResponse
@@ -714,68 +714,88 @@ func (o *ValidationResponse) SetDnsblListed(v bool) {
 	o.DnsblListed = &v
 }
 
-// GetSuppressionMatch returns the SuppressionMatch field value if set, zero value otherwise.
+// GetSuppressionMatch returns the SuppressionMatch field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ValidationResponse) GetSuppressionMatch() ValidationResponseSuppressionMatch {
-	if o == nil || IsNil(o.SuppressionMatch) {
+	if o == nil || IsNil(o.SuppressionMatch.Get()) {
 		var ret ValidationResponseSuppressionMatch
 		return ret
 	}
-	return *o.SuppressionMatch
+	return *o.SuppressionMatch.Get()
 }
 
 // GetSuppressionMatchOk returns a tuple with the SuppressionMatch field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ValidationResponse) GetSuppressionMatchOk() (*ValidationResponseSuppressionMatch, bool) {
-	if o == nil || IsNil(o.SuppressionMatch) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SuppressionMatch, true
+	return o.SuppressionMatch.Get(), o.SuppressionMatch.IsSet()
 }
 
 // HasSuppressionMatch returns a boolean if a field has been set.
 func (o *ValidationResponse) HasSuppressionMatch() bool {
-	if o != nil && !IsNil(o.SuppressionMatch) {
+	if o != nil && o.SuppressionMatch.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSuppressionMatch gets a reference to the given ValidationResponseSuppressionMatch and assigns it to the SuppressionMatch field.
+// SetSuppressionMatch gets a reference to the given NullableValidationResponseSuppressionMatch and assigns it to the SuppressionMatch field.
 func (o *ValidationResponse) SetSuppressionMatch(v ValidationResponseSuppressionMatch) {
-	o.SuppressionMatch = &v
+	o.SuppressionMatch.Set(&v)
+}
+// SetSuppressionMatchNil sets the value for SuppressionMatch to be an explicit nil
+func (o *ValidationResponse) SetSuppressionMatchNil() {
+	o.SuppressionMatch.Set(nil)
 }
 
-// GetPolicyApplied returns the PolicyApplied field value if set, zero value otherwise.
+// UnsetSuppressionMatch ensures that no value is present for SuppressionMatch, not even an explicit nil
+func (o *ValidationResponse) UnsetSuppressionMatch() {
+	o.SuppressionMatch.Unset()
+}
+
+// GetPolicyApplied returns the PolicyApplied field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ValidationResponse) GetPolicyApplied() ValidationResponsePolicyApplied {
-	if o == nil || IsNil(o.PolicyApplied) {
+	if o == nil || IsNil(o.PolicyApplied.Get()) {
 		var ret ValidationResponsePolicyApplied
 		return ret
 	}
-	return *o.PolicyApplied
+	return *o.PolicyApplied.Get()
 }
 
 // GetPolicyAppliedOk returns a tuple with the PolicyApplied field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ValidationResponse) GetPolicyAppliedOk() (*ValidationResponsePolicyApplied, bool) {
-	if o == nil || IsNil(o.PolicyApplied) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PolicyApplied, true
+	return o.PolicyApplied.Get(), o.PolicyApplied.IsSet()
 }
 
 // HasPolicyApplied returns a boolean if a field has been set.
 func (o *ValidationResponse) HasPolicyApplied() bool {
-	if o != nil && !IsNil(o.PolicyApplied) {
+	if o != nil && o.PolicyApplied.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPolicyApplied gets a reference to the given ValidationResponsePolicyApplied and assigns it to the PolicyApplied field.
+// SetPolicyApplied gets a reference to the given NullableValidationResponsePolicyApplied and assigns it to the PolicyApplied field.
 func (o *ValidationResponse) SetPolicyApplied(v ValidationResponsePolicyApplied) {
-	o.PolicyApplied = &v
+	o.PolicyApplied.Set(&v)
+}
+// SetPolicyAppliedNil sets the value for PolicyApplied to be an explicit nil
+func (o *ValidationResponse) SetPolicyAppliedNil() {
+	o.PolicyApplied.Set(nil)
+}
+
+// UnsetPolicyApplied ensures that no value is present for PolicyApplied, not even an explicit nil
+func (o *ValidationResponse) UnsetPolicyApplied() {
+	o.PolicyApplied.Unset()
 }
 
 func (o ValidationResponse) MarshalJSON() ([]byte, error) {
@@ -832,11 +852,11 @@ func (o ValidationResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DnsblListed) {
 		toSerialize["dnsbl_listed"] = o.DnsblListed
 	}
-	if !IsNil(o.SuppressionMatch) {
-		toSerialize["suppression_match"] = o.SuppressionMatch
+	if o.SuppressionMatch.IsSet() {
+		toSerialize["suppression_match"] = o.SuppressionMatch.Get()
 	}
-	if !IsNil(o.PolicyApplied) {
-		toSerialize["policy_applied"] = o.PolicyApplied
+	if o.PolicyApplied.IsSet() {
+		toSerialize["policy_applied"] = o.PolicyApplied.Get()
 	}
 	return toSerialize, nil
 }

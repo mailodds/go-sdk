@@ -4,12 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TotalReports** | Pointer to **int32** |  | [optional] 
-**TotalRecords** | Pointer to **int32** |  | [optional] 
+**Days** | Pointer to **int32** |  | [optional] 
+**ReportCount** | Pointer to **int32** |  | [optional] 
+**SourceCount** | Pointer to **int32** |  | [optional] 
+**TotalMessages** | Pointer to **int32** |  | [optional] 
+**TotalPass** | Pointer to **int32** |  | [optional] 
+**TotalFail** | Pointer to **int32** |  | [optional] 
 **PassRate** | Pointer to **float32** |  | [optional] 
-**FailRate** | Pointer to **float32** |  | [optional] 
-**DkimAligned** | Pointer to **float32** |  | [optional] 
-**SpfAligned** | Pointer to **float32** |  | [optional] 
 
 ## Methods
 
@@ -30,55 +31,155 @@ NewGetDmarcDomain200ResponseDomainAllOfSummaryWithDefaults instantiates a new Ge
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetTotalReports
+### GetDays
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalReports() int32`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDays() int32`
 
-GetTotalReports returns the TotalReports field if non-nil, zero value otherwise.
+GetDays returns the Days field if non-nil, zero value otherwise.
 
-### GetTotalReportsOk
+### GetDaysOk
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalReportsOk() (*int32, bool)`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDaysOk() (*int32, bool)`
 
-GetTotalReportsOk returns a tuple with the TotalReports field if it's non-nil, zero value otherwise
+GetDaysOk returns a tuple with the Days field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTotalReports
+### SetDays
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalReports(v int32)`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetDays(v int32)`
 
-SetTotalReports sets TotalReports field to given value.
+SetDays sets Days field to given value.
 
-### HasTotalReports
+### HasDays
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalReports() bool`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasDays() bool`
 
-HasTotalReports returns a boolean if a field has been set.
+HasDays returns a boolean if a field has been set.
 
-### GetTotalRecords
+### GetReportCount
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalRecords() int32`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetReportCount() int32`
 
-GetTotalRecords returns the TotalRecords field if non-nil, zero value otherwise.
+GetReportCount returns the ReportCount field if non-nil, zero value otherwise.
 
-### GetTotalRecordsOk
+### GetReportCountOk
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalRecordsOk() (*int32, bool)`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetReportCountOk() (*int32, bool)`
 
-GetTotalRecordsOk returns a tuple with the TotalRecords field if it's non-nil, zero value otherwise
+GetReportCountOk returns a tuple with the ReportCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTotalRecords
+### SetReportCount
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalRecords(v int32)`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetReportCount(v int32)`
 
-SetTotalRecords sets TotalRecords field to given value.
+SetReportCount sets ReportCount field to given value.
 
-### HasTotalRecords
+### HasReportCount
 
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalRecords() bool`
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasReportCount() bool`
 
-HasTotalRecords returns a boolean if a field has been set.
+HasReportCount returns a boolean if a field has been set.
+
+### GetSourceCount
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSourceCount() int32`
+
+GetSourceCount returns the SourceCount field if non-nil, zero value otherwise.
+
+### GetSourceCountOk
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSourceCountOk() (*int32, bool)`
+
+GetSourceCountOk returns a tuple with the SourceCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceCount
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetSourceCount(v int32)`
+
+SetSourceCount sets SourceCount field to given value.
+
+### HasSourceCount
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasSourceCount() bool`
+
+HasSourceCount returns a boolean if a field has been set.
+
+### GetTotalMessages
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalMessages() int32`
+
+GetTotalMessages returns the TotalMessages field if non-nil, zero value otherwise.
+
+### GetTotalMessagesOk
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalMessagesOk() (*int32, bool)`
+
+GetTotalMessagesOk returns a tuple with the TotalMessages field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalMessages
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalMessages(v int32)`
+
+SetTotalMessages sets TotalMessages field to given value.
+
+### HasTotalMessages
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalMessages() bool`
+
+HasTotalMessages returns a boolean if a field has been set.
+
+### GetTotalPass
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalPass() int32`
+
+GetTotalPass returns the TotalPass field if non-nil, zero value otherwise.
+
+### GetTotalPassOk
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalPassOk() (*int32, bool)`
+
+GetTotalPassOk returns a tuple with the TotalPass field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalPass
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalPass(v int32)`
+
+SetTotalPass sets TotalPass field to given value.
+
+### HasTotalPass
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalPass() bool`
+
+HasTotalPass returns a boolean if a field has been set.
+
+### GetTotalFail
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalFail() int32`
+
+GetTotalFail returns the TotalFail field if non-nil, zero value otherwise.
+
+### GetTotalFailOk
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalFailOk() (*int32, bool)`
+
+GetTotalFailOk returns a tuple with the TotalFail field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalFail
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalFail(v int32)`
+
+SetTotalFail sets TotalFail field to given value.
+
+### HasTotalFail
+
+`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalFail() bool`
+
+HasTotalFail returns a boolean if a field has been set.
 
 ### GetPassRate
 
@@ -104,81 +205,6 @@ SetPassRate sets PassRate field to given value.
 `func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasPassRate() bool`
 
 HasPassRate returns a boolean if a field has been set.
-
-### GetFailRate
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetFailRate() float32`
-
-GetFailRate returns the FailRate field if non-nil, zero value otherwise.
-
-### GetFailRateOk
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetFailRateOk() (*float32, bool)`
-
-GetFailRateOk returns a tuple with the FailRate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFailRate
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetFailRate(v float32)`
-
-SetFailRate sets FailRate field to given value.
-
-### HasFailRate
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasFailRate() bool`
-
-HasFailRate returns a boolean if a field has been set.
-
-### GetDkimAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDkimAligned() float32`
-
-GetDkimAligned returns the DkimAligned field if non-nil, zero value otherwise.
-
-### GetDkimAlignedOk
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDkimAlignedOk() (*float32, bool)`
-
-GetDkimAlignedOk returns a tuple with the DkimAligned field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDkimAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetDkimAligned(v float32)`
-
-SetDkimAligned sets DkimAligned field to given value.
-
-### HasDkimAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasDkimAligned() bool`
-
-HasDkimAligned returns a boolean if a field has been set.
-
-### GetSpfAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSpfAligned() float32`
-
-GetSpfAligned returns the SpfAligned field if non-nil, zero value otherwise.
-
-### GetSpfAlignedOk
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSpfAlignedOk() (*float32, bool)`
-
-GetSpfAlignedOk returns a tuple with the SpfAligned field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSpfAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetSpfAligned(v float32)`
-
-SetSpfAligned sets SpfAligned field to given value.
-
-### HasSpfAligned
-
-`func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasSpfAligned() bool`
-
-HasSpfAligned returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

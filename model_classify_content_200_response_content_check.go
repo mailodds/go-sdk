@@ -20,13 +20,18 @@ var _ MappedNullable = &ClassifyContent200ResponseContentCheck{}
 
 // ClassifyContent200ResponseContentCheck struct for ClassifyContent200ResponseContentCheck
 type ClassifyContent200ResponseContentCheck struct {
-	// Overall content quality score (0-100)
-	Score *float32 `json:"score,omitempty"`
-	// Overall verdict
-	Verdict *string `json:"verdict,omitempty"`
-	Categories []ClassifyContent200ResponseContentCheckCategoriesInner `json:"categories,omitempty"`
+	// Overall content status
+	Status *string `json:"status,omitempty"`
+	// Whether the content is flagged
+	Flag *bool `json:"flag,omitempty"`
+	// Human-readable reason for the status
+	Reason *string `json:"reason,omitempty"`
+	// Priority level (1=lowest, 5=highest)
+	Priority *int32 `json:"priority,omitempty"`
 	// Improvement suggestions
 	Suggestions []string `json:"suggestions,omitempty"`
+	// Classification duration in milliseconds
+	DurationMs *int32 `json:"duration_ms,omitempty"`
 }
 
 // NewClassifyContent200ResponseContentCheck instantiates a new ClassifyContent200ResponseContentCheck object
@@ -46,100 +51,132 @@ func NewClassifyContent200ResponseContentCheckWithDefaults() *ClassifyContent200
 	return &this
 }
 
-// GetScore returns the Score field value if set, zero value otherwise.
-func (o *ClassifyContent200ResponseContentCheck) GetScore() float32 {
-	if o == nil || IsNil(o.Score) {
-		var ret float32
-		return ret
-	}
-	return *o.Score
-}
-
-// GetScoreOk returns a tuple with the Score field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ClassifyContent200ResponseContentCheck) GetScoreOk() (*float32, bool) {
-	if o == nil || IsNil(o.Score) {
-		return nil, false
-	}
-	return o.Score, true
-}
-
-// HasScore returns a boolean if a field has been set.
-func (o *ClassifyContent200ResponseContentCheck) HasScore() bool {
-	if o != nil && !IsNil(o.Score) {
-		return true
-	}
-
-	return false
-}
-
-// SetScore gets a reference to the given float32 and assigns it to the Score field.
-func (o *ClassifyContent200ResponseContentCheck) SetScore(v float32) {
-	o.Score = &v
-}
-
-// GetVerdict returns the Verdict field value if set, zero value otherwise.
-func (o *ClassifyContent200ResponseContentCheck) GetVerdict() string {
-	if o == nil || IsNil(o.Verdict) {
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *ClassifyContent200ResponseContentCheck) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
-	return *o.Verdict
+	return *o.Status
 }
 
-// GetVerdictOk returns a tuple with the Verdict field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClassifyContent200ResponseContentCheck) GetVerdictOk() (*string, bool) {
-	if o == nil || IsNil(o.Verdict) {
+func (o *ClassifyContent200ResponseContentCheck) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return o.Verdict, true
+	return o.Status, true
 }
 
-// HasVerdict returns a boolean if a field has been set.
-func (o *ClassifyContent200ResponseContentCheck) HasVerdict() bool {
-	if o != nil && !IsNil(o.Verdict) {
+// HasStatus returns a boolean if a field has been set.
+func (o *ClassifyContent200ResponseContentCheck) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
 	return false
 }
 
-// SetVerdict gets a reference to the given string and assigns it to the Verdict field.
-func (o *ClassifyContent200ResponseContentCheck) SetVerdict(v string) {
-	o.Verdict = &v
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *ClassifyContent200ResponseContentCheck) SetStatus(v string) {
+	o.Status = &v
 }
 
-// GetCategories returns the Categories field value if set, zero value otherwise.
-func (o *ClassifyContent200ResponseContentCheck) GetCategories() []ClassifyContent200ResponseContentCheckCategoriesInner {
-	if o == nil || IsNil(o.Categories) {
-		var ret []ClassifyContent200ResponseContentCheckCategoriesInner
+// GetFlag returns the Flag field value if set, zero value otherwise.
+func (o *ClassifyContent200ResponseContentCheck) GetFlag() bool {
+	if o == nil || IsNil(o.Flag) {
+		var ret bool
 		return ret
 	}
-	return o.Categories
+	return *o.Flag
 }
 
-// GetCategoriesOk returns a tuple with the Categories field value if set, nil otherwise
+// GetFlagOk returns a tuple with the Flag field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClassifyContent200ResponseContentCheck) GetCategoriesOk() ([]ClassifyContent200ResponseContentCheckCategoriesInner, bool) {
-	if o == nil || IsNil(o.Categories) {
+func (o *ClassifyContent200ResponseContentCheck) GetFlagOk() (*bool, bool) {
+	if o == nil || IsNil(o.Flag) {
 		return nil, false
 	}
-	return o.Categories, true
+	return o.Flag, true
 }
 
-// HasCategories returns a boolean if a field has been set.
-func (o *ClassifyContent200ResponseContentCheck) HasCategories() bool {
-	if o != nil && !IsNil(o.Categories) {
+// HasFlag returns a boolean if a field has been set.
+func (o *ClassifyContent200ResponseContentCheck) HasFlag() bool {
+	if o != nil && !IsNil(o.Flag) {
 		return true
 	}
 
 	return false
 }
 
-// SetCategories gets a reference to the given []ClassifyContent200ResponseContentCheckCategoriesInner and assigns it to the Categories field.
-func (o *ClassifyContent200ResponseContentCheck) SetCategories(v []ClassifyContent200ResponseContentCheckCategoriesInner) {
-	o.Categories = v
+// SetFlag gets a reference to the given bool and assigns it to the Flag field.
+func (o *ClassifyContent200ResponseContentCheck) SetFlag(v bool) {
+	o.Flag = &v
+}
+
+// GetReason returns the Reason field value if set, zero value otherwise.
+func (o *ClassifyContent200ResponseContentCheck) GetReason() string {
+	if o == nil || IsNil(o.Reason) {
+		var ret string
+		return ret
+	}
+	return *o.Reason
+}
+
+// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClassifyContent200ResponseContentCheck) GetReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.Reason) {
+		return nil, false
+	}
+	return o.Reason, true
+}
+
+// HasReason returns a boolean if a field has been set.
+func (o *ClassifyContent200ResponseContentCheck) HasReason() bool {
+	if o != nil && !IsNil(o.Reason) {
+		return true
+	}
+
+	return false
+}
+
+// SetReason gets a reference to the given string and assigns it to the Reason field.
+func (o *ClassifyContent200ResponseContentCheck) SetReason(v string) {
+	o.Reason = &v
+}
+
+// GetPriority returns the Priority field value if set, zero value otherwise.
+func (o *ClassifyContent200ResponseContentCheck) GetPriority() int32 {
+	if o == nil || IsNil(o.Priority) {
+		var ret int32
+		return ret
+	}
+	return *o.Priority
+}
+
+// GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClassifyContent200ResponseContentCheck) GetPriorityOk() (*int32, bool) {
+	if o == nil || IsNil(o.Priority) {
+		return nil, false
+	}
+	return o.Priority, true
+}
+
+// HasPriority returns a boolean if a field has been set.
+func (o *ClassifyContent200ResponseContentCheck) HasPriority() bool {
+	if o != nil && !IsNil(o.Priority) {
+		return true
+	}
+
+	return false
+}
+
+// SetPriority gets a reference to the given int32 and assigns it to the Priority field.
+func (o *ClassifyContent200ResponseContentCheck) SetPriority(v int32) {
+	o.Priority = &v
 }
 
 // GetSuggestions returns the Suggestions field value if set, zero value otherwise.
@@ -174,6 +211,38 @@ func (o *ClassifyContent200ResponseContentCheck) SetSuggestions(v []string) {
 	o.Suggestions = v
 }
 
+// GetDurationMs returns the DurationMs field value if set, zero value otherwise.
+func (o *ClassifyContent200ResponseContentCheck) GetDurationMs() int32 {
+	if o == nil || IsNil(o.DurationMs) {
+		var ret int32
+		return ret
+	}
+	return *o.DurationMs
+}
+
+// GetDurationMsOk returns a tuple with the DurationMs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClassifyContent200ResponseContentCheck) GetDurationMsOk() (*int32, bool) {
+	if o == nil || IsNil(o.DurationMs) {
+		return nil, false
+	}
+	return o.DurationMs, true
+}
+
+// HasDurationMs returns a boolean if a field has been set.
+func (o *ClassifyContent200ResponseContentCheck) HasDurationMs() bool {
+	if o != nil && !IsNil(o.DurationMs) {
+		return true
+	}
+
+	return false
+}
+
+// SetDurationMs gets a reference to the given int32 and assigns it to the DurationMs field.
+func (o *ClassifyContent200ResponseContentCheck) SetDurationMs(v int32) {
+	o.DurationMs = &v
+}
+
 func (o ClassifyContent200ResponseContentCheck) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -184,17 +253,23 @@ func (o ClassifyContent200ResponseContentCheck) MarshalJSON() ([]byte, error) {
 
 func (o ClassifyContent200ResponseContentCheck) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Score) {
-		toSerialize["score"] = o.Score
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
-	if !IsNil(o.Verdict) {
-		toSerialize["verdict"] = o.Verdict
+	if !IsNil(o.Flag) {
+		toSerialize["flag"] = o.Flag
 	}
-	if !IsNil(o.Categories) {
-		toSerialize["categories"] = o.Categories
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	if !IsNil(o.Priority) {
+		toSerialize["priority"] = o.Priority
 	}
 	if !IsNil(o.Suggestions) {
 		toSerialize["suggestions"] = o.Suggestions
+	}
+	if !IsNil(o.DurationMs) {
+		toSerialize["duration_ms"] = o.DurationMs
 	}
 	return toSerialize, nil
 }

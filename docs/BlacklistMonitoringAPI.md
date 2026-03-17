@@ -5,6 +5,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddBlacklistMonitor**](BlacklistMonitoringAPI.md#AddBlacklistMonitor) | **Post** /v1/blacklist-monitors | Add blacklist monitor
+[**DeleteBlacklistMonitor**](BlacklistMonitoringAPI.md#DeleteBlacklistMonitor) | **Delete** /v1/blacklist-monitors/{monitor_id} | Delete a blacklist monitor
 [**GetBlacklistHistory**](BlacklistMonitoringAPI.md#GetBlacklistHistory) | **Get** /v1/blacklist-monitors/{monitor_id}/history | Get blacklist check history
 [**ListBlacklistMonitors**](BlacklistMonitoringAPI.md#ListBlacklistMonitors) | **Get** /v1/blacklist-monitors | List blacklist monitors
 [**RunBlacklistCheck**](BlacklistMonitoringAPI.md#RunBlacklistCheck) | **Post** /v1/blacklist-monitors/{monitor_id}/check | Run blacklist check
@@ -28,7 +29,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -77,6 +78,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteBlacklistMonitor
+
+> DeletePolicyRule200Response DeleteBlacklistMonitor(ctx, monitorId).Execute()
+
+Delete a blacklist monitor
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	monitorId := "monitorId_example" // string | Monitor UUID
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BlacklistMonitoringAPI.DeleteBlacklistMonitor(context.Background(), monitorId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BlacklistMonitoringAPI.DeleteBlacklistMonitor``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteBlacklistMonitor`: DeletePolicyRule200Response
+	fmt.Fprintf(os.Stdout, "Response from `BlacklistMonitoringAPI.DeleteBlacklistMonitor`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**monitorId** | **string** | Monitor UUID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteBlacklistMonitorRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetBlacklistHistory
 
 > GetBlacklistHistory200Response GetBlacklistHistory(ctx, monitorId).Page(page).PerPage(perPage).Execute()
@@ -94,7 +165,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -168,7 +239,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -229,7 +300,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {

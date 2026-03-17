@@ -24,6 +24,130 @@ import (
 // SpamChecksAPIService SpamChecksAPI service
 type SpamChecksAPIService service
 
+type ApiDeleteSpamCheckRequest struct {
+	ctx context.Context
+	ApiService *SpamChecksAPIService
+	checkId string
+}
+
+func (r ApiDeleteSpamCheckRequest) Execute() (*DeletePolicyRule200Response, *http.Response, error) {
+	return r.ApiService.DeleteSpamCheckExecute(r)
+}
+
+/*
+DeleteSpamCheck Delete spam check
+
+Delete a spam check result.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param checkId Spam check ID
+ @return ApiDeleteSpamCheckRequest
+*/
+func (a *SpamChecksAPIService) DeleteSpamCheck(ctx context.Context, checkId string) ApiDeleteSpamCheckRequest {
+	return ApiDeleteSpamCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+		checkId: checkId,
+	}
+}
+
+// Execute executes the request
+//  @return DeletePolicyRule200Response
+func (a *SpamChecksAPIService) DeleteSpamCheckExecute(r ApiDeleteSpamCheckRequest) (*DeletePolicyRule200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeletePolicyRule200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SpamChecksAPIService.DeleteSpamCheck")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/spam-checks/{check_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"check_id"+"}", url.PathEscape(parameterValueToString(r.checkId, "checkId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetSpamCheckRequest struct {
 	ctx context.Context
 	ApiService *SpamChecksAPIService
@@ -37,7 +161,7 @@ func (r ApiGetSpamCheckRequest) Execute() (*RunSpamCheck201Response, *http.Respo
 /*
 GetSpamCheck Get spam check
 
-Get the detailed result of a specific spam check. Currently available to beta accounts only.
+Get the detailed result of a specific spam check.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param checkId Spam check UUID
@@ -172,7 +296,7 @@ func (r ApiListSpamChecksRequest) Execute() (*ListSpamChecks200Response, *http.R
 /*
 ListSpamChecks List spam checks
 
-List past spam check results with pagination. Currently available to beta accounts only.
+List past spam check results with pagination.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListSpamChecksRequest
@@ -267,7 +391,6 @@ func (a *SpamChecksAPIService) ListSpamChecksExecute(r ApiListSpamChecksRequest)
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -302,7 +425,7 @@ func (r ApiRunSpamCheckRequest) Execute() (*RunSpamCheck201Response, *http.Respo
 /*
 RunSpamCheck Run spam check
 
-Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality. Currently available to beta accounts only.
+Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRunSpamCheckRequest
@@ -399,7 +522,6 @@ func (a *SpamChecksAPIService) RunSpamCheckExecute(r ApiRunSpamCheckRequest) (*R
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

@@ -6,10 +6,12 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateSendingDomain**](SendingDomainsAPI.md#CreateSendingDomain) | **Post** /v1/sending-domains | Add a sending domain
 [**DeleteSendingDomain**](SendingDomainsAPI.md#DeleteSendingDomain) | **Delete** /v1/sending-domains/{domain_id} | Delete a sending domain
+[**GetReplyForwarding**](SendingDomainsAPI.md#GetReplyForwarding) | **Get** /v1/sending-domains/{domain_id}/reply-forwarding | Get reply forwarding config
 [**GetSendingDomain**](SendingDomainsAPI.md#GetSendingDomain) | **Get** /v1/sending-domains/{domain_id} | Get a sending domain
 [**GetSendingDomainIdentityScore**](SendingDomainsAPI.md#GetSendingDomainIdentityScore) | **Get** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score
 [**GetSendingStats**](SendingDomainsAPI.md#GetSendingStats) | **Get** /v1/sending-stats | Get sending statistics
 [**ListSendingDomains**](SendingDomainsAPI.md#ListSendingDomains) | **Get** /v1/sending-domains | List sending domains
+[**UpdateReplyForwarding**](SendingDomainsAPI.md#UpdateReplyForwarding) | **Patch** /v1/sending-domains/{domain_id}/reply-forwarding | Update reply forwarding config
 [**VerifySendingDomain**](SendingDomainsAPI.md#VerifySendingDomain) | **Post** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
 
 
@@ -31,7 +33,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -97,7 +99,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -150,6 +152,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetReplyForwarding
+
+> GetReplyForwarding200Response GetReplyForwarding(ctx, domainId).Execute()
+
+Get reply forwarding config
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	domainId := "domainId_example" // string | Sending domain ID
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SendingDomainsAPI.GetReplyForwarding(context.Background(), domainId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SendingDomainsAPI.GetReplyForwarding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetReplyForwarding`: GetReplyForwarding200Response
+	fmt.Fprintf(os.Stdout, "Response from `SendingDomainsAPI.GetReplyForwarding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**domainId** | **string** | Sending domain ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetReplyForwardingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetReplyForwarding200Response**](GetReplyForwarding200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetSendingDomain
 
 > CreateSendingDomain201Response GetSendingDomain(ctx, domainId).Execute()
@@ -167,7 +239,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -237,7 +309,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -307,7 +379,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -375,7 +447,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -419,6 +491,78 @@ Other parameters are passed through a pointer to a apiListSendingDomainsRequest 
 [[Back to README]](../README.md)
 
 
+## UpdateReplyForwarding
+
+> GetReplyForwarding200Response UpdateReplyForwarding(ctx, domainId).UpdateReplyForwardingRequest(updateReplyForwardingRequest).Execute()
+
+Update reply forwarding config
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	domainId := "domainId_example" // string | Sending domain ID
+	updateReplyForwardingRequest := *openapiclient.NewUpdateReplyForwardingRequest() // UpdateReplyForwardingRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SendingDomainsAPI.UpdateReplyForwarding(context.Background(), domainId).UpdateReplyForwardingRequest(updateReplyForwardingRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SendingDomainsAPI.UpdateReplyForwarding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateReplyForwarding`: GetReplyForwarding200Response
+	fmt.Fprintf(os.Stdout, "Response from `SendingDomainsAPI.UpdateReplyForwarding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**domainId** | **string** | Sending domain ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateReplyForwardingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateReplyForwardingRequest** | [**UpdateReplyForwardingRequest**](UpdateReplyForwardingRequest.md) |  | 
+
+### Return type
+
+[**GetReplyForwarding200Response**](GetReplyForwarding200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## VerifySendingDomain
 
 > CreateSendingDomain201Response VerifySendingDomain(ctx, domainId).Execute()
@@ -436,7 +580,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {

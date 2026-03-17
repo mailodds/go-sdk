@@ -20,12 +20,13 @@ var _ MappedNullable = &GetDmarcDomain200ResponseDomainAllOfSummary{}
 
 // GetDmarcDomain200ResponseDomainAllOfSummary struct for GetDmarcDomain200ResponseDomainAllOfSummary
 type GetDmarcDomain200ResponseDomainAllOfSummary struct {
-	TotalReports *int32 `json:"total_reports,omitempty"`
-	TotalRecords *int32 `json:"total_records,omitempty"`
+	Days *int32 `json:"days,omitempty"`
+	ReportCount *int32 `json:"report_count,omitempty"`
+	SourceCount *int32 `json:"source_count,omitempty"`
+	TotalMessages *int32 `json:"total_messages,omitempty"`
+	TotalPass *int32 `json:"total_pass,omitempty"`
+	TotalFail *int32 `json:"total_fail,omitempty"`
 	PassRate *float32 `json:"pass_rate,omitempty"`
-	FailRate *float32 `json:"fail_rate,omitempty"`
-	DkimAligned *float32 `json:"dkim_aligned,omitempty"`
-	SpfAligned *float32 `json:"spf_aligned,omitempty"`
 }
 
 // NewGetDmarcDomain200ResponseDomainAllOfSummary instantiates a new GetDmarcDomain200ResponseDomainAllOfSummary object
@@ -45,68 +46,196 @@ func NewGetDmarcDomain200ResponseDomainAllOfSummaryWithDefaults() *GetDmarcDomai
 	return &this
 }
 
-// GetTotalReports returns the TotalReports field value if set, zero value otherwise.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalReports() int32 {
-	if o == nil || IsNil(o.TotalReports) {
+// GetDays returns the Days field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDays() int32 {
+	if o == nil || IsNil(o.Days) {
 		var ret int32
 		return ret
 	}
-	return *o.TotalReports
+	return *o.Days
 }
 
-// GetTotalReportsOk returns a tuple with the TotalReports field value if set, nil otherwise
+// GetDaysOk returns a tuple with the Days field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalReportsOk() (*int32, bool) {
-	if o == nil || IsNil(o.TotalReports) {
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDaysOk() (*int32, bool) {
+	if o == nil || IsNil(o.Days) {
 		return nil, false
 	}
-	return o.TotalReports, true
+	return o.Days, true
 }
 
-// HasTotalReports returns a boolean if a field has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalReports() bool {
-	if o != nil && !IsNil(o.TotalReports) {
+// HasDays returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasDays() bool {
+	if o != nil && !IsNil(o.Days) {
 		return true
 	}
 
 	return false
 }
 
-// SetTotalReports gets a reference to the given int32 and assigns it to the TotalReports field.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalReports(v int32) {
-	o.TotalReports = &v
+// SetDays gets a reference to the given int32 and assigns it to the Days field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetDays(v int32) {
+	o.Days = &v
 }
 
-// GetTotalRecords returns the TotalRecords field value if set, zero value otherwise.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalRecords() int32 {
-	if o == nil || IsNil(o.TotalRecords) {
+// GetReportCount returns the ReportCount field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetReportCount() int32 {
+	if o == nil || IsNil(o.ReportCount) {
 		var ret int32
 		return ret
 	}
-	return *o.TotalRecords
+	return *o.ReportCount
 }
 
-// GetTotalRecordsOk returns a tuple with the TotalRecords field value if set, nil otherwise
+// GetReportCountOk returns a tuple with the ReportCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalRecordsOk() (*int32, bool) {
-	if o == nil || IsNil(o.TotalRecords) {
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetReportCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.ReportCount) {
 		return nil, false
 	}
-	return o.TotalRecords, true
+	return o.ReportCount, true
 }
 
-// HasTotalRecords returns a boolean if a field has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalRecords() bool {
-	if o != nil && !IsNil(o.TotalRecords) {
+// HasReportCount returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasReportCount() bool {
+	if o != nil && !IsNil(o.ReportCount) {
 		return true
 	}
 
 	return false
 }
 
-// SetTotalRecords gets a reference to the given int32 and assigns it to the TotalRecords field.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalRecords(v int32) {
-	o.TotalRecords = &v
+// SetReportCount gets a reference to the given int32 and assigns it to the ReportCount field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetReportCount(v int32) {
+	o.ReportCount = &v
+}
+
+// GetSourceCount returns the SourceCount field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSourceCount() int32 {
+	if o == nil || IsNil(o.SourceCount) {
+		var ret int32
+		return ret
+	}
+	return *o.SourceCount
+}
+
+// GetSourceCountOk returns a tuple with the SourceCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSourceCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.SourceCount) {
+		return nil, false
+	}
+	return o.SourceCount, true
+}
+
+// HasSourceCount returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasSourceCount() bool {
+	if o != nil && !IsNil(o.SourceCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceCount gets a reference to the given int32 and assigns it to the SourceCount field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetSourceCount(v int32) {
+	o.SourceCount = &v
+}
+
+// GetTotalMessages returns the TotalMessages field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalMessages() int32 {
+	if o == nil || IsNil(o.TotalMessages) {
+		var ret int32
+		return ret
+	}
+	return *o.TotalMessages
+}
+
+// GetTotalMessagesOk returns a tuple with the TotalMessages field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalMessagesOk() (*int32, bool) {
+	if o == nil || IsNil(o.TotalMessages) {
+		return nil, false
+	}
+	return o.TotalMessages, true
+}
+
+// HasTotalMessages returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalMessages() bool {
+	if o != nil && !IsNil(o.TotalMessages) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalMessages gets a reference to the given int32 and assigns it to the TotalMessages field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalMessages(v int32) {
+	o.TotalMessages = &v
+}
+
+// GetTotalPass returns the TotalPass field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalPass() int32 {
+	if o == nil || IsNil(o.TotalPass) {
+		var ret int32
+		return ret
+	}
+	return *o.TotalPass
+}
+
+// GetTotalPassOk returns a tuple with the TotalPass field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalPassOk() (*int32, bool) {
+	if o == nil || IsNil(o.TotalPass) {
+		return nil, false
+	}
+	return o.TotalPass, true
+}
+
+// HasTotalPass returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalPass() bool {
+	if o != nil && !IsNil(o.TotalPass) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalPass gets a reference to the given int32 and assigns it to the TotalPass field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalPass(v int32) {
+	o.TotalPass = &v
+}
+
+// GetTotalFail returns the TotalFail field value if set, zero value otherwise.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalFail() int32 {
+	if o == nil || IsNil(o.TotalFail) {
+		var ret int32
+		return ret
+	}
+	return *o.TotalFail
+}
+
+// GetTotalFailOk returns a tuple with the TotalFail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetTotalFailOk() (*int32, bool) {
+	if o == nil || IsNil(o.TotalFail) {
+		return nil, false
+	}
+	return o.TotalFail, true
+}
+
+// HasTotalFail returns a boolean if a field has been set.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasTotalFail() bool {
+	if o != nil && !IsNil(o.TotalFail) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalFail gets a reference to the given int32 and assigns it to the TotalFail field.
+func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetTotalFail(v int32) {
+	o.TotalFail = &v
 }
 
 // GetPassRate returns the PassRate field value if set, zero value otherwise.
@@ -141,102 +270,6 @@ func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetPassRate(v float32) {
 	o.PassRate = &v
 }
 
-// GetFailRate returns the FailRate field value if set, zero value otherwise.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetFailRate() float32 {
-	if o == nil || IsNil(o.FailRate) {
-		var ret float32
-		return ret
-	}
-	return *o.FailRate
-}
-
-// GetFailRateOk returns a tuple with the FailRate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetFailRateOk() (*float32, bool) {
-	if o == nil || IsNil(o.FailRate) {
-		return nil, false
-	}
-	return o.FailRate, true
-}
-
-// HasFailRate returns a boolean if a field has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasFailRate() bool {
-	if o != nil && !IsNil(o.FailRate) {
-		return true
-	}
-
-	return false
-}
-
-// SetFailRate gets a reference to the given float32 and assigns it to the FailRate field.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetFailRate(v float32) {
-	o.FailRate = &v
-}
-
-// GetDkimAligned returns the DkimAligned field value if set, zero value otherwise.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDkimAligned() float32 {
-	if o == nil || IsNil(o.DkimAligned) {
-		var ret float32
-		return ret
-	}
-	return *o.DkimAligned
-}
-
-// GetDkimAlignedOk returns a tuple with the DkimAligned field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetDkimAlignedOk() (*float32, bool) {
-	if o == nil || IsNil(o.DkimAligned) {
-		return nil, false
-	}
-	return o.DkimAligned, true
-}
-
-// HasDkimAligned returns a boolean if a field has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasDkimAligned() bool {
-	if o != nil && !IsNil(o.DkimAligned) {
-		return true
-	}
-
-	return false
-}
-
-// SetDkimAligned gets a reference to the given float32 and assigns it to the DkimAligned field.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetDkimAligned(v float32) {
-	o.DkimAligned = &v
-}
-
-// GetSpfAligned returns the SpfAligned field value if set, zero value otherwise.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSpfAligned() float32 {
-	if o == nil || IsNil(o.SpfAligned) {
-		var ret float32
-		return ret
-	}
-	return *o.SpfAligned
-}
-
-// GetSpfAlignedOk returns a tuple with the SpfAligned field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) GetSpfAlignedOk() (*float32, bool) {
-	if o == nil || IsNil(o.SpfAligned) {
-		return nil, false
-	}
-	return o.SpfAligned, true
-}
-
-// HasSpfAligned returns a boolean if a field has been set.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) HasSpfAligned() bool {
-	if o != nil && !IsNil(o.SpfAligned) {
-		return true
-	}
-
-	return false
-}
-
-// SetSpfAligned gets a reference to the given float32 and assigns it to the SpfAligned field.
-func (o *GetDmarcDomain200ResponseDomainAllOfSummary) SetSpfAligned(v float32) {
-	o.SpfAligned = &v
-}
-
 func (o GetDmarcDomain200ResponseDomainAllOfSummary) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -247,23 +280,26 @@ func (o GetDmarcDomain200ResponseDomainAllOfSummary) MarshalJSON() ([]byte, erro
 
 func (o GetDmarcDomain200ResponseDomainAllOfSummary) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.TotalReports) {
-		toSerialize["total_reports"] = o.TotalReports
+	if !IsNil(o.Days) {
+		toSerialize["days"] = o.Days
 	}
-	if !IsNil(o.TotalRecords) {
-		toSerialize["total_records"] = o.TotalRecords
+	if !IsNil(o.ReportCount) {
+		toSerialize["report_count"] = o.ReportCount
+	}
+	if !IsNil(o.SourceCount) {
+		toSerialize["source_count"] = o.SourceCount
+	}
+	if !IsNil(o.TotalMessages) {
+		toSerialize["total_messages"] = o.TotalMessages
+	}
+	if !IsNil(o.TotalPass) {
+		toSerialize["total_pass"] = o.TotalPass
+	}
+	if !IsNil(o.TotalFail) {
+		toSerialize["total_fail"] = o.TotalFail
 	}
 	if !IsNil(o.PassRate) {
 		toSerialize["pass_rate"] = o.PassRate
-	}
-	if !IsNil(o.FailRate) {
-		toSerialize["fail_rate"] = o.FailRate
-	}
-	if !IsNil(o.DkimAligned) {
-		toSerialize["dkim_aligned"] = o.DkimAligned
-	}
-	if !IsNil(o.SpfAligned) {
-		toSerialize["spf_aligned"] = o.SpfAligned
 	}
 	return toSerialize, nil
 }

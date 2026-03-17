@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **RequestId** | Pointer to **string** |  | [optional] 
-**Tests** | Pointer to [**[]ServerTest**](ServerTest.md) |  | [optional] 
+**Data** | Pointer to [**[]ServerTest**](ServerTest.md) |  | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
 
 ## Methods
@@ -78,30 +78,30 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetTests
+### GetData
 
-`func (o *ListServerTests200Response) GetTests() []ServerTest`
+`func (o *ListServerTests200Response) GetData() []ServerTest`
 
-GetTests returns the Tests field if non-nil, zero value otherwise.
+GetData returns the Data field if non-nil, zero value otherwise.
 
-### GetTestsOk
+### GetDataOk
 
-`func (o *ListServerTests200Response) GetTestsOk() (*[]ServerTest, bool)`
+`func (o *ListServerTests200Response) GetDataOk() (*[]ServerTest, bool)`
 
-GetTestsOk returns a tuple with the Tests field if it's non-nil, zero value otherwise
+GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTests
+### SetData
 
-`func (o *ListServerTests200Response) SetTests(v []ServerTest)`
+`func (o *ListServerTests200Response) SetData(v []ServerTest)`
 
-SetTests sets Tests field to given value.
+SetData sets Data field to given value.
 
-### HasTests
+### HasData
 
-`func (o *ListServerTests200Response) HasTests() bool`
+`func (o *ListServerTests200Response) HasData() bool`
 
-HasTests returns a boolean if a field has been set.
+HasData returns a boolean if a field has been set.
 
 ### GetPagination
 

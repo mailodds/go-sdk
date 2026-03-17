@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateBounceAnalysis**](BounceAnalysisAPI.md#CreateBounceAnalysis) | **Post** /v1/bounce-analyses | Analyze bounce logs
 [**CrossReferenceBounces**](BounceAnalysisAPI.md#CrossReferenceBounces) | **Get** /v1/bounce-analyses/{analysis_id}/cross-reference | Cross-reference bounces with validation logs
+[**DeleteBounceAnalysis**](BounceAnalysisAPI.md#DeleteBounceAnalysis) | **Delete** /v1/bounce-analyses/{analysis_id} | Delete bounce analysis
 [**GetBounceAnalysis**](BounceAnalysisAPI.md#GetBounceAnalysis) | **Get** /v1/bounce-analyses/{analysis_id} | Get bounce analysis
 [**GetBounceRecords**](BounceAnalysisAPI.md#GetBounceRecords) | **Get** /v1/bounce-analyses/{analysis_id}/records | Get bounce records
 
@@ -28,7 +29,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -94,7 +95,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -147,6 +148,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteBounceAnalysis
+
+> DeletePolicyRule200Response DeleteBounceAnalysis(ctx, analysisId).Execute()
+
+Delete bounce analysis
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
+)
+
+func main() {
+	analysisId := "analysisId_example" // string | Bounce analysis ID
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BounceAnalysisAPI.DeleteBounceAnalysis(context.Background(), analysisId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BounceAnalysisAPI.DeleteBounceAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteBounceAnalysis`: DeletePolicyRule200Response
+	fmt.Fprintf(os.Stdout, "Response from `BounceAnalysisAPI.DeleteBounceAnalysis`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**analysisId** | **string** | Bounce analysis ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteBounceAnalysisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetBounceAnalysis
 
 > BounceAnalysisResponse GetBounceAnalysis(ctx, analysisId).Execute()
@@ -164,7 +235,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
@@ -234,7 +305,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/mailodds"
 )
 
 func main() {
