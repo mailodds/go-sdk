@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **RequestId** | Pointer to **string** |  | [optional] 
-**Timeline** | Pointer to **[]map[string]interface{}** |  | [optional] 
+**Timeline** | Pointer to [**GetReputationTimeline200ResponseTimeline**](GetReputationTimeline200ResponseTimeline.md) |  | [optional] 
 
 ## Methods
 
@@ -79,20 +79,20 @@ HasRequestId returns a boolean if a field has been set.
 
 ### GetTimeline
 
-`func (o *GetReputationTimeline200Response) GetTimeline() []map[string]interface{}`
+`func (o *GetReputationTimeline200Response) GetTimeline() GetReputationTimeline200ResponseTimeline`
 
 GetTimeline returns the Timeline field if non-nil, zero value otherwise.
 
 ### GetTimelineOk
 
-`func (o *GetReputationTimeline200Response) GetTimelineOk() (*[]map[string]interface{}, bool)`
+`func (o *GetReputationTimeline200Response) GetTimelineOk() (*GetReputationTimeline200ResponseTimeline, bool)`
 
 GetTimelineOk returns a tuple with the Timeline field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTimeline
 
-`func (o *GetReputationTimeline200Response) SetTimeline(v []map[string]interface{})`
+`func (o *GetReputationTimeline200Response) SetTimeline(v GetReputationTimeline200ResponseTimeline)`
 
 SetTimeline sets Timeline field to given value.
 
