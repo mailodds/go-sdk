@@ -40,7 +40,7 @@ GetServerTest Get server test
 Get the detailed results of a specific server test.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param testId Server test UUID
+ @param testId
  @return ApiGetServerTestRequest
 */
 func (a *ServerTestsAPIService) GetServerTest(ctx context.Context, testId string) ApiGetServerTestRequest {
@@ -112,7 +112,7 @@ func (a *ServerTestsAPIService) GetServerTestExecute(r ApiGetServerTestRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -123,7 +123,7 @@ func (a *ServerTestsAPIService) GetServerTestExecute(r ApiGetServerTestRequest) 
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

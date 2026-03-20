@@ -143,7 +143,6 @@ func (a *ValidationPoliciesAPIService) AddPolicyRuleExecute(r ApiAddPolicyRuleRe
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -275,7 +274,6 @@ func (a *ValidationPoliciesAPIService) CreatePolicyExecute(r ApiCreatePolicyRequ
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -520,7 +518,6 @@ func (a *ValidationPoliciesAPIService) DeletePolicyExecute(r ApiDeletePolicyRequ
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -638,7 +635,6 @@ func (a *ValidationPoliciesAPIService) DeletePolicyRuleExecute(r ApiDeletePolicy
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -752,7 +748,6 @@ func (a *ValidationPoliciesAPIService) GetPolicyExecute(r ApiGetPolicyRequest) (
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1116,7 +1111,6 @@ func (a *ValidationPoliciesAPIService) TestPolicyExecute(r ApiTestPolicyRequest)
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1252,7 +1246,6 @@ func (a *ValidationPoliciesAPIService) UpdatePolicyExecute(r ApiUpdatePolicyRequ
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

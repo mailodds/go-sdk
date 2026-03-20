@@ -22,7 +22,7 @@ var _ MappedNullable = &GetBounceStats200Response{}
 type GetBounceStats200Response struct {
 	SchemaVersion *string `json:"schema_version,omitempty"`
 	RequestId *string `json:"request_id,omitempty"`
-	Stats []map[string]interface{} `json:"stats,omitempty"`
+	Stats *GetBounceStats200ResponseStats `json:"stats,omitempty"`
 }
 
 // NewGetBounceStats200Response instantiates a new GetBounceStats200Response object
@@ -107,17 +107,17 @@ func (o *GetBounceStats200Response) SetRequestId(v string) {
 }
 
 // GetStats returns the Stats field value if set, zero value otherwise.
-func (o *GetBounceStats200Response) GetStats() []map[string]interface{} {
+func (o *GetBounceStats200Response) GetStats() GetBounceStats200ResponseStats {
 	if o == nil || IsNil(o.Stats) {
-		var ret []map[string]interface{}
+		var ret GetBounceStats200ResponseStats
 		return ret
 	}
-	return o.Stats
+	return *o.Stats
 }
 
 // GetStatsOk returns a tuple with the Stats field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetBounceStats200Response) GetStatsOk() ([]map[string]interface{}, bool) {
+func (o *GetBounceStats200Response) GetStatsOk() (*GetBounceStats200ResponseStats, bool) {
 	if o == nil || IsNil(o.Stats) {
 		return nil, false
 	}
@@ -133,9 +133,9 @@ func (o *GetBounceStats200Response) HasStats() bool {
 	return false
 }
 
-// SetStats gets a reference to the given []map[string]interface{} and assigns it to the Stats field.
-func (o *GetBounceStats200Response) SetStats(v []map[string]interface{}) {
-	o.Stats = v
+// SetStats gets a reference to the given GetBounceStats200ResponseStats and assigns it to the Stats field.
+func (o *GetBounceStats200Response) SetStats(v GetBounceStats200ResponseStats) {
+	o.Stats = &v
 }
 
 func (o GetBounceStats200Response) MarshalJSON() ([]byte, error) {

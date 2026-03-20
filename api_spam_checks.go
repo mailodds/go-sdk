@@ -40,7 +40,7 @@ DeleteSpamCheck Delete spam check
 Delete a spam check result.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param checkId Spam check ID
+ @param checkId
  @return ApiDeleteSpamCheckRequest
 */
 func (a *SpamChecksAPIService) DeleteSpamCheck(ctx context.Context, checkId string) ApiDeleteSpamCheckRequest {
@@ -112,7 +112,7 @@ func (a *SpamChecksAPIService) DeleteSpamCheckExecute(r ApiDeleteSpamCheckReques
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -123,7 +123,7 @@ func (a *SpamChecksAPIService) DeleteSpamCheckExecute(r ApiDeleteSpamCheckReques
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -164,7 +164,7 @@ GetSpamCheck Get spam check
 Get the detailed result of a specific spam check.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param checkId Spam check UUID
+ @param checkId
  @return ApiGetSpamCheckRequest
 */
 func (a *SpamChecksAPIService) GetSpamCheck(ctx context.Context, checkId string) ApiGetSpamCheckRequest {
@@ -236,7 +236,7 @@ func (a *SpamChecksAPIService) GetSpamCheckExecute(r ApiGetSpamCheckRequest) (*R
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -247,7 +247,7 @@ func (a *SpamChecksAPIService) GetSpamCheckExecute(r ApiGetSpamCheckRequest) (*R
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

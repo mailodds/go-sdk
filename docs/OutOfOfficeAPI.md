@@ -99,7 +99,7 @@ import (
 )
 
 func main() {
-	email := "email_example" // string | Email address
+	email := "email_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -119,7 +119,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** | Email address | 
+**email** | **string** |  | 
 
 ### Other Parameters
 
@@ -169,7 +169,7 @@ import (
 )
 
 func main() {
-	email := "email_example" // string | Email address to check
+	email := "email_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -189,7 +189,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** | Email address to check | 
+**email** | **string** |  | 
 
 ### Other Parameters
 
@@ -309,7 +309,7 @@ import (
 )
 
 func main() {
-	email := "email_example" // string | Email address
+	email := "email_example" // string | 
 	updateOooContactRequest := *openapiclient.NewUpdateOooContactRequest() // UpdateOooContactRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -330,7 +330,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** | Email address | 
+**email** | **string** |  | 
 
 ### Other Parameters
 

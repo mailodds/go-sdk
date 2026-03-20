@@ -171,7 +171,7 @@ DisconnectStore Disconnect a store
 Disconnect a store and deactivate its products. Products are retained but marked inactive.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store connection UUID
+ @param storeId
  @return ApiDisconnectStoreRequest
 */
 func (a *StoreConnectionsAPIService) DisconnectStore(ctx context.Context, storeId string) ApiDisconnectStoreRequest {
@@ -243,7 +243,7 @@ func (a *StoreConnectionsAPIService) DisconnectStoreExecute(r ApiDisconnectStore
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -254,7 +254,7 @@ func (a *StoreConnectionsAPIService) DisconnectStoreExecute(r ApiDisconnectStore
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -295,7 +295,7 @@ GetStore Get a store connection
 Get details of a specific store connection including sync status and product count.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store connection UUID
+ @param storeId
  @return ApiGetStoreRequest
 */
 func (a *StoreConnectionsAPIService) GetStore(ctx context.Context, storeId string) ApiGetStoreRequest {
@@ -367,7 +367,7 @@ func (a *StoreConnectionsAPIService) GetStoreExecute(r ApiGetStoreRequest) (*Cre
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -378,7 +378,7 @@ func (a *StoreConnectionsAPIService) GetStoreExecute(r ApiGetStoreRequest) (*Cre
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -432,8 +432,8 @@ GetSyncJobErrors Get sync job errors
 Get error details for a sync job.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store ID
- @param jobId Sync job ID
+ @param storeId
+ @param jobId
  @return ApiGetSyncJobErrorsRequest
 */
 func (a *StoreConnectionsAPIService) GetSyncJobErrors(ctx context.Context, storeId string, jobId string) ApiGetSyncJobErrorsRequest {
@@ -521,7 +521,7 @@ func (a *StoreConnectionsAPIService) GetSyncJobErrorsExecute(r ApiGetSyncJobErro
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -532,7 +532,7 @@ func (a *StoreConnectionsAPIService) GetSyncJobErrorsExecute(r ApiGetSyncJobErro
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -704,7 +704,7 @@ ListSyncJobs List sync jobs
 List sync job history for a store.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store ID
+ @param storeId
  @return ApiListSyncJobsRequest
 */
 func (a *StoreConnectionsAPIService) ListSyncJobs(ctx context.Context, storeId string) ApiListSyncJobsRequest {
@@ -790,7 +790,7 @@ func (a *StoreConnectionsAPIService) ListSyncJobsExecute(r ApiListSyncJobsReques
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -801,7 +801,7 @@ func (a *StoreConnectionsAPIService) ListSyncJobsExecute(r ApiListSyncJobsReques
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -849,7 +849,7 @@ TriggerSync Trigger product sync
 Trigger a manual product sync for a store. Supports idempotency via the Idempotency-Key header (5 minute TTL).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store connection UUID
+ @param storeId
  @return ApiTriggerSyncRequest
 */
 func (a *StoreConnectionsAPIService) TriggerSync(ctx context.Context, storeId string) ApiTriggerSyncRequest {
@@ -935,7 +935,7 @@ func (a *StoreConnectionsAPIService) TriggerSyncExecute(r ApiTriggerSyncRequest)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -946,7 +946,7 @@ func (a *StoreConnectionsAPIService) TriggerSyncExecute(r ApiTriggerSyncRequest)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -993,7 +993,7 @@ UpdateStore Update a store connection
 Update store settings such as name, sync interval, or credentials.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param storeId Store connection UUID
+ @param storeId
  @return ApiUpdateStoreRequest
 */
 func (a *StoreConnectionsAPIService) UpdateStore(ctx context.Context, storeId string) ApiUpdateStoreRequest {
@@ -1070,6 +1070,17 @@ func (a *StoreConnectionsAPIService) UpdateStoreExecute(r ApiUpdateStoreRequest)
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1082,17 +1093,6 @@ func (a *StoreConnectionsAPIService) UpdateStoreExecute(r ApiUpdateStoreRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

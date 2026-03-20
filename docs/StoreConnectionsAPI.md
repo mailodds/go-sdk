@@ -102,7 +102,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store connection UUID
+	storeId := "storeId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -122,7 +122,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store connection UUID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 
@@ -172,7 +172,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store connection UUID
+	storeId := "storeId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -192,7 +192,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store connection UUID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 
@@ -242,8 +242,8 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store ID
-	jobId := "jobId_example" // string | Sync job ID
+	storeId := "storeId_example" // string | 
+	jobId := "jobId_example" // string | 
 	page := int32(56) // int32 |  (optional) (default to 1)
 	perPage := int32(56) // int32 |  (optional) (default to 50)
 
@@ -265,8 +265,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store ID | 
-**jobId** | **string** | Sync job ID | 
+**storeId** | **string** |  | 
+**jobId** | **string** |  | 
 
 ### Other Parameters
 
@@ -385,7 +385,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store ID
+	storeId := "storeId_example" // string | 
 	page := int32(56) // int32 |  (optional) (default to 1)
 	perPage := int32(56) // int32 |  (optional) (default to 20)
 
@@ -407,7 +407,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store ID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 
@@ -459,7 +459,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store connection UUID
+	storeId := "storeId_example" // string | 
 	idempotencyKey := "idempotencyKey_example" // string | Idempotency key to prevent duplicate syncs (5 min TTL) (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -480,7 +480,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store connection UUID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 
@@ -531,7 +531,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store connection UUID
+	storeId := "storeId_example" // string | 
 	updateStoreRequest := *openapiclient.NewUpdateStoreRequest() // UpdateStoreRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -552,7 +552,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store connection UUID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 

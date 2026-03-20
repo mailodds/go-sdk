@@ -31,7 +31,7 @@ import (
 )
 
 func main() {
-	testId := "testId_example" // string | Server test UUID
+	testId := "testId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -51,7 +51,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**testId** | **string** | Server test UUID | 
+**testId** | **string** |  | 
 
 ### Other Parameters
 

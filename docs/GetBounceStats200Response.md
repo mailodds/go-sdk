@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SchemaVersion** | Pointer to **string** |  | [optional] 
 **RequestId** | Pointer to **string** |  | [optional] 
-**Stats** | Pointer to **[]map[string]interface{}** |  | [optional] 
+**Stats** | Pointer to [**GetBounceStats200ResponseStats**](GetBounceStats200ResponseStats.md) |  | [optional] 
 
 ## Methods
 
@@ -79,20 +79,20 @@ HasRequestId returns a boolean if a field has been set.
 
 ### GetStats
 
-`func (o *GetBounceStats200Response) GetStats() []map[string]interface{}`
+`func (o *GetBounceStats200Response) GetStats() GetBounceStats200ResponseStats`
 
 GetStats returns the Stats field if non-nil, zero value otherwise.
 
 ### GetStatsOk
 
-`func (o *GetBounceStats200Response) GetStatsOk() (*[]map[string]interface{}, bool)`
+`func (o *GetBounceStats200Response) GetStatsOk() (*GetBounceStats200ResponseStats, bool)`
 
 GetStatsOk returns a tuple with the Stats field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStats
 
-`func (o *GetBounceStats200Response) SetStats(v []map[string]interface{})`
+`func (o *GetBounceStats200Response) SetStats(v GetBounceStats200ResponseStats)`
 
 SetStats sets Stats field to given value.
 

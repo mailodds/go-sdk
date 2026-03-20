@@ -171,7 +171,7 @@ DeleteBlacklistMonitor Delete a blacklist monitor
 Permanently remove a blacklist monitor and its check history.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param monitorId Monitor UUID
+ @param monitorId
  @return ApiDeleteBlacklistMonitorRequest
 */
 func (a *BlacklistMonitoringAPIService) DeleteBlacklistMonitor(ctx context.Context, monitorId string) ApiDeleteBlacklistMonitorRequest {
@@ -243,7 +243,7 @@ func (a *BlacklistMonitoringAPIService) DeleteBlacklistMonitorExecute(r ApiDelet
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -254,7 +254,7 @@ func (a *BlacklistMonitoringAPIService) DeleteBlacklistMonitorExecute(r ApiDelet
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -307,7 +307,7 @@ GetBlacklistHistory Get blacklist check history
 Get the listing and delisting timeline for a monitored IP or domain.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param monitorId Monitor UUID
+ @param monitorId
  @return ApiGetBlacklistHistoryRequest
 */
 func (a *BlacklistMonitoringAPIService) GetBlacklistHistory(ctx context.Context, monitorId string) ApiGetBlacklistHistoryRequest {
@@ -393,7 +393,7 @@ func (a *BlacklistMonitoringAPIService) GetBlacklistHistoryExecute(r ApiGetBlack
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -404,7 +404,7 @@ func (a *BlacklistMonitoringAPIService) GetBlacklistHistoryExecute(r ApiGetBlack
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -554,7 +554,7 @@ RunBlacklistCheck Run blacklist check
 Run an on-demand DNSBL check for a monitored IP or domain.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param monitorId Monitor UUID
+ @param monitorId
  @return ApiRunBlacklistCheckRequest
 */
 func (a *BlacklistMonitoringAPIService) RunBlacklistCheck(ctx context.Context, monitorId string) ApiRunBlacklistCheckRequest {
@@ -626,7 +626,7 @@ func (a *BlacklistMonitoringAPIService) RunBlacklistCheckExecute(r ApiRunBlackli
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -637,7 +637,7 @@ func (a *BlacklistMonitoringAPIService) RunBlacklistCheckExecute(r ApiRunBlackli
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

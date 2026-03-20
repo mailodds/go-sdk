@@ -99,7 +99,7 @@ import (
 )
 
 func main() {
-	ruleId := "ruleId_example" // string | Alert rule ID
+	ruleId := "ruleId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -119,7 +119,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ruleId** | **string** | Alert rule ID | 
+**ruleId** | **string** |  | 
 
 ### Other Parameters
 
@@ -169,7 +169,7 @@ import (
 )
 
 func main() {
-	ruleId := "ruleId_example" // string | Alert rule ID
+	ruleId := "ruleId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -189,7 +189,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ruleId** | **string** | Alert rule ID | 
+**ruleId** | **string** |  | 
 
 ### Other Parameters
 
@@ -300,7 +300,7 @@ import (
 )
 
 func main() {
-	ruleId := "ruleId_example" // string | Alert rule ID
+	ruleId := "ruleId_example" // string | 
 	updateAlertRuleRequest := *openapiclient.NewUpdateAlertRuleRequest() // UpdateAlertRuleRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -321,7 +321,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ruleId** | **string** | Alert rule ID | 
+**ruleId** | **string** |  | 
 
 ### Other Parameters
 

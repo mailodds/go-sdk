@@ -116,6 +116,17 @@ func (a *WebhookCLIAPIService) CreateWebhookCliSessionExecute(r ApiCreateWebhook
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -157,7 +168,7 @@ DeleteWebhookCliSession Close CLI session
 Close a webhook CLI forwarding session.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param sessionId Session ID
+ @param sessionId
  @return ApiDeleteWebhookCliSessionRequest
 */
 func (a *WebhookCLIAPIService) DeleteWebhookCliSession(ctx context.Context, sessionId string) ApiDeleteWebhookCliSessionRequest {
@@ -229,7 +240,7 @@ func (a *WebhookCLIAPIService) DeleteWebhookCliSessionExecute(r ApiDeleteWebhook
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -240,7 +251,7 @@ func (a *WebhookCLIAPIService) DeleteWebhookCliSessionExecute(r ApiDeleteWebhook
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -404,7 +415,7 @@ ReplayWebhookDelivery Replay webhook delivery
 Replay a historical webhook delivery to active CLI sessions.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param deliveryId Delivery ID
+ @param deliveryId
  @return ApiReplayWebhookDeliveryRequest
 */
 func (a *WebhookCLIAPIService) ReplayWebhookDelivery(ctx context.Context, deliveryId int32) ApiReplayWebhookDeliveryRequest {
@@ -476,7 +487,7 @@ func (a *WebhookCLIAPIService) ReplayWebhookDeliveryExecute(r ApiReplayWebhookDe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -487,7 +498,7 @@ func (a *WebhookCLIAPIService) ReplayWebhookDeliveryExecute(r ApiReplayWebhookDe
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 401 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

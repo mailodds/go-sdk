@@ -664,7 +664,7 @@ import (
 )
 
 func main() {
-	jobId := "jobId_example" // string | Job ID
+	jobId := "jobId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -684,7 +684,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**jobId** | **string** | Job ID | 
+**jobId** | **string** |  | 
 
 ### Other Parameters
 

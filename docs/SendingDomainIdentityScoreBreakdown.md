@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Dkim** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
 **Spf** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
+**Dkim** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
 **Dmarc** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
-**Mx** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
-**ReturnPath** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
+**Bounce** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
+**Tracking** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
 **Bimi** | Pointer to [**IdentityScoreCheck**](IdentityScoreCheck.md) |  | [optional] 
 
 ## Methods
@@ -29,31 +29,6 @@ will change when the set of required properties is changed
 NewSendingDomainIdentityScoreBreakdownWithDefaults instantiates a new SendingDomainIdentityScoreBreakdown object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetDkim
-
-`func (o *SendingDomainIdentityScoreBreakdown) GetDkim() IdentityScoreCheck`
-
-GetDkim returns the Dkim field if non-nil, zero value otherwise.
-
-### GetDkimOk
-
-`func (o *SendingDomainIdentityScoreBreakdown) GetDkimOk() (*IdentityScoreCheck, bool)`
-
-GetDkimOk returns a tuple with the Dkim field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDkim
-
-`func (o *SendingDomainIdentityScoreBreakdown) SetDkim(v IdentityScoreCheck)`
-
-SetDkim sets Dkim field to given value.
-
-### HasDkim
-
-`func (o *SendingDomainIdentityScoreBreakdown) HasDkim() bool`
-
-HasDkim returns a boolean if a field has been set.
 
 ### GetSpf
 
@@ -80,6 +55,31 @@ SetSpf sets Spf field to given value.
 
 HasSpf returns a boolean if a field has been set.
 
+### GetDkim
+
+`func (o *SendingDomainIdentityScoreBreakdown) GetDkim() IdentityScoreCheck`
+
+GetDkim returns the Dkim field if non-nil, zero value otherwise.
+
+### GetDkimOk
+
+`func (o *SendingDomainIdentityScoreBreakdown) GetDkimOk() (*IdentityScoreCheck, bool)`
+
+GetDkimOk returns a tuple with the Dkim field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDkim
+
+`func (o *SendingDomainIdentityScoreBreakdown) SetDkim(v IdentityScoreCheck)`
+
+SetDkim sets Dkim field to given value.
+
+### HasDkim
+
+`func (o *SendingDomainIdentityScoreBreakdown) HasDkim() bool`
+
+HasDkim returns a boolean if a field has been set.
+
 ### GetDmarc
 
 `func (o *SendingDomainIdentityScoreBreakdown) GetDmarc() IdentityScoreCheck`
@@ -105,55 +105,55 @@ SetDmarc sets Dmarc field to given value.
 
 HasDmarc returns a boolean if a field has been set.
 
-### GetMx
+### GetBounce
 
-`func (o *SendingDomainIdentityScoreBreakdown) GetMx() IdentityScoreCheck`
+`func (o *SendingDomainIdentityScoreBreakdown) GetBounce() IdentityScoreCheck`
 
-GetMx returns the Mx field if non-nil, zero value otherwise.
+GetBounce returns the Bounce field if non-nil, zero value otherwise.
 
-### GetMxOk
+### GetBounceOk
 
-`func (o *SendingDomainIdentityScoreBreakdown) GetMxOk() (*IdentityScoreCheck, bool)`
+`func (o *SendingDomainIdentityScoreBreakdown) GetBounceOk() (*IdentityScoreCheck, bool)`
 
-GetMxOk returns a tuple with the Mx field if it's non-nil, zero value otherwise
+GetBounceOk returns a tuple with the Bounce field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMx
+### SetBounce
 
-`func (o *SendingDomainIdentityScoreBreakdown) SetMx(v IdentityScoreCheck)`
+`func (o *SendingDomainIdentityScoreBreakdown) SetBounce(v IdentityScoreCheck)`
 
-SetMx sets Mx field to given value.
+SetBounce sets Bounce field to given value.
 
-### HasMx
+### HasBounce
 
-`func (o *SendingDomainIdentityScoreBreakdown) HasMx() bool`
+`func (o *SendingDomainIdentityScoreBreakdown) HasBounce() bool`
 
-HasMx returns a boolean if a field has been set.
+HasBounce returns a boolean if a field has been set.
 
-### GetReturnPath
+### GetTracking
 
-`func (o *SendingDomainIdentityScoreBreakdown) GetReturnPath() IdentityScoreCheck`
+`func (o *SendingDomainIdentityScoreBreakdown) GetTracking() IdentityScoreCheck`
 
-GetReturnPath returns the ReturnPath field if non-nil, zero value otherwise.
+GetTracking returns the Tracking field if non-nil, zero value otherwise.
 
-### GetReturnPathOk
+### GetTrackingOk
 
-`func (o *SendingDomainIdentityScoreBreakdown) GetReturnPathOk() (*IdentityScoreCheck, bool)`
+`func (o *SendingDomainIdentityScoreBreakdown) GetTrackingOk() (*IdentityScoreCheck, bool)`
 
-GetReturnPathOk returns a tuple with the ReturnPath field if it's non-nil, zero value otherwise
+GetTrackingOk returns a tuple with the Tracking field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetReturnPath
+### SetTracking
 
-`func (o *SendingDomainIdentityScoreBreakdown) SetReturnPath(v IdentityScoreCheck)`
+`func (o *SendingDomainIdentityScoreBreakdown) SetTracking(v IdentityScoreCheck)`
 
-SetReturnPath sets ReturnPath field to given value.
+SetTracking sets Tracking field to given value.
 
-### HasReturnPath
+### HasTracking
 
-`func (o *SendingDomainIdentityScoreBreakdown) HasReturnPath() bool`
+`func (o *SendingDomainIdentityScoreBreakdown) HasTracking() bool`
 
-HasReturnPath returns a boolean if a field has been set.
+HasTracking returns a boolean if a field has been set.
 
 ### GetBimi
 

@@ -34,7 +34,7 @@ import (
 )
 
 func main() {
-	messageId := "messageId_example" // string | Message ID
+	messageId := "messageId_example" // string | 
 	correctInboundMessageRequest := *openapiclient.NewCorrectInboundMessageRequest("Correction_example") // CorrectInboundMessageRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -55,7 +55,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**messageId** | **string** | Message ID | 
+**messageId** | **string** |  | 
 
 ### Other Parameters
 
@@ -312,7 +312,7 @@ import (
 )
 
 func main() {
-	messageId := "messageId_example" // string | Message ID
+	messageId := "messageId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -332,7 +332,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**messageId** | **string** | Message ID | 
+**messageId** | **string** |  | 
 
 ### Other Parameters
 

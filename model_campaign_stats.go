@@ -18,7 +18,7 @@ import (
 // checks if the CampaignStats type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CampaignStats{}
 
-// CampaignStats Delivery and engagement statistics. Present when the campaign has started sending.
+// CampaignStats Delivery and engagement statistics.
 type CampaignStats struct {
 	Sent *int32 `json:"sent,omitempty"`
 	Delivered *int32 `json:"delivered,omitempty"`
@@ -26,10 +26,9 @@ type CampaignStats struct {
 	Clicked *int32 `json:"clicked,omitempty"`
 	Bounced *int32 `json:"bounced,omitempty"`
 	Unsubscribed *int32 `json:"unsubscribed,omitempty"`
-	Complained *int32 `json:"complained,omitempty"`
-	DeliveryRate *float32 `json:"delivery_rate,omitempty"`
-	OpenRate *float32 `json:"open_rate,omitempty"`
-	ClickRate *float32 `json:"click_rate,omitempty"`
+	Suppressed *int32 `json:"suppressed,omitempty"`
+	Failed *int32 `json:"failed,omitempty"`
+	Conversions *int32 `json:"conversions,omitempty"`
 }
 
 // NewCampaignStats instantiates a new CampaignStats object
@@ -241,132 +240,100 @@ func (o *CampaignStats) SetUnsubscribed(v int32) {
 	o.Unsubscribed = &v
 }
 
-// GetComplained returns the Complained field value if set, zero value otherwise.
-func (o *CampaignStats) GetComplained() int32 {
-	if o == nil || IsNil(o.Complained) {
+// GetSuppressed returns the Suppressed field value if set, zero value otherwise.
+func (o *CampaignStats) GetSuppressed() int32 {
+	if o == nil || IsNil(o.Suppressed) {
 		var ret int32
 		return ret
 	}
-	return *o.Complained
+	return *o.Suppressed
 }
 
-// GetComplainedOk returns a tuple with the Complained field value if set, nil otherwise
+// GetSuppressedOk returns a tuple with the Suppressed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignStats) GetComplainedOk() (*int32, bool) {
-	if o == nil || IsNil(o.Complained) {
+func (o *CampaignStats) GetSuppressedOk() (*int32, bool) {
+	if o == nil || IsNil(o.Suppressed) {
 		return nil, false
 	}
-	return o.Complained, true
+	return o.Suppressed, true
 }
 
-// HasComplained returns a boolean if a field has been set.
-func (o *CampaignStats) HasComplained() bool {
-	if o != nil && !IsNil(o.Complained) {
+// HasSuppressed returns a boolean if a field has been set.
+func (o *CampaignStats) HasSuppressed() bool {
+	if o != nil && !IsNil(o.Suppressed) {
 		return true
 	}
 
 	return false
 }
 
-// SetComplained gets a reference to the given int32 and assigns it to the Complained field.
-func (o *CampaignStats) SetComplained(v int32) {
-	o.Complained = &v
+// SetSuppressed gets a reference to the given int32 and assigns it to the Suppressed field.
+func (o *CampaignStats) SetSuppressed(v int32) {
+	o.Suppressed = &v
 }
 
-// GetDeliveryRate returns the DeliveryRate field value if set, zero value otherwise.
-func (o *CampaignStats) GetDeliveryRate() float32 {
-	if o == nil || IsNil(o.DeliveryRate) {
-		var ret float32
+// GetFailed returns the Failed field value if set, zero value otherwise.
+func (o *CampaignStats) GetFailed() int32 {
+	if o == nil || IsNil(o.Failed) {
+		var ret int32
 		return ret
 	}
-	return *o.DeliveryRate
+	return *o.Failed
 }
 
-// GetDeliveryRateOk returns a tuple with the DeliveryRate field value if set, nil otherwise
+// GetFailedOk returns a tuple with the Failed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignStats) GetDeliveryRateOk() (*float32, bool) {
-	if o == nil || IsNil(o.DeliveryRate) {
+func (o *CampaignStats) GetFailedOk() (*int32, bool) {
+	if o == nil || IsNil(o.Failed) {
 		return nil, false
 	}
-	return o.DeliveryRate, true
+	return o.Failed, true
 }
 
-// HasDeliveryRate returns a boolean if a field has been set.
-func (o *CampaignStats) HasDeliveryRate() bool {
-	if o != nil && !IsNil(o.DeliveryRate) {
+// HasFailed returns a boolean if a field has been set.
+func (o *CampaignStats) HasFailed() bool {
+	if o != nil && !IsNil(o.Failed) {
 		return true
 	}
 
 	return false
 }
 
-// SetDeliveryRate gets a reference to the given float32 and assigns it to the DeliveryRate field.
-func (o *CampaignStats) SetDeliveryRate(v float32) {
-	o.DeliveryRate = &v
+// SetFailed gets a reference to the given int32 and assigns it to the Failed field.
+func (o *CampaignStats) SetFailed(v int32) {
+	o.Failed = &v
 }
 
-// GetOpenRate returns the OpenRate field value if set, zero value otherwise.
-func (o *CampaignStats) GetOpenRate() float32 {
-	if o == nil || IsNil(o.OpenRate) {
-		var ret float32
+// GetConversions returns the Conversions field value if set, zero value otherwise.
+func (o *CampaignStats) GetConversions() int32 {
+	if o == nil || IsNil(o.Conversions) {
+		var ret int32
 		return ret
 	}
-	return *o.OpenRate
+	return *o.Conversions
 }
 
-// GetOpenRateOk returns a tuple with the OpenRate field value if set, nil otherwise
+// GetConversionsOk returns a tuple with the Conversions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignStats) GetOpenRateOk() (*float32, bool) {
-	if o == nil || IsNil(o.OpenRate) {
+func (o *CampaignStats) GetConversionsOk() (*int32, bool) {
+	if o == nil || IsNil(o.Conversions) {
 		return nil, false
 	}
-	return o.OpenRate, true
+	return o.Conversions, true
 }
 
-// HasOpenRate returns a boolean if a field has been set.
-func (o *CampaignStats) HasOpenRate() bool {
-	if o != nil && !IsNil(o.OpenRate) {
+// HasConversions returns a boolean if a field has been set.
+func (o *CampaignStats) HasConversions() bool {
+	if o != nil && !IsNil(o.Conversions) {
 		return true
 	}
 
 	return false
 }
 
-// SetOpenRate gets a reference to the given float32 and assigns it to the OpenRate field.
-func (o *CampaignStats) SetOpenRate(v float32) {
-	o.OpenRate = &v
-}
-
-// GetClickRate returns the ClickRate field value if set, zero value otherwise.
-func (o *CampaignStats) GetClickRate() float32 {
-	if o == nil || IsNil(o.ClickRate) {
-		var ret float32
-		return ret
-	}
-	return *o.ClickRate
-}
-
-// GetClickRateOk returns a tuple with the ClickRate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CampaignStats) GetClickRateOk() (*float32, bool) {
-	if o == nil || IsNil(o.ClickRate) {
-		return nil, false
-	}
-	return o.ClickRate, true
-}
-
-// HasClickRate returns a boolean if a field has been set.
-func (o *CampaignStats) HasClickRate() bool {
-	if o != nil && !IsNil(o.ClickRate) {
-		return true
-	}
-
-	return false
-}
-
-// SetClickRate gets a reference to the given float32 and assigns it to the ClickRate field.
-func (o *CampaignStats) SetClickRate(v float32) {
-	o.ClickRate = &v
+// SetConversions gets a reference to the given int32 and assigns it to the Conversions field.
+func (o *CampaignStats) SetConversions(v int32) {
+	o.Conversions = &v
 }
 
 func (o CampaignStats) MarshalJSON() ([]byte, error) {
@@ -397,17 +364,14 @@ func (o CampaignStats) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Unsubscribed) {
 		toSerialize["unsubscribed"] = o.Unsubscribed
 	}
-	if !IsNil(o.Complained) {
-		toSerialize["complained"] = o.Complained
+	if !IsNil(o.Suppressed) {
+		toSerialize["suppressed"] = o.Suppressed
 	}
-	if !IsNil(o.DeliveryRate) {
-		toSerialize["delivery_rate"] = o.DeliveryRate
+	if !IsNil(o.Failed) {
+		toSerialize["failed"] = o.Failed
 	}
-	if !IsNil(o.OpenRate) {
-		toSerialize["open_rate"] = o.OpenRate
-	}
-	if !IsNil(o.ClickRate) {
-		toSerialize["click_rate"] = o.ClickRate
+	if !IsNil(o.Conversions) {
+		toSerialize["conversions"] = o.Conversions
 	}
 	return toSerialize, nil
 }

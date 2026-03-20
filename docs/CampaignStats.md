@@ -10,10 +10,9 @@ Name | Type | Description | Notes
 **Clicked** | Pointer to **int32** |  | [optional] 
 **Bounced** | Pointer to **int32** |  | [optional] 
 **Unsubscribed** | Pointer to **int32** |  | [optional] 
-**Complained** | Pointer to **int32** |  | [optional] 
-**DeliveryRate** | Pointer to **float32** |  | [optional] 
-**OpenRate** | Pointer to **float32** |  | [optional] 
-**ClickRate** | Pointer to **float32** |  | [optional] 
+**Suppressed** | Pointer to **int32** |  | [optional] 
+**Failed** | Pointer to **int32** |  | [optional] 
+**Conversions** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -184,105 +183,80 @@ SetUnsubscribed sets Unsubscribed field to given value.
 
 HasUnsubscribed returns a boolean if a field has been set.
 
-### GetComplained
+### GetSuppressed
 
-`func (o *CampaignStats) GetComplained() int32`
+`func (o *CampaignStats) GetSuppressed() int32`
 
-GetComplained returns the Complained field if non-nil, zero value otherwise.
+GetSuppressed returns the Suppressed field if non-nil, zero value otherwise.
 
-### GetComplainedOk
+### GetSuppressedOk
 
-`func (o *CampaignStats) GetComplainedOk() (*int32, bool)`
+`func (o *CampaignStats) GetSuppressedOk() (*int32, bool)`
 
-GetComplainedOk returns a tuple with the Complained field if it's non-nil, zero value otherwise
+GetSuppressedOk returns a tuple with the Suppressed field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetComplained
+### SetSuppressed
 
-`func (o *CampaignStats) SetComplained(v int32)`
+`func (o *CampaignStats) SetSuppressed(v int32)`
 
-SetComplained sets Complained field to given value.
+SetSuppressed sets Suppressed field to given value.
 
-### HasComplained
+### HasSuppressed
 
-`func (o *CampaignStats) HasComplained() bool`
+`func (o *CampaignStats) HasSuppressed() bool`
 
-HasComplained returns a boolean if a field has been set.
+HasSuppressed returns a boolean if a field has been set.
 
-### GetDeliveryRate
+### GetFailed
 
-`func (o *CampaignStats) GetDeliveryRate() float32`
+`func (o *CampaignStats) GetFailed() int32`
 
-GetDeliveryRate returns the DeliveryRate field if non-nil, zero value otherwise.
+GetFailed returns the Failed field if non-nil, zero value otherwise.
 
-### GetDeliveryRateOk
+### GetFailedOk
 
-`func (o *CampaignStats) GetDeliveryRateOk() (*float32, bool)`
+`func (o *CampaignStats) GetFailedOk() (*int32, bool)`
 
-GetDeliveryRateOk returns a tuple with the DeliveryRate field if it's non-nil, zero value otherwise
+GetFailedOk returns a tuple with the Failed field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDeliveryRate
+### SetFailed
 
-`func (o *CampaignStats) SetDeliveryRate(v float32)`
+`func (o *CampaignStats) SetFailed(v int32)`
 
-SetDeliveryRate sets DeliveryRate field to given value.
+SetFailed sets Failed field to given value.
 
-### HasDeliveryRate
+### HasFailed
 
-`func (o *CampaignStats) HasDeliveryRate() bool`
+`func (o *CampaignStats) HasFailed() bool`
 
-HasDeliveryRate returns a boolean if a field has been set.
+HasFailed returns a boolean if a field has been set.
 
-### GetOpenRate
+### GetConversions
 
-`func (o *CampaignStats) GetOpenRate() float32`
+`func (o *CampaignStats) GetConversions() int32`
 
-GetOpenRate returns the OpenRate field if non-nil, zero value otherwise.
+GetConversions returns the Conversions field if non-nil, zero value otherwise.
 
-### GetOpenRateOk
+### GetConversionsOk
 
-`func (o *CampaignStats) GetOpenRateOk() (*float32, bool)`
+`func (o *CampaignStats) GetConversionsOk() (*int32, bool)`
 
-GetOpenRateOk returns a tuple with the OpenRate field if it's non-nil, zero value otherwise
+GetConversionsOk returns a tuple with the Conversions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOpenRate
+### SetConversions
 
-`func (o *CampaignStats) SetOpenRate(v float32)`
+`func (o *CampaignStats) SetConversions(v int32)`
 
-SetOpenRate sets OpenRate field to given value.
+SetConversions sets Conversions field to given value.
 
-### HasOpenRate
+### HasConversions
 
-`func (o *CampaignStats) HasOpenRate() bool`
+`func (o *CampaignStats) HasConversions() bool`
 
-HasOpenRate returns a boolean if a field has been set.
-
-### GetClickRate
-
-`func (o *CampaignStats) GetClickRate() float32`
-
-GetClickRate returns the ClickRate field if non-nil, zero value otherwise.
-
-### GetClickRateOk
-
-`func (o *CampaignStats) GetClickRateOk() (*float32, bool)`
-
-GetClickRateOk returns a tuple with the ClickRate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetClickRate
-
-`func (o *CampaignStats) SetClickRate(v float32)`
-
-SetClickRate sets ClickRate field to given value.
-
-### HasClickRate
-
-`func (o *CampaignStats) HasClickRate() bool`
-
-HasClickRate returns a boolean if a field has been set.
+HasConversions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

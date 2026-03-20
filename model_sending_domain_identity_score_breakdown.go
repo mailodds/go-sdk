@@ -20,11 +20,11 @@ var _ MappedNullable = &SendingDomainIdentityScoreBreakdown{}
 
 // SendingDomainIdentityScoreBreakdown Per-check scoring breakdown
 type SendingDomainIdentityScoreBreakdown struct {
-	Dkim *IdentityScoreCheck `json:"dkim,omitempty"`
 	Spf *IdentityScoreCheck `json:"spf,omitempty"`
+	Dkim *IdentityScoreCheck `json:"dkim,omitempty"`
 	Dmarc *IdentityScoreCheck `json:"dmarc,omitempty"`
-	Mx *IdentityScoreCheck `json:"mx,omitempty"`
-	ReturnPath *IdentityScoreCheck `json:"return_path,omitempty"`
+	Bounce *IdentityScoreCheck `json:"bounce,omitempty"`
+	Tracking *IdentityScoreCheck `json:"tracking,omitempty"`
 	Bimi *IdentityScoreCheck `json:"bimi,omitempty"`
 }
 
@@ -43,38 +43,6 @@ func NewSendingDomainIdentityScoreBreakdown() *SendingDomainIdentityScoreBreakdo
 func NewSendingDomainIdentityScoreBreakdownWithDefaults() *SendingDomainIdentityScoreBreakdown {
 	this := SendingDomainIdentityScoreBreakdown{}
 	return &this
-}
-
-// GetDkim returns the Dkim field value if set, zero value otherwise.
-func (o *SendingDomainIdentityScoreBreakdown) GetDkim() IdentityScoreCheck {
-	if o == nil || IsNil(o.Dkim) {
-		var ret IdentityScoreCheck
-		return ret
-	}
-	return *o.Dkim
-}
-
-// GetDkimOk returns a tuple with the Dkim field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SendingDomainIdentityScoreBreakdown) GetDkimOk() (*IdentityScoreCheck, bool) {
-	if o == nil || IsNil(o.Dkim) {
-		return nil, false
-	}
-	return o.Dkim, true
-}
-
-// HasDkim returns a boolean if a field has been set.
-func (o *SendingDomainIdentityScoreBreakdown) HasDkim() bool {
-	if o != nil && !IsNil(o.Dkim) {
-		return true
-	}
-
-	return false
-}
-
-// SetDkim gets a reference to the given IdentityScoreCheck and assigns it to the Dkim field.
-func (o *SendingDomainIdentityScoreBreakdown) SetDkim(v IdentityScoreCheck) {
-	o.Dkim = &v
 }
 
 // GetSpf returns the Spf field value if set, zero value otherwise.
@@ -109,6 +77,38 @@ func (o *SendingDomainIdentityScoreBreakdown) SetSpf(v IdentityScoreCheck) {
 	o.Spf = &v
 }
 
+// GetDkim returns the Dkim field value if set, zero value otherwise.
+func (o *SendingDomainIdentityScoreBreakdown) GetDkim() IdentityScoreCheck {
+	if o == nil || IsNil(o.Dkim) {
+		var ret IdentityScoreCheck
+		return ret
+	}
+	return *o.Dkim
+}
+
+// GetDkimOk returns a tuple with the Dkim field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendingDomainIdentityScoreBreakdown) GetDkimOk() (*IdentityScoreCheck, bool) {
+	if o == nil || IsNil(o.Dkim) {
+		return nil, false
+	}
+	return o.Dkim, true
+}
+
+// HasDkim returns a boolean if a field has been set.
+func (o *SendingDomainIdentityScoreBreakdown) HasDkim() bool {
+	if o != nil && !IsNil(o.Dkim) {
+		return true
+	}
+
+	return false
+}
+
+// SetDkim gets a reference to the given IdentityScoreCheck and assigns it to the Dkim field.
+func (o *SendingDomainIdentityScoreBreakdown) SetDkim(v IdentityScoreCheck) {
+	o.Dkim = &v
+}
+
 // GetDmarc returns the Dmarc field value if set, zero value otherwise.
 func (o *SendingDomainIdentityScoreBreakdown) GetDmarc() IdentityScoreCheck {
 	if o == nil || IsNil(o.Dmarc) {
@@ -141,68 +141,68 @@ func (o *SendingDomainIdentityScoreBreakdown) SetDmarc(v IdentityScoreCheck) {
 	o.Dmarc = &v
 }
 
-// GetMx returns the Mx field value if set, zero value otherwise.
-func (o *SendingDomainIdentityScoreBreakdown) GetMx() IdentityScoreCheck {
-	if o == nil || IsNil(o.Mx) {
+// GetBounce returns the Bounce field value if set, zero value otherwise.
+func (o *SendingDomainIdentityScoreBreakdown) GetBounce() IdentityScoreCheck {
+	if o == nil || IsNil(o.Bounce) {
 		var ret IdentityScoreCheck
 		return ret
 	}
-	return *o.Mx
+	return *o.Bounce
 }
 
-// GetMxOk returns a tuple with the Mx field value if set, nil otherwise
+// GetBounceOk returns a tuple with the Bounce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SendingDomainIdentityScoreBreakdown) GetMxOk() (*IdentityScoreCheck, bool) {
-	if o == nil || IsNil(o.Mx) {
+func (o *SendingDomainIdentityScoreBreakdown) GetBounceOk() (*IdentityScoreCheck, bool) {
+	if o == nil || IsNil(o.Bounce) {
 		return nil, false
 	}
-	return o.Mx, true
+	return o.Bounce, true
 }
 
-// HasMx returns a boolean if a field has been set.
-func (o *SendingDomainIdentityScoreBreakdown) HasMx() bool {
-	if o != nil && !IsNil(o.Mx) {
+// HasBounce returns a boolean if a field has been set.
+func (o *SendingDomainIdentityScoreBreakdown) HasBounce() bool {
+	if o != nil && !IsNil(o.Bounce) {
 		return true
 	}
 
 	return false
 }
 
-// SetMx gets a reference to the given IdentityScoreCheck and assigns it to the Mx field.
-func (o *SendingDomainIdentityScoreBreakdown) SetMx(v IdentityScoreCheck) {
-	o.Mx = &v
+// SetBounce gets a reference to the given IdentityScoreCheck and assigns it to the Bounce field.
+func (o *SendingDomainIdentityScoreBreakdown) SetBounce(v IdentityScoreCheck) {
+	o.Bounce = &v
 }
 
-// GetReturnPath returns the ReturnPath field value if set, zero value otherwise.
-func (o *SendingDomainIdentityScoreBreakdown) GetReturnPath() IdentityScoreCheck {
-	if o == nil || IsNil(o.ReturnPath) {
+// GetTracking returns the Tracking field value if set, zero value otherwise.
+func (o *SendingDomainIdentityScoreBreakdown) GetTracking() IdentityScoreCheck {
+	if o == nil || IsNil(o.Tracking) {
 		var ret IdentityScoreCheck
 		return ret
 	}
-	return *o.ReturnPath
+	return *o.Tracking
 }
 
-// GetReturnPathOk returns a tuple with the ReturnPath field value if set, nil otherwise
+// GetTrackingOk returns a tuple with the Tracking field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SendingDomainIdentityScoreBreakdown) GetReturnPathOk() (*IdentityScoreCheck, bool) {
-	if o == nil || IsNil(o.ReturnPath) {
+func (o *SendingDomainIdentityScoreBreakdown) GetTrackingOk() (*IdentityScoreCheck, bool) {
+	if o == nil || IsNil(o.Tracking) {
 		return nil, false
 	}
-	return o.ReturnPath, true
+	return o.Tracking, true
 }
 
-// HasReturnPath returns a boolean if a field has been set.
-func (o *SendingDomainIdentityScoreBreakdown) HasReturnPath() bool {
-	if o != nil && !IsNil(o.ReturnPath) {
+// HasTracking returns a boolean if a field has been set.
+func (o *SendingDomainIdentityScoreBreakdown) HasTracking() bool {
+	if o != nil && !IsNil(o.Tracking) {
 		return true
 	}
 
 	return false
 }
 
-// SetReturnPath gets a reference to the given IdentityScoreCheck and assigns it to the ReturnPath field.
-func (o *SendingDomainIdentityScoreBreakdown) SetReturnPath(v IdentityScoreCheck) {
-	o.ReturnPath = &v
+// SetTracking gets a reference to the given IdentityScoreCheck and assigns it to the Tracking field.
+func (o *SendingDomainIdentityScoreBreakdown) SetTracking(v IdentityScoreCheck) {
+	o.Tracking = &v
 }
 
 // GetBimi returns the Bimi field value if set, zero value otherwise.
@@ -247,20 +247,20 @@ func (o SendingDomainIdentityScoreBreakdown) MarshalJSON() ([]byte, error) {
 
 func (o SendingDomainIdentityScoreBreakdown) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Dkim) {
-		toSerialize["dkim"] = o.Dkim
-	}
 	if !IsNil(o.Spf) {
 		toSerialize["spf"] = o.Spf
+	}
+	if !IsNil(o.Dkim) {
+		toSerialize["dkim"] = o.Dkim
 	}
 	if !IsNil(o.Dmarc) {
 		toSerialize["dmarc"] = o.Dmarc
 	}
-	if !IsNil(o.Mx) {
-		toSerialize["mx"] = o.Mx
+	if !IsNil(o.Bounce) {
+		toSerialize["bounce"] = o.Bounce
 	}
-	if !IsNil(o.ReturnPath) {
-		toSerialize["return_path"] = o.ReturnPath
+	if !IsNil(o.Tracking) {
+		toSerialize["tracking"] = o.Tracking
 	}
 	if !IsNil(o.Bimi) {
 		toSerialize["bimi"] = o.Bimi

@@ -39,7 +39,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list ID
+	listId := "listId_example" // string | 
 	addContactRequest := *openapiclient.NewAddContactRequest("Email_example") // AddContactRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -60,7 +60,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list ID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -111,7 +111,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list UUID
+	listId := "listId_example" // string | 
 	appendToContactListRequest := *openapiclient.NewAppendToContactListRequest([]string{"SourceJobIds_example"}) // AppendToContactListRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -132,7 +132,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list UUID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -249,8 +249,8 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list ID
-	contactId := "contactId_example" // string | Contact ID
+	listId := "listId_example" // string | 
+	contactId := "contactId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -270,8 +270,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list ID | 
-**contactId** | **string** | Contact ID | 
+**listId** | **string** |  | 
+**contactId** | **string** |  | 
 
 ### Other Parameters
 
@@ -322,7 +322,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list UUID
+	listId := "listId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -342,7 +342,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list UUID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -392,7 +392,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list ID
+	listId := "listId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -412,7 +412,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list ID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -528,7 +528,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list ID
+	listId := "listId_example" // string | 
 	file := os.NewFile(1234, "some_file") // *os.File | CSV file (max 10MB)
 	columnMapping := "columnMapping_example" // string | JSON mapping of CSV columns to contact fields (optional)
 	consentSource := "consentSource_example" // string | Source of consent for imported contacts (optional)
@@ -552,7 +552,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list ID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -674,7 +674,7 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list UUID
+	listId := "listId_example" // string | 
 	queryContactListRequest := *openapiclient.NewQueryContactListRequest() // QueryContactListRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -695,7 +695,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list UUID | 
+**listId** | **string** |  | 
 
 ### Other Parameters
 
@@ -746,8 +746,8 @@ import (
 )
 
 func main() {
-	listId := "listId_example" // string | Contact list ID
-	contactId := "contactId_example" // string | Contact ID
+	listId := "listId_example" // string | 
+	contactId := "contactId_example" // string | 
 	updateContactRequest := *openapiclient.NewUpdateContactRequest() // UpdateContactRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -768,8 +768,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**listId** | **string** | Contact list ID | 
-**contactId** | **string** | Contact ID | 
+**listId** | **string** |  | 
+**contactId** | **string** |  | 
 
 ### Other Parameters
 

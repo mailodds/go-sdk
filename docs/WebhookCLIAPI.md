@@ -98,7 +98,7 @@ import (
 )
 
 func main() {
-	sessionId := "sessionId_example" // string | Session ID
+	sessionId := "sessionId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -118,7 +118,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**sessionId** | **string** | Session ID | 
+**sessionId** | **string** |  | 
 
 ### Other Parameters
 
@@ -234,7 +234,7 @@ import (
 )
 
 func main() {
-	deliveryId := int32(56) // int32 | Delivery ID
+	deliveryId := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -254,7 +254,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**deliveryId** | **int32** | Delivery ID | 
+**deliveryId** | **int32** |  | 
 
 ### Other Parameters
 

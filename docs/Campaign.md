@@ -5,18 +5,32 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | Campaign UUID | 
+**AccountId** | Pointer to **int32** |  | [optional] 
 **Name** | **string** | Campaign name | 
 **Status** | **string** |  | 
-**ListId** | **string** | Target subscriber list UUID | 
 **DomainId** | **string** | Sending domain UUID | 
-**FromEmail** | **string** |  | 
-**FromName** | Pointer to **string** |  | [optional] 
+**Subject** | Pointer to **string** |  | [optional] 
+**FromAddress** | **string** | Sender email address | 
 **ReplyTo** | Pointer to **NullableString** |  | [optional] 
+**HtmlBody** | Pointer to **NullableString** |  | [optional] 
+**TextBody** | Pointer to **NullableString** |  | [optional] 
+**HtmlBodyDark** | Pointer to **NullableString** |  | [optional] 
+**TextBodyDark** | Pointer to **NullableString** |  | [optional] 
+**CampaignType** | Pointer to **NullableString** |  | [optional] 
+**AutoDetectSchema** | Pointer to **bool** |  | [optional] 
+**PromoAnnotations** | Pointer to **map[string]interface{}** |  | [optional] 
+**ThrowawayPolicy** | Pointer to **string** |  | [optional] 
 **ScheduledAt** | Pointer to **NullableTime** |  | [optional] 
-**SentAt** | Pointer to **NullableTime** |  | [optional] 
-**CancelledAt** | Pointer to **NullableTime** |  | [optional] 
-**VariantCount** | Pointer to **int32** | Number of A/B variants | [optional] 
+**StartedAt** | Pointer to **NullableTime** |  | [optional] 
+**CompletedAt** | Pointer to **NullableTime** |  | [optional] 
+**RecipientCount** | Pointer to **int32** |  | [optional] 
+**IsAbTest** | Pointer to **bool** |  | [optional] 
+**WinningVariantId** | Pointer to **NullableString** |  | [optional] 
+**AbTestConfig** | Pointer to **map[string]interface{}** |  | [optional] 
+**ErrorMessage** | Pointer to **NullableString** |  | [optional] 
 **Stats** | Pointer to [**CampaignStats**](CampaignStats.md) |  | [optional] 
+**OpenRate** | Pointer to **float32** |  | [optional] 
+**ClickRate** | Pointer to **float32** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
 
@@ -24,7 +38,7 @@ Name | Type | Description | Notes
 
 ### NewCampaign
 
-`func NewCampaign(id string, name string, status string, listId string, domainId string, fromEmail string, createdAt time.Time, ) *Campaign`
+`func NewCampaign(id string, name string, status string, domainId string, fromAddress string, createdAt time.Time, ) *Campaign`
 
 NewCampaign instantiates a new Campaign object
 This constructor will assign default values to properties that have it defined,
@@ -58,6 +72,31 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+
+### GetAccountId
+
+`func (o *Campaign) GetAccountId() int32`
+
+GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+
+### GetAccountIdOk
+
+`func (o *Campaign) GetAccountIdOk() (*int32, bool)`
+
+GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountId
+
+`func (o *Campaign) SetAccountId(v int32)`
+
+SetAccountId sets AccountId field to given value.
+
+### HasAccountId
+
+`func (o *Campaign) HasAccountId() bool`
+
+HasAccountId returns a boolean if a field has been set.
 
 ### GetName
 
@@ -99,26 +138,6 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
-### GetListId
-
-`func (o *Campaign) GetListId() string`
-
-GetListId returns the ListId field if non-nil, zero value otherwise.
-
-### GetListIdOk
-
-`func (o *Campaign) GetListIdOk() (*string, bool)`
-
-GetListIdOk returns a tuple with the ListId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetListId
-
-`func (o *Campaign) SetListId(v string)`
-
-SetListId sets ListId field to given value.
-
-
 ### GetDomainId
 
 `func (o *Campaign) GetDomainId() string`
@@ -139,50 +158,50 @@ and a boolean to check if the value has been set.
 SetDomainId sets DomainId field to given value.
 
 
-### GetFromEmail
+### GetSubject
 
-`func (o *Campaign) GetFromEmail() string`
+`func (o *Campaign) GetSubject() string`
 
-GetFromEmail returns the FromEmail field if non-nil, zero value otherwise.
+GetSubject returns the Subject field if non-nil, zero value otherwise.
 
-### GetFromEmailOk
+### GetSubjectOk
 
-`func (o *Campaign) GetFromEmailOk() (*string, bool)`
+`func (o *Campaign) GetSubjectOk() (*string, bool)`
 
-GetFromEmailOk returns a tuple with the FromEmail field if it's non-nil, zero value otherwise
+GetSubjectOk returns a tuple with the Subject field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromEmail
+### SetSubject
 
-`func (o *Campaign) SetFromEmail(v string)`
+`func (o *Campaign) SetSubject(v string)`
 
-SetFromEmail sets FromEmail field to given value.
+SetSubject sets Subject field to given value.
 
+### HasSubject
 
-### GetFromName
+`func (o *Campaign) HasSubject() bool`
 
-`func (o *Campaign) GetFromName() string`
+HasSubject returns a boolean if a field has been set.
 
-GetFromName returns the FromName field if non-nil, zero value otherwise.
+### GetFromAddress
 
-### GetFromNameOk
+`func (o *Campaign) GetFromAddress() string`
 
-`func (o *Campaign) GetFromNameOk() (*string, bool)`
+GetFromAddress returns the FromAddress field if non-nil, zero value otherwise.
 
-GetFromNameOk returns a tuple with the FromName field if it's non-nil, zero value otherwise
+### GetFromAddressOk
+
+`func (o *Campaign) GetFromAddressOk() (*string, bool)`
+
+GetFromAddressOk returns a tuple with the FromAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromName
+### SetFromAddress
 
-`func (o *Campaign) SetFromName(v string)`
+`func (o *Campaign) SetFromAddress(v string)`
 
-SetFromName sets FromName field to given value.
+SetFromAddress sets FromAddress field to given value.
 
-### HasFromName
-
-`func (o *Campaign) HasFromName() bool`
-
-HasFromName returns a boolean if a field has been set.
 
 ### GetReplyTo
 
@@ -219,6 +238,266 @@ HasReplyTo returns a boolean if a field has been set.
 `func (o *Campaign) UnsetReplyTo()`
 
 UnsetReplyTo ensures that no value is present for ReplyTo, not even an explicit nil
+### GetHtmlBody
+
+`func (o *Campaign) GetHtmlBody() string`
+
+GetHtmlBody returns the HtmlBody field if non-nil, zero value otherwise.
+
+### GetHtmlBodyOk
+
+`func (o *Campaign) GetHtmlBodyOk() (*string, bool)`
+
+GetHtmlBodyOk returns a tuple with the HtmlBody field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHtmlBody
+
+`func (o *Campaign) SetHtmlBody(v string)`
+
+SetHtmlBody sets HtmlBody field to given value.
+
+### HasHtmlBody
+
+`func (o *Campaign) HasHtmlBody() bool`
+
+HasHtmlBody returns a boolean if a field has been set.
+
+### SetHtmlBodyNil
+
+`func (o *Campaign) SetHtmlBodyNil(b bool)`
+
+ SetHtmlBodyNil sets the value for HtmlBody to be an explicit nil
+
+### UnsetHtmlBody
+`func (o *Campaign) UnsetHtmlBody()`
+
+UnsetHtmlBody ensures that no value is present for HtmlBody, not even an explicit nil
+### GetTextBody
+
+`func (o *Campaign) GetTextBody() string`
+
+GetTextBody returns the TextBody field if non-nil, zero value otherwise.
+
+### GetTextBodyOk
+
+`func (o *Campaign) GetTextBodyOk() (*string, bool)`
+
+GetTextBodyOk returns a tuple with the TextBody field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTextBody
+
+`func (o *Campaign) SetTextBody(v string)`
+
+SetTextBody sets TextBody field to given value.
+
+### HasTextBody
+
+`func (o *Campaign) HasTextBody() bool`
+
+HasTextBody returns a boolean if a field has been set.
+
+### SetTextBodyNil
+
+`func (o *Campaign) SetTextBodyNil(b bool)`
+
+ SetTextBodyNil sets the value for TextBody to be an explicit nil
+
+### UnsetTextBody
+`func (o *Campaign) UnsetTextBody()`
+
+UnsetTextBody ensures that no value is present for TextBody, not even an explicit nil
+### GetHtmlBodyDark
+
+`func (o *Campaign) GetHtmlBodyDark() string`
+
+GetHtmlBodyDark returns the HtmlBodyDark field if non-nil, zero value otherwise.
+
+### GetHtmlBodyDarkOk
+
+`func (o *Campaign) GetHtmlBodyDarkOk() (*string, bool)`
+
+GetHtmlBodyDarkOk returns a tuple with the HtmlBodyDark field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHtmlBodyDark
+
+`func (o *Campaign) SetHtmlBodyDark(v string)`
+
+SetHtmlBodyDark sets HtmlBodyDark field to given value.
+
+### HasHtmlBodyDark
+
+`func (o *Campaign) HasHtmlBodyDark() bool`
+
+HasHtmlBodyDark returns a boolean if a field has been set.
+
+### SetHtmlBodyDarkNil
+
+`func (o *Campaign) SetHtmlBodyDarkNil(b bool)`
+
+ SetHtmlBodyDarkNil sets the value for HtmlBodyDark to be an explicit nil
+
+### UnsetHtmlBodyDark
+`func (o *Campaign) UnsetHtmlBodyDark()`
+
+UnsetHtmlBodyDark ensures that no value is present for HtmlBodyDark, not even an explicit nil
+### GetTextBodyDark
+
+`func (o *Campaign) GetTextBodyDark() string`
+
+GetTextBodyDark returns the TextBodyDark field if non-nil, zero value otherwise.
+
+### GetTextBodyDarkOk
+
+`func (o *Campaign) GetTextBodyDarkOk() (*string, bool)`
+
+GetTextBodyDarkOk returns a tuple with the TextBodyDark field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTextBodyDark
+
+`func (o *Campaign) SetTextBodyDark(v string)`
+
+SetTextBodyDark sets TextBodyDark field to given value.
+
+### HasTextBodyDark
+
+`func (o *Campaign) HasTextBodyDark() bool`
+
+HasTextBodyDark returns a boolean if a field has been set.
+
+### SetTextBodyDarkNil
+
+`func (o *Campaign) SetTextBodyDarkNil(b bool)`
+
+ SetTextBodyDarkNil sets the value for TextBodyDark to be an explicit nil
+
+### UnsetTextBodyDark
+`func (o *Campaign) UnsetTextBodyDark()`
+
+UnsetTextBodyDark ensures that no value is present for TextBodyDark, not even an explicit nil
+### GetCampaignType
+
+`func (o *Campaign) GetCampaignType() string`
+
+GetCampaignType returns the CampaignType field if non-nil, zero value otherwise.
+
+### GetCampaignTypeOk
+
+`func (o *Campaign) GetCampaignTypeOk() (*string, bool)`
+
+GetCampaignTypeOk returns a tuple with the CampaignType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCampaignType
+
+`func (o *Campaign) SetCampaignType(v string)`
+
+SetCampaignType sets CampaignType field to given value.
+
+### HasCampaignType
+
+`func (o *Campaign) HasCampaignType() bool`
+
+HasCampaignType returns a boolean if a field has been set.
+
+### SetCampaignTypeNil
+
+`func (o *Campaign) SetCampaignTypeNil(b bool)`
+
+ SetCampaignTypeNil sets the value for CampaignType to be an explicit nil
+
+### UnsetCampaignType
+`func (o *Campaign) UnsetCampaignType()`
+
+UnsetCampaignType ensures that no value is present for CampaignType, not even an explicit nil
+### GetAutoDetectSchema
+
+`func (o *Campaign) GetAutoDetectSchema() bool`
+
+GetAutoDetectSchema returns the AutoDetectSchema field if non-nil, zero value otherwise.
+
+### GetAutoDetectSchemaOk
+
+`func (o *Campaign) GetAutoDetectSchemaOk() (*bool, bool)`
+
+GetAutoDetectSchemaOk returns a tuple with the AutoDetectSchema field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoDetectSchema
+
+`func (o *Campaign) SetAutoDetectSchema(v bool)`
+
+SetAutoDetectSchema sets AutoDetectSchema field to given value.
+
+### HasAutoDetectSchema
+
+`func (o *Campaign) HasAutoDetectSchema() bool`
+
+HasAutoDetectSchema returns a boolean if a field has been set.
+
+### GetPromoAnnotations
+
+`func (o *Campaign) GetPromoAnnotations() map[string]interface{}`
+
+GetPromoAnnotations returns the PromoAnnotations field if non-nil, zero value otherwise.
+
+### GetPromoAnnotationsOk
+
+`func (o *Campaign) GetPromoAnnotationsOk() (*map[string]interface{}, bool)`
+
+GetPromoAnnotationsOk returns a tuple with the PromoAnnotations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPromoAnnotations
+
+`func (o *Campaign) SetPromoAnnotations(v map[string]interface{})`
+
+SetPromoAnnotations sets PromoAnnotations field to given value.
+
+### HasPromoAnnotations
+
+`func (o *Campaign) HasPromoAnnotations() bool`
+
+HasPromoAnnotations returns a boolean if a field has been set.
+
+### SetPromoAnnotationsNil
+
+`func (o *Campaign) SetPromoAnnotationsNil(b bool)`
+
+ SetPromoAnnotationsNil sets the value for PromoAnnotations to be an explicit nil
+
+### UnsetPromoAnnotations
+`func (o *Campaign) UnsetPromoAnnotations()`
+
+UnsetPromoAnnotations ensures that no value is present for PromoAnnotations, not even an explicit nil
+### GetThrowawayPolicy
+
+`func (o *Campaign) GetThrowawayPolicy() string`
+
+GetThrowawayPolicy returns the ThrowawayPolicy field if non-nil, zero value otherwise.
+
+### GetThrowawayPolicyOk
+
+`func (o *Campaign) GetThrowawayPolicyOk() (*string, bool)`
+
+GetThrowawayPolicyOk returns a tuple with the ThrowawayPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetThrowawayPolicy
+
+`func (o *Campaign) SetThrowawayPolicy(v string)`
+
+SetThrowawayPolicy sets ThrowawayPolicy field to given value.
+
+### HasThrowawayPolicy
+
+`func (o *Campaign) HasThrowawayPolicy() bool`
+
+HasThrowawayPolicy returns a boolean if a field has been set.
+
 ### GetScheduledAt
 
 `func (o *Campaign) GetScheduledAt() time.Time`
@@ -254,101 +533,231 @@ HasScheduledAt returns a boolean if a field has been set.
 `func (o *Campaign) UnsetScheduledAt()`
 
 UnsetScheduledAt ensures that no value is present for ScheduledAt, not even an explicit nil
-### GetSentAt
+### GetStartedAt
 
-`func (o *Campaign) GetSentAt() time.Time`
+`func (o *Campaign) GetStartedAt() time.Time`
 
-GetSentAt returns the SentAt field if non-nil, zero value otherwise.
+GetStartedAt returns the StartedAt field if non-nil, zero value otherwise.
 
-### GetSentAtOk
+### GetStartedAtOk
 
-`func (o *Campaign) GetSentAtOk() (*time.Time, bool)`
+`func (o *Campaign) GetStartedAtOk() (*time.Time, bool)`
 
-GetSentAtOk returns a tuple with the SentAt field if it's non-nil, zero value otherwise
+GetStartedAtOk returns a tuple with the StartedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSentAt
+### SetStartedAt
 
-`func (o *Campaign) SetSentAt(v time.Time)`
+`func (o *Campaign) SetStartedAt(v time.Time)`
 
-SetSentAt sets SentAt field to given value.
+SetStartedAt sets StartedAt field to given value.
 
-### HasSentAt
+### HasStartedAt
 
-`func (o *Campaign) HasSentAt() bool`
+`func (o *Campaign) HasStartedAt() bool`
 
-HasSentAt returns a boolean if a field has been set.
+HasStartedAt returns a boolean if a field has been set.
 
-### SetSentAtNil
+### SetStartedAtNil
 
-`func (o *Campaign) SetSentAtNil(b bool)`
+`func (o *Campaign) SetStartedAtNil(b bool)`
 
- SetSentAtNil sets the value for SentAt to be an explicit nil
+ SetStartedAtNil sets the value for StartedAt to be an explicit nil
 
-### UnsetSentAt
-`func (o *Campaign) UnsetSentAt()`
+### UnsetStartedAt
+`func (o *Campaign) UnsetStartedAt()`
 
-UnsetSentAt ensures that no value is present for SentAt, not even an explicit nil
-### GetCancelledAt
+UnsetStartedAt ensures that no value is present for StartedAt, not even an explicit nil
+### GetCompletedAt
 
-`func (o *Campaign) GetCancelledAt() time.Time`
+`func (o *Campaign) GetCompletedAt() time.Time`
 
-GetCancelledAt returns the CancelledAt field if non-nil, zero value otherwise.
+GetCompletedAt returns the CompletedAt field if non-nil, zero value otherwise.
 
-### GetCancelledAtOk
+### GetCompletedAtOk
 
-`func (o *Campaign) GetCancelledAtOk() (*time.Time, bool)`
+`func (o *Campaign) GetCompletedAtOk() (*time.Time, bool)`
 
-GetCancelledAtOk returns a tuple with the CancelledAt field if it's non-nil, zero value otherwise
+GetCompletedAtOk returns a tuple with the CompletedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCancelledAt
+### SetCompletedAt
 
-`func (o *Campaign) SetCancelledAt(v time.Time)`
+`func (o *Campaign) SetCompletedAt(v time.Time)`
 
-SetCancelledAt sets CancelledAt field to given value.
+SetCompletedAt sets CompletedAt field to given value.
 
-### HasCancelledAt
+### HasCompletedAt
 
-`func (o *Campaign) HasCancelledAt() bool`
+`func (o *Campaign) HasCompletedAt() bool`
 
-HasCancelledAt returns a boolean if a field has been set.
+HasCompletedAt returns a boolean if a field has been set.
 
-### SetCancelledAtNil
+### SetCompletedAtNil
 
-`func (o *Campaign) SetCancelledAtNil(b bool)`
+`func (o *Campaign) SetCompletedAtNil(b bool)`
 
- SetCancelledAtNil sets the value for CancelledAt to be an explicit nil
+ SetCompletedAtNil sets the value for CompletedAt to be an explicit nil
 
-### UnsetCancelledAt
-`func (o *Campaign) UnsetCancelledAt()`
+### UnsetCompletedAt
+`func (o *Campaign) UnsetCompletedAt()`
 
-UnsetCancelledAt ensures that no value is present for CancelledAt, not even an explicit nil
-### GetVariantCount
+UnsetCompletedAt ensures that no value is present for CompletedAt, not even an explicit nil
+### GetRecipientCount
 
-`func (o *Campaign) GetVariantCount() int32`
+`func (o *Campaign) GetRecipientCount() int32`
 
-GetVariantCount returns the VariantCount field if non-nil, zero value otherwise.
+GetRecipientCount returns the RecipientCount field if non-nil, zero value otherwise.
 
-### GetVariantCountOk
+### GetRecipientCountOk
 
-`func (o *Campaign) GetVariantCountOk() (*int32, bool)`
+`func (o *Campaign) GetRecipientCountOk() (*int32, bool)`
 
-GetVariantCountOk returns a tuple with the VariantCount field if it's non-nil, zero value otherwise
+GetRecipientCountOk returns a tuple with the RecipientCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVariantCount
+### SetRecipientCount
 
-`func (o *Campaign) SetVariantCount(v int32)`
+`func (o *Campaign) SetRecipientCount(v int32)`
 
-SetVariantCount sets VariantCount field to given value.
+SetRecipientCount sets RecipientCount field to given value.
 
-### HasVariantCount
+### HasRecipientCount
 
-`func (o *Campaign) HasVariantCount() bool`
+`func (o *Campaign) HasRecipientCount() bool`
 
-HasVariantCount returns a boolean if a field has been set.
+HasRecipientCount returns a boolean if a field has been set.
 
+### GetIsAbTest
+
+`func (o *Campaign) GetIsAbTest() bool`
+
+GetIsAbTest returns the IsAbTest field if non-nil, zero value otherwise.
+
+### GetIsAbTestOk
+
+`func (o *Campaign) GetIsAbTestOk() (*bool, bool)`
+
+GetIsAbTestOk returns a tuple with the IsAbTest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsAbTest
+
+`func (o *Campaign) SetIsAbTest(v bool)`
+
+SetIsAbTest sets IsAbTest field to given value.
+
+### HasIsAbTest
+
+`func (o *Campaign) HasIsAbTest() bool`
+
+HasIsAbTest returns a boolean if a field has been set.
+
+### GetWinningVariantId
+
+`func (o *Campaign) GetWinningVariantId() string`
+
+GetWinningVariantId returns the WinningVariantId field if non-nil, zero value otherwise.
+
+### GetWinningVariantIdOk
+
+`func (o *Campaign) GetWinningVariantIdOk() (*string, bool)`
+
+GetWinningVariantIdOk returns a tuple with the WinningVariantId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWinningVariantId
+
+`func (o *Campaign) SetWinningVariantId(v string)`
+
+SetWinningVariantId sets WinningVariantId field to given value.
+
+### HasWinningVariantId
+
+`func (o *Campaign) HasWinningVariantId() bool`
+
+HasWinningVariantId returns a boolean if a field has been set.
+
+### SetWinningVariantIdNil
+
+`func (o *Campaign) SetWinningVariantIdNil(b bool)`
+
+ SetWinningVariantIdNil sets the value for WinningVariantId to be an explicit nil
+
+### UnsetWinningVariantId
+`func (o *Campaign) UnsetWinningVariantId()`
+
+UnsetWinningVariantId ensures that no value is present for WinningVariantId, not even an explicit nil
+### GetAbTestConfig
+
+`func (o *Campaign) GetAbTestConfig() map[string]interface{}`
+
+GetAbTestConfig returns the AbTestConfig field if non-nil, zero value otherwise.
+
+### GetAbTestConfigOk
+
+`func (o *Campaign) GetAbTestConfigOk() (*map[string]interface{}, bool)`
+
+GetAbTestConfigOk returns a tuple with the AbTestConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAbTestConfig
+
+`func (o *Campaign) SetAbTestConfig(v map[string]interface{})`
+
+SetAbTestConfig sets AbTestConfig field to given value.
+
+### HasAbTestConfig
+
+`func (o *Campaign) HasAbTestConfig() bool`
+
+HasAbTestConfig returns a boolean if a field has been set.
+
+### SetAbTestConfigNil
+
+`func (o *Campaign) SetAbTestConfigNil(b bool)`
+
+ SetAbTestConfigNil sets the value for AbTestConfig to be an explicit nil
+
+### UnsetAbTestConfig
+`func (o *Campaign) UnsetAbTestConfig()`
+
+UnsetAbTestConfig ensures that no value is present for AbTestConfig, not even an explicit nil
+### GetErrorMessage
+
+`func (o *Campaign) GetErrorMessage() string`
+
+GetErrorMessage returns the ErrorMessage field if non-nil, zero value otherwise.
+
+### GetErrorMessageOk
+
+`func (o *Campaign) GetErrorMessageOk() (*string, bool)`
+
+GetErrorMessageOk returns a tuple with the ErrorMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetErrorMessage
+
+`func (o *Campaign) SetErrorMessage(v string)`
+
+SetErrorMessage sets ErrorMessage field to given value.
+
+### HasErrorMessage
+
+`func (o *Campaign) HasErrorMessage() bool`
+
+HasErrorMessage returns a boolean if a field has been set.
+
+### SetErrorMessageNil
+
+`func (o *Campaign) SetErrorMessageNil(b bool)`
+
+ SetErrorMessageNil sets the value for ErrorMessage to be an explicit nil
+
+### UnsetErrorMessage
+`func (o *Campaign) UnsetErrorMessage()`
+
+UnsetErrorMessage ensures that no value is present for ErrorMessage, not even an explicit nil
 ### GetStats
 
 `func (o *Campaign) GetStats() CampaignStats`
@@ -373,6 +782,56 @@ SetStats sets Stats field to given value.
 `func (o *Campaign) HasStats() bool`
 
 HasStats returns a boolean if a field has been set.
+
+### GetOpenRate
+
+`func (o *Campaign) GetOpenRate() float32`
+
+GetOpenRate returns the OpenRate field if non-nil, zero value otherwise.
+
+### GetOpenRateOk
+
+`func (o *Campaign) GetOpenRateOk() (*float32, bool)`
+
+GetOpenRateOk returns a tuple with the OpenRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOpenRate
+
+`func (o *Campaign) SetOpenRate(v float32)`
+
+SetOpenRate sets OpenRate field to given value.
+
+### HasOpenRate
+
+`func (o *Campaign) HasOpenRate() bool`
+
+HasOpenRate returns a boolean if a field has been set.
+
+### GetClickRate
+
+`func (o *Campaign) GetClickRate() float32`
+
+GetClickRate returns the ClickRate field if non-nil, zero value otherwise.
+
+### GetClickRateOk
+
+`func (o *Campaign) GetClickRateOk() (*float32, bool)`
+
+GetClickRateOk returns a tuple with the ClickRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClickRate
+
+`func (o *Campaign) SetClickRate(v float32)`
+
+SetClickRate sets ClickRate field to given value.
+
+### HasClickRate
+
+`func (o *Campaign) HasClickRate() bool`
+
+HasClickRate returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

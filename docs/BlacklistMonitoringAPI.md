@@ -99,7 +99,7 @@ import (
 )
 
 func main() {
-	monitorId := "monitorId_example" // string | Monitor UUID
+	monitorId := "monitorId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -119,7 +119,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**monitorId** | **string** | Monitor UUID | 
+**monitorId** | **string** |  | 
 
 ### Other Parameters
 
@@ -169,7 +169,7 @@ import (
 )
 
 func main() {
-	monitorId := "monitorId_example" // string | Monitor UUID
+	monitorId := "monitorId_example" // string | 
 	page := int32(56) // int32 |  (optional) (default to 1)
 	perPage := int32(56) // int32 |  (optional) (default to 20)
 
@@ -191,7 +191,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**monitorId** | **string** | Monitor UUID | 
+**monitorId** | **string** |  | 
 
 ### Other Parameters
 
@@ -304,7 +304,7 @@ import (
 )
 
 func main() {
-	monitorId := "monitorId_example" // string | Monitor UUID
+	monitorId := "monitorId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -324,7 +324,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**monitorId** | **string** | Monitor UUID | 
+**monitorId** | **string** |  | 
 
 ### Other Parameters
 

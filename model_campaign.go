@@ -25,22 +25,35 @@ var _ MappedNullable = &Campaign{}
 type Campaign struct {
 	// Campaign UUID
 	Id string `json:"id"`
+	AccountId *int32 `json:"account_id,omitempty"`
 	// Campaign name
 	Name string `json:"name"`
 	Status string `json:"status"`
-	// Target subscriber list UUID
-	ListId string `json:"list_id"`
 	// Sending domain UUID
 	DomainId string `json:"domain_id"`
-	FromEmail string `json:"from_email"`
-	FromName *string `json:"from_name,omitempty"`
+	Subject *string `json:"subject,omitempty"`
+	// Sender email address
+	FromAddress string `json:"from_address"`
 	ReplyTo NullableString `json:"reply_to,omitempty"`
+	HtmlBody NullableString `json:"html_body,omitempty"`
+	TextBody NullableString `json:"text_body,omitempty"`
+	HtmlBodyDark NullableString `json:"html_body_dark,omitempty"`
+	TextBodyDark NullableString `json:"text_body_dark,omitempty"`
+	CampaignType NullableString `json:"campaign_type,omitempty"`
+	AutoDetectSchema *bool `json:"auto_detect_schema,omitempty"`
+	PromoAnnotations map[string]interface{} `json:"promo_annotations,omitempty"`
+	ThrowawayPolicy *string `json:"throwaway_policy,omitempty"`
 	ScheduledAt NullableTime `json:"scheduled_at,omitempty"`
-	SentAt NullableTime `json:"sent_at,omitempty"`
-	CancelledAt NullableTime `json:"cancelled_at,omitempty"`
-	// Number of A/B variants
-	VariantCount *int32 `json:"variant_count,omitempty"`
+	StartedAt NullableTime `json:"started_at,omitempty"`
+	CompletedAt NullableTime `json:"completed_at,omitempty"`
+	RecipientCount *int32 `json:"recipient_count,omitempty"`
+	IsAbTest *bool `json:"is_ab_test,omitempty"`
+	WinningVariantId NullableString `json:"winning_variant_id,omitempty"`
+	AbTestConfig map[string]interface{} `json:"ab_test_config,omitempty"`
+	ErrorMessage NullableString `json:"error_message,omitempty"`
 	Stats *CampaignStats `json:"stats,omitempty"`
+	OpenRate *float32 `json:"open_rate,omitempty"`
+	ClickRate *float32 `json:"click_rate,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
@@ -51,14 +64,13 @@ type _Campaign Campaign
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCampaign(id string, name string, status string, listId string, domainId string, fromEmail string, createdAt time.Time) *Campaign {
+func NewCampaign(id string, name string, status string, domainId string, fromAddress string, createdAt time.Time) *Campaign {
 	this := Campaign{}
 	this.Id = id
 	this.Name = name
 	this.Status = status
-	this.ListId = listId
 	this.DomainId = domainId
-	this.FromEmail = fromEmail
+	this.FromAddress = fromAddress
 	this.CreatedAt = createdAt
 	return &this
 }
@@ -93,6 +105,38 @@ func (o *Campaign) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *Campaign) SetId(v string) {
 	o.Id = v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Campaign) GetAccountId() int32 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int32
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetAccountIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Campaign) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int32 and assigns it to the AccountId field.
+func (o *Campaign) SetAccountId(v int32) {
+	o.AccountId = &v
 }
 
 // GetName returns the Name field value
@@ -143,30 +187,6 @@ func (o *Campaign) SetStatus(v string) {
 	o.Status = v
 }
 
-// GetListId returns the ListId field value
-func (o *Campaign) GetListId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ListId
-}
-
-// GetListIdOk returns a tuple with the ListId field value
-// and a boolean to check if the value has been set.
-func (o *Campaign) GetListIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ListId, true
-}
-
-// SetListId sets field value
-func (o *Campaign) SetListId(v string) {
-	o.ListId = v
-}
-
 // GetDomainId returns the DomainId field value
 func (o *Campaign) GetDomainId() string {
 	if o == nil {
@@ -191,60 +211,60 @@ func (o *Campaign) SetDomainId(v string) {
 	o.DomainId = v
 }
 
-// GetFromEmail returns the FromEmail field value
-func (o *Campaign) GetFromEmail() string {
-	if o == nil {
+// GetSubject returns the Subject field value if set, zero value otherwise.
+func (o *Campaign) GetSubject() string {
+	if o == nil || IsNil(o.Subject) {
 		var ret string
 		return ret
 	}
-
-	return o.FromEmail
+	return *o.Subject
 }
 
-// GetFromEmailOk returns a tuple with the FromEmail field value
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Campaign) GetFromEmailOk() (*string, bool) {
-	if o == nil {
+func (o *Campaign) GetSubjectOk() (*string, bool) {
+	if o == nil || IsNil(o.Subject) {
 		return nil, false
 	}
-	return &o.FromEmail, true
+	return o.Subject, true
 }
 
-// SetFromEmail sets field value
-func (o *Campaign) SetFromEmail(v string) {
-	o.FromEmail = v
-}
-
-// GetFromName returns the FromName field value if set, zero value otherwise.
-func (o *Campaign) GetFromName() string {
-	if o == nil || IsNil(o.FromName) {
-		var ret string
-		return ret
-	}
-	return *o.FromName
-}
-
-// GetFromNameOk returns a tuple with the FromName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Campaign) GetFromNameOk() (*string, bool) {
-	if o == nil || IsNil(o.FromName) {
-		return nil, false
-	}
-	return o.FromName, true
-}
-
-// HasFromName returns a boolean if a field has been set.
-func (o *Campaign) HasFromName() bool {
-	if o != nil && !IsNil(o.FromName) {
+// HasSubject returns a boolean if a field has been set.
+func (o *Campaign) HasSubject() bool {
+	if o != nil && !IsNil(o.Subject) {
 		return true
 	}
 
 	return false
 }
 
-// SetFromName gets a reference to the given string and assigns it to the FromName field.
-func (o *Campaign) SetFromName(v string) {
-	o.FromName = &v
+// SetSubject gets a reference to the given string and assigns it to the Subject field.
+func (o *Campaign) SetSubject(v string) {
+	o.Subject = &v
+}
+
+// GetFromAddress returns the FromAddress field value
+func (o *Campaign) GetFromAddress() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FromAddress
+}
+
+// GetFromAddressOk returns a tuple with the FromAddress field value
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetFromAddressOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FromAddress, true
+}
+
+// SetFromAddress sets field value
+func (o *Campaign) SetFromAddress(v string) {
+	o.FromAddress = v
 }
 
 // GetReplyTo returns the ReplyTo field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -289,6 +309,313 @@ func (o *Campaign) UnsetReplyTo() {
 	o.ReplyTo.Unset()
 }
 
+// GetHtmlBody returns the HtmlBody field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetHtmlBody() string {
+	if o == nil || IsNil(o.HtmlBody.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HtmlBody.Get()
+}
+
+// GetHtmlBodyOk returns a tuple with the HtmlBody field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetHtmlBodyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HtmlBody.Get(), o.HtmlBody.IsSet()
+}
+
+// HasHtmlBody returns a boolean if a field has been set.
+func (o *Campaign) HasHtmlBody() bool {
+	if o != nil && o.HtmlBody.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHtmlBody gets a reference to the given NullableString and assigns it to the HtmlBody field.
+func (o *Campaign) SetHtmlBody(v string) {
+	o.HtmlBody.Set(&v)
+}
+// SetHtmlBodyNil sets the value for HtmlBody to be an explicit nil
+func (o *Campaign) SetHtmlBodyNil() {
+	o.HtmlBody.Set(nil)
+}
+
+// UnsetHtmlBody ensures that no value is present for HtmlBody, not even an explicit nil
+func (o *Campaign) UnsetHtmlBody() {
+	o.HtmlBody.Unset()
+}
+
+// GetTextBody returns the TextBody field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetTextBody() string {
+	if o == nil || IsNil(o.TextBody.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TextBody.Get()
+}
+
+// GetTextBodyOk returns a tuple with the TextBody field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetTextBodyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TextBody.Get(), o.TextBody.IsSet()
+}
+
+// HasTextBody returns a boolean if a field has been set.
+func (o *Campaign) HasTextBody() bool {
+	if o != nil && o.TextBody.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTextBody gets a reference to the given NullableString and assigns it to the TextBody field.
+func (o *Campaign) SetTextBody(v string) {
+	o.TextBody.Set(&v)
+}
+// SetTextBodyNil sets the value for TextBody to be an explicit nil
+func (o *Campaign) SetTextBodyNil() {
+	o.TextBody.Set(nil)
+}
+
+// UnsetTextBody ensures that no value is present for TextBody, not even an explicit nil
+func (o *Campaign) UnsetTextBody() {
+	o.TextBody.Unset()
+}
+
+// GetHtmlBodyDark returns the HtmlBodyDark field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetHtmlBodyDark() string {
+	if o == nil || IsNil(o.HtmlBodyDark.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HtmlBodyDark.Get()
+}
+
+// GetHtmlBodyDarkOk returns a tuple with the HtmlBodyDark field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetHtmlBodyDarkOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HtmlBodyDark.Get(), o.HtmlBodyDark.IsSet()
+}
+
+// HasHtmlBodyDark returns a boolean if a field has been set.
+func (o *Campaign) HasHtmlBodyDark() bool {
+	if o != nil && o.HtmlBodyDark.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHtmlBodyDark gets a reference to the given NullableString and assigns it to the HtmlBodyDark field.
+func (o *Campaign) SetHtmlBodyDark(v string) {
+	o.HtmlBodyDark.Set(&v)
+}
+// SetHtmlBodyDarkNil sets the value for HtmlBodyDark to be an explicit nil
+func (o *Campaign) SetHtmlBodyDarkNil() {
+	o.HtmlBodyDark.Set(nil)
+}
+
+// UnsetHtmlBodyDark ensures that no value is present for HtmlBodyDark, not even an explicit nil
+func (o *Campaign) UnsetHtmlBodyDark() {
+	o.HtmlBodyDark.Unset()
+}
+
+// GetTextBodyDark returns the TextBodyDark field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetTextBodyDark() string {
+	if o == nil || IsNil(o.TextBodyDark.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TextBodyDark.Get()
+}
+
+// GetTextBodyDarkOk returns a tuple with the TextBodyDark field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetTextBodyDarkOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TextBodyDark.Get(), o.TextBodyDark.IsSet()
+}
+
+// HasTextBodyDark returns a boolean if a field has been set.
+func (o *Campaign) HasTextBodyDark() bool {
+	if o != nil && o.TextBodyDark.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTextBodyDark gets a reference to the given NullableString and assigns it to the TextBodyDark field.
+func (o *Campaign) SetTextBodyDark(v string) {
+	o.TextBodyDark.Set(&v)
+}
+// SetTextBodyDarkNil sets the value for TextBodyDark to be an explicit nil
+func (o *Campaign) SetTextBodyDarkNil() {
+	o.TextBodyDark.Set(nil)
+}
+
+// UnsetTextBodyDark ensures that no value is present for TextBodyDark, not even an explicit nil
+func (o *Campaign) UnsetTextBodyDark() {
+	o.TextBodyDark.Unset()
+}
+
+// GetCampaignType returns the CampaignType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetCampaignType() string {
+	if o == nil || IsNil(o.CampaignType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CampaignType.Get()
+}
+
+// GetCampaignTypeOk returns a tuple with the CampaignType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetCampaignTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CampaignType.Get(), o.CampaignType.IsSet()
+}
+
+// HasCampaignType returns a boolean if a field has been set.
+func (o *Campaign) HasCampaignType() bool {
+	if o != nil && o.CampaignType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCampaignType gets a reference to the given NullableString and assigns it to the CampaignType field.
+func (o *Campaign) SetCampaignType(v string) {
+	o.CampaignType.Set(&v)
+}
+// SetCampaignTypeNil sets the value for CampaignType to be an explicit nil
+func (o *Campaign) SetCampaignTypeNil() {
+	o.CampaignType.Set(nil)
+}
+
+// UnsetCampaignType ensures that no value is present for CampaignType, not even an explicit nil
+func (o *Campaign) UnsetCampaignType() {
+	o.CampaignType.Unset()
+}
+
+// GetAutoDetectSchema returns the AutoDetectSchema field value if set, zero value otherwise.
+func (o *Campaign) GetAutoDetectSchema() bool {
+	if o == nil || IsNil(o.AutoDetectSchema) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoDetectSchema
+}
+
+// GetAutoDetectSchemaOk returns a tuple with the AutoDetectSchema field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetAutoDetectSchemaOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutoDetectSchema) {
+		return nil, false
+	}
+	return o.AutoDetectSchema, true
+}
+
+// HasAutoDetectSchema returns a boolean if a field has been set.
+func (o *Campaign) HasAutoDetectSchema() bool {
+	if o != nil && !IsNil(o.AutoDetectSchema) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoDetectSchema gets a reference to the given bool and assigns it to the AutoDetectSchema field.
+func (o *Campaign) SetAutoDetectSchema(v bool) {
+	o.AutoDetectSchema = &v
+}
+
+// GetPromoAnnotations returns the PromoAnnotations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetPromoAnnotations() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.PromoAnnotations
+}
+
+// GetPromoAnnotationsOk returns a tuple with the PromoAnnotations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetPromoAnnotationsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.PromoAnnotations) {
+		return map[string]interface{}{}, false
+	}
+	return o.PromoAnnotations, true
+}
+
+// HasPromoAnnotations returns a boolean if a field has been set.
+func (o *Campaign) HasPromoAnnotations() bool {
+	if o != nil && !IsNil(o.PromoAnnotations) {
+		return true
+	}
+
+	return false
+}
+
+// SetPromoAnnotations gets a reference to the given map[string]interface{} and assigns it to the PromoAnnotations field.
+func (o *Campaign) SetPromoAnnotations(v map[string]interface{}) {
+	o.PromoAnnotations = v
+}
+
+// GetThrowawayPolicy returns the ThrowawayPolicy field value if set, zero value otherwise.
+func (o *Campaign) GetThrowawayPolicy() string {
+	if o == nil || IsNil(o.ThrowawayPolicy) {
+		var ret string
+		return ret
+	}
+	return *o.ThrowawayPolicy
+}
+
+// GetThrowawayPolicyOk returns a tuple with the ThrowawayPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetThrowawayPolicyOk() (*string, bool) {
+	if o == nil || IsNil(o.ThrowawayPolicy) {
+		return nil, false
+	}
+	return o.ThrowawayPolicy, true
+}
+
+// HasThrowawayPolicy returns a boolean if a field has been set.
+func (o *Campaign) HasThrowawayPolicy() bool {
+	if o != nil && !IsNil(o.ThrowawayPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetThrowawayPolicy gets a reference to the given string and assigns it to the ThrowawayPolicy field.
+func (o *Campaign) SetThrowawayPolicy(v string) {
+	o.ThrowawayPolicy = &v
+}
+
 // GetScheduledAt returns the ScheduledAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Campaign) GetScheduledAt() time.Time {
 	if o == nil || IsNil(o.ScheduledAt.Get()) {
@@ -331,120 +658,269 @@ func (o *Campaign) UnsetScheduledAt() {
 	o.ScheduledAt.Unset()
 }
 
-// GetSentAt returns the SentAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Campaign) GetSentAt() time.Time {
-	if o == nil || IsNil(o.SentAt.Get()) {
+// GetStartedAt returns the StartedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetStartedAt() time.Time {
+	if o == nil || IsNil(o.StartedAt.Get()) {
 		var ret time.Time
 		return ret
 	}
-	return *o.SentAt.Get()
+	return *o.StartedAt.Get()
 }
 
-// GetSentAtOk returns a tuple with the SentAt field value if set, nil otherwise
+// GetStartedAtOk returns a tuple with the StartedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Campaign) GetSentAtOk() (*time.Time, bool) {
+func (o *Campaign) GetStartedAtOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.SentAt.Get(), o.SentAt.IsSet()
+	return o.StartedAt.Get(), o.StartedAt.IsSet()
 }
 
-// HasSentAt returns a boolean if a field has been set.
-func (o *Campaign) HasSentAt() bool {
-	if o != nil && o.SentAt.IsSet() {
+// HasStartedAt returns a boolean if a field has been set.
+func (o *Campaign) HasStartedAt() bool {
+	if o != nil && o.StartedAt.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSentAt gets a reference to the given NullableTime and assigns it to the SentAt field.
-func (o *Campaign) SetSentAt(v time.Time) {
-	o.SentAt.Set(&v)
+// SetStartedAt gets a reference to the given NullableTime and assigns it to the StartedAt field.
+func (o *Campaign) SetStartedAt(v time.Time) {
+	o.StartedAt.Set(&v)
 }
-// SetSentAtNil sets the value for SentAt to be an explicit nil
-func (o *Campaign) SetSentAtNil() {
-	o.SentAt.Set(nil)
-}
-
-// UnsetSentAt ensures that no value is present for SentAt, not even an explicit nil
-func (o *Campaign) UnsetSentAt() {
-	o.SentAt.Unset()
+// SetStartedAtNil sets the value for StartedAt to be an explicit nil
+func (o *Campaign) SetStartedAtNil() {
+	o.StartedAt.Set(nil)
 }
 
-// GetCancelledAt returns the CancelledAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Campaign) GetCancelledAt() time.Time {
-	if o == nil || IsNil(o.CancelledAt.Get()) {
+// UnsetStartedAt ensures that no value is present for StartedAt, not even an explicit nil
+func (o *Campaign) UnsetStartedAt() {
+	o.StartedAt.Unset()
+}
+
+// GetCompletedAt returns the CompletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetCompletedAt() time.Time {
+	if o == nil || IsNil(o.CompletedAt.Get()) {
 		var ret time.Time
 		return ret
 	}
-	return *o.CancelledAt.Get()
+	return *o.CompletedAt.Get()
 }
 
-// GetCancelledAtOk returns a tuple with the CancelledAt field value if set, nil otherwise
+// GetCompletedAtOk returns a tuple with the CompletedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Campaign) GetCancelledAtOk() (*time.Time, bool) {
+func (o *Campaign) GetCompletedAtOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CancelledAt.Get(), o.CancelledAt.IsSet()
+	return o.CompletedAt.Get(), o.CompletedAt.IsSet()
 }
 
-// HasCancelledAt returns a boolean if a field has been set.
-func (o *Campaign) HasCancelledAt() bool {
-	if o != nil && o.CancelledAt.IsSet() {
+// HasCompletedAt returns a boolean if a field has been set.
+func (o *Campaign) HasCompletedAt() bool {
+	if o != nil && o.CompletedAt.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCancelledAt gets a reference to the given NullableTime and assigns it to the CancelledAt field.
-func (o *Campaign) SetCancelledAt(v time.Time) {
-	o.CancelledAt.Set(&v)
+// SetCompletedAt gets a reference to the given NullableTime and assigns it to the CompletedAt field.
+func (o *Campaign) SetCompletedAt(v time.Time) {
+	o.CompletedAt.Set(&v)
 }
-// SetCancelledAtNil sets the value for CancelledAt to be an explicit nil
-func (o *Campaign) SetCancelledAtNil() {
-	o.CancelledAt.Set(nil)
-}
-
-// UnsetCancelledAt ensures that no value is present for CancelledAt, not even an explicit nil
-func (o *Campaign) UnsetCancelledAt() {
-	o.CancelledAt.Unset()
+// SetCompletedAtNil sets the value for CompletedAt to be an explicit nil
+func (o *Campaign) SetCompletedAtNil() {
+	o.CompletedAt.Set(nil)
 }
 
-// GetVariantCount returns the VariantCount field value if set, zero value otherwise.
-func (o *Campaign) GetVariantCount() int32 {
-	if o == nil || IsNil(o.VariantCount) {
+// UnsetCompletedAt ensures that no value is present for CompletedAt, not even an explicit nil
+func (o *Campaign) UnsetCompletedAt() {
+	o.CompletedAt.Unset()
+}
+
+// GetRecipientCount returns the RecipientCount field value if set, zero value otherwise.
+func (o *Campaign) GetRecipientCount() int32 {
+	if o == nil || IsNil(o.RecipientCount) {
 		var ret int32
 		return ret
 	}
-	return *o.VariantCount
+	return *o.RecipientCount
 }
 
-// GetVariantCountOk returns a tuple with the VariantCount field value if set, nil otherwise
+// GetRecipientCountOk returns a tuple with the RecipientCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Campaign) GetVariantCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.VariantCount) {
+func (o *Campaign) GetRecipientCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.RecipientCount) {
 		return nil, false
 	}
-	return o.VariantCount, true
+	return o.RecipientCount, true
 }
 
-// HasVariantCount returns a boolean if a field has been set.
-func (o *Campaign) HasVariantCount() bool {
-	if o != nil && !IsNil(o.VariantCount) {
+// HasRecipientCount returns a boolean if a field has been set.
+func (o *Campaign) HasRecipientCount() bool {
+	if o != nil && !IsNil(o.RecipientCount) {
 		return true
 	}
 
 	return false
 }
 
-// SetVariantCount gets a reference to the given int32 and assigns it to the VariantCount field.
-func (o *Campaign) SetVariantCount(v int32) {
-	o.VariantCount = &v
+// SetRecipientCount gets a reference to the given int32 and assigns it to the RecipientCount field.
+func (o *Campaign) SetRecipientCount(v int32) {
+	o.RecipientCount = &v
+}
+
+// GetIsAbTest returns the IsAbTest field value if set, zero value otherwise.
+func (o *Campaign) GetIsAbTest() bool {
+	if o == nil || IsNil(o.IsAbTest) {
+		var ret bool
+		return ret
+	}
+	return *o.IsAbTest
+}
+
+// GetIsAbTestOk returns a tuple with the IsAbTest field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetIsAbTestOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsAbTest) {
+		return nil, false
+	}
+	return o.IsAbTest, true
+}
+
+// HasIsAbTest returns a boolean if a field has been set.
+func (o *Campaign) HasIsAbTest() bool {
+	if o != nil && !IsNil(o.IsAbTest) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsAbTest gets a reference to the given bool and assigns it to the IsAbTest field.
+func (o *Campaign) SetIsAbTest(v bool) {
+	o.IsAbTest = &v
+}
+
+// GetWinningVariantId returns the WinningVariantId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetWinningVariantId() string {
+	if o == nil || IsNil(o.WinningVariantId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WinningVariantId.Get()
+}
+
+// GetWinningVariantIdOk returns a tuple with the WinningVariantId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetWinningVariantIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WinningVariantId.Get(), o.WinningVariantId.IsSet()
+}
+
+// HasWinningVariantId returns a boolean if a field has been set.
+func (o *Campaign) HasWinningVariantId() bool {
+	if o != nil && o.WinningVariantId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWinningVariantId gets a reference to the given NullableString and assigns it to the WinningVariantId field.
+func (o *Campaign) SetWinningVariantId(v string) {
+	o.WinningVariantId.Set(&v)
+}
+// SetWinningVariantIdNil sets the value for WinningVariantId to be an explicit nil
+func (o *Campaign) SetWinningVariantIdNil() {
+	o.WinningVariantId.Set(nil)
+}
+
+// UnsetWinningVariantId ensures that no value is present for WinningVariantId, not even an explicit nil
+func (o *Campaign) UnsetWinningVariantId() {
+	o.WinningVariantId.Unset()
+}
+
+// GetAbTestConfig returns the AbTestConfig field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetAbTestConfig() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AbTestConfig
+}
+
+// GetAbTestConfigOk returns a tuple with the AbTestConfig field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetAbTestConfigOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AbTestConfig) {
+		return map[string]interface{}{}, false
+	}
+	return o.AbTestConfig, true
+}
+
+// HasAbTestConfig returns a boolean if a field has been set.
+func (o *Campaign) HasAbTestConfig() bool {
+	if o != nil && !IsNil(o.AbTestConfig) {
+		return true
+	}
+
+	return false
+}
+
+// SetAbTestConfig gets a reference to the given map[string]interface{} and assigns it to the AbTestConfig field.
+func (o *Campaign) SetAbTestConfig(v map[string]interface{}) {
+	o.AbTestConfig = v
+}
+
+// GetErrorMessage returns the ErrorMessage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Campaign) GetErrorMessage() string {
+	if o == nil || IsNil(o.ErrorMessage.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ErrorMessage.Get()
+}
+
+// GetErrorMessageOk returns a tuple with the ErrorMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Campaign) GetErrorMessageOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ErrorMessage.Get(), o.ErrorMessage.IsSet()
+}
+
+// HasErrorMessage returns a boolean if a field has been set.
+func (o *Campaign) HasErrorMessage() bool {
+	if o != nil && o.ErrorMessage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetErrorMessage gets a reference to the given NullableString and assigns it to the ErrorMessage field.
+func (o *Campaign) SetErrorMessage(v string) {
+	o.ErrorMessage.Set(&v)
+}
+// SetErrorMessageNil sets the value for ErrorMessage to be an explicit nil
+func (o *Campaign) SetErrorMessageNil() {
+	o.ErrorMessage.Set(nil)
+}
+
+// UnsetErrorMessage ensures that no value is present for ErrorMessage, not even an explicit nil
+func (o *Campaign) UnsetErrorMessage() {
+	o.ErrorMessage.Unset()
 }
 
 // GetStats returns the Stats field value if set, zero value otherwise.
@@ -477,6 +953,70 @@ func (o *Campaign) HasStats() bool {
 // SetStats gets a reference to the given CampaignStats and assigns it to the Stats field.
 func (o *Campaign) SetStats(v CampaignStats) {
 	o.Stats = &v
+}
+
+// GetOpenRate returns the OpenRate field value if set, zero value otherwise.
+func (o *Campaign) GetOpenRate() float32 {
+	if o == nil || IsNil(o.OpenRate) {
+		var ret float32
+		return ret
+	}
+	return *o.OpenRate
+}
+
+// GetOpenRateOk returns a tuple with the OpenRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetOpenRateOk() (*float32, bool) {
+	if o == nil || IsNil(o.OpenRate) {
+		return nil, false
+	}
+	return o.OpenRate, true
+}
+
+// HasOpenRate returns a boolean if a field has been set.
+func (o *Campaign) HasOpenRate() bool {
+	if o != nil && !IsNil(o.OpenRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetOpenRate gets a reference to the given float32 and assigns it to the OpenRate field.
+func (o *Campaign) SetOpenRate(v float32) {
+	o.OpenRate = &v
+}
+
+// GetClickRate returns the ClickRate field value if set, zero value otherwise.
+func (o *Campaign) GetClickRate() float32 {
+	if o == nil || IsNil(o.ClickRate) {
+		var ret float32
+		return ret
+	}
+	return *o.ClickRate
+}
+
+// GetClickRateOk returns a tuple with the ClickRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Campaign) GetClickRateOk() (*float32, bool) {
+	if o == nil || IsNil(o.ClickRate) {
+		return nil, false
+	}
+	return o.ClickRate, true
+}
+
+// HasClickRate returns a boolean if a field has been set.
+func (o *Campaign) HasClickRate() bool {
+	if o != nil && !IsNil(o.ClickRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetClickRate gets a reference to the given float32 and assigns it to the ClickRate field.
+func (o *Campaign) SetClickRate(v float32) {
+	o.ClickRate = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -546,31 +1086,75 @@ func (o Campaign) MarshalJSON() ([]byte, error) {
 func (o Campaign) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["status"] = o.Status
-	toSerialize["list_id"] = o.ListId
 	toSerialize["domain_id"] = o.DomainId
-	toSerialize["from_email"] = o.FromEmail
-	if !IsNil(o.FromName) {
-		toSerialize["from_name"] = o.FromName
+	if !IsNil(o.Subject) {
+		toSerialize["subject"] = o.Subject
 	}
+	toSerialize["from_address"] = o.FromAddress
 	if o.ReplyTo.IsSet() {
 		toSerialize["reply_to"] = o.ReplyTo.Get()
+	}
+	if o.HtmlBody.IsSet() {
+		toSerialize["html_body"] = o.HtmlBody.Get()
+	}
+	if o.TextBody.IsSet() {
+		toSerialize["text_body"] = o.TextBody.Get()
+	}
+	if o.HtmlBodyDark.IsSet() {
+		toSerialize["html_body_dark"] = o.HtmlBodyDark.Get()
+	}
+	if o.TextBodyDark.IsSet() {
+		toSerialize["text_body_dark"] = o.TextBodyDark.Get()
+	}
+	if o.CampaignType.IsSet() {
+		toSerialize["campaign_type"] = o.CampaignType.Get()
+	}
+	if !IsNil(o.AutoDetectSchema) {
+		toSerialize["auto_detect_schema"] = o.AutoDetectSchema
+	}
+	if o.PromoAnnotations != nil {
+		toSerialize["promo_annotations"] = o.PromoAnnotations
+	}
+	if !IsNil(o.ThrowawayPolicy) {
+		toSerialize["throwaway_policy"] = o.ThrowawayPolicy
 	}
 	if o.ScheduledAt.IsSet() {
 		toSerialize["scheduled_at"] = o.ScheduledAt.Get()
 	}
-	if o.SentAt.IsSet() {
-		toSerialize["sent_at"] = o.SentAt.Get()
+	if o.StartedAt.IsSet() {
+		toSerialize["started_at"] = o.StartedAt.Get()
 	}
-	if o.CancelledAt.IsSet() {
-		toSerialize["cancelled_at"] = o.CancelledAt.Get()
+	if o.CompletedAt.IsSet() {
+		toSerialize["completed_at"] = o.CompletedAt.Get()
 	}
-	if !IsNil(o.VariantCount) {
-		toSerialize["variant_count"] = o.VariantCount
+	if !IsNil(o.RecipientCount) {
+		toSerialize["recipient_count"] = o.RecipientCount
+	}
+	if !IsNil(o.IsAbTest) {
+		toSerialize["is_ab_test"] = o.IsAbTest
+	}
+	if o.WinningVariantId.IsSet() {
+		toSerialize["winning_variant_id"] = o.WinningVariantId.Get()
+	}
+	if o.AbTestConfig != nil {
+		toSerialize["ab_test_config"] = o.AbTestConfig
+	}
+	if o.ErrorMessage.IsSet() {
+		toSerialize["error_message"] = o.ErrorMessage.Get()
 	}
 	if !IsNil(o.Stats) {
 		toSerialize["stats"] = o.Stats
+	}
+	if !IsNil(o.OpenRate) {
+		toSerialize["open_rate"] = o.OpenRate
+	}
+	if !IsNil(o.ClickRate) {
+		toSerialize["click_rate"] = o.ClickRate
 	}
 	toSerialize["created_at"] = o.CreatedAt
 	if !IsNil(o.UpdatedAt) {
@@ -587,9 +1171,8 @@ func (o *Campaign) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"status",
-		"list_id",
 		"domain_id",
-		"from_email",
+		"from_address",
 		"created_at",
 	}
 

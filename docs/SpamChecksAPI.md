@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	checkId := "checkId_example" // string | Spam check ID
+	checkId := "checkId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -52,7 +52,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**checkId** | **string** | Spam check ID | 
+**checkId** | **string** |  | 
 
 ### Other Parameters
 
@@ -102,7 +102,7 @@ import (
 )
 
 func main() {
-	checkId := "checkId_example" // string | Spam check UUID
+	checkId := "checkId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -122,7 +122,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**checkId** | **string** | Spam check UUID | 
+**checkId** | **string** |  | 
 
 ### Other Parameters
 

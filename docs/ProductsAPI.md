@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	storeId := "storeId_example" // string | Store connection UUID
+	storeId := "storeId_example" // string | 
 	batchProductsRequest := *openapiclient.NewBatchProductsRequest([]openapiclient.BatchProductsRequestProductsInner{*openapiclient.NewBatchProductsRequestProductsInner("ExternalId_example", "Title_example", "ProductUrl_example")}) // BatchProductsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -53,7 +53,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**storeId** | **string** | Store connection UUID | 
+**storeId** | **string** |  | 
 
 ### Other Parameters
 
@@ -170,7 +170,7 @@ import (
 )
 
 func main() {
-	productId := "productId_example" // string | Product UUID
+	productId := "productId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -190,7 +190,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**productId** | **string** | Product UUID | 
+**productId** | **string** |  | 
 
 ### Other Parameters
 
