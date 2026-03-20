@@ -64,11 +64,17 @@ type APIClient struct {
 
 	CampaignsAPI *CampaignsAPIService
 
+	ConfigurationSetsAPI *ConfigurationSetsAPIService
+
 	ContactListsAPI *ContactListsAPIService
 
 	ContentClassificationAPI *ContentClassificationAPIService
 
+	DKIMManagementAPI *DKIMManagementAPIService
+
 	DMARCMonitoringAPI *DMARCMonitoringAPIService
+
+	DeliverabilityAdvisorAPI *DeliverabilityAdvisorAPIService
 
 	DomainInsightsAPI *DomainInsightsAPIService
 
@@ -78,9 +84,19 @@ type APIClient struct {
 
 	EngagementAPI *EngagementAPIService
 
+	EventDestinationsAPI *EventDestinationsAPIService
+
 	EventsAPI *EventsAPIService
 
+	GlobalSuppressionsAPI *GlobalSuppressionsAPIService
+
+	ISPFBLGuidesAPI *ISPFBLGuidesAPIService
+
 	InboundProcessingAPI *InboundProcessingAPIService
+
+	InboundRulesAPI *InboundRulesAPIService
+
+	ManagedSPFAPI *ManagedSPFAPIService
 
 	MessageEventsAPI *MessageEventsAPIService
 
@@ -88,13 +104,19 @@ type APIClient struct {
 
 	OutOfOfficeAPI *OutOfOfficeAPIService
 
+	PipelineSimulationAPI *PipelineSimulationAPIService
+
 	PixelSettingsAPI *PixelSettingsAPIService
 
 	ProductsAPI *ProductsAPIService
 
 	ReputationAPI *ReputationAPIService
 
+	ReputationPoliciesAPI *ReputationPoliciesAPIService
+
 	SenderHealthAPI *SenderHealthAPIService
+
+	SendingDelegationsAPI *SendingDelegationsAPIService
 
 	SendingDomainsAPI *SendingDomainsAPIService
 
@@ -109,6 +131,8 @@ type APIClient struct {
 	SuppressionListsAPI *SuppressionListsAPIService
 
 	SystemAPI *SystemAPIService
+
+	TemplateVersionsAPI *TemplateVersionsAPIService
 
 	ValidationPoliciesAPI *ValidationPoliciesAPIService
 
@@ -138,22 +162,33 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.BulkValidationAPI = (*BulkValidationAPIService)(&c.common)
 	c.CampaignAnalyticsAPI = (*CampaignAnalyticsAPIService)(&c.common)
 	c.CampaignsAPI = (*CampaignsAPIService)(&c.common)
+	c.ConfigurationSetsAPI = (*ConfigurationSetsAPIService)(&c.common)
 	c.ContactListsAPI = (*ContactListsAPIService)(&c.common)
 	c.ContentClassificationAPI = (*ContentClassificationAPIService)(&c.common)
+	c.DKIMManagementAPI = (*DKIMManagementAPIService)(&c.common)
 	c.DMARCMonitoringAPI = (*DMARCMonitoringAPIService)(&c.common)
+	c.DeliverabilityAdvisorAPI = (*DeliverabilityAdvisorAPIService)(&c.common)
 	c.DomainInsightsAPI = (*DomainInsightsAPIService)(&c.common)
 	c.EmailSendingAPI = (*EmailSendingAPIService)(&c.common)
 	c.EmailValidationAPI = (*EmailValidationAPIService)(&c.common)
 	c.EngagementAPI = (*EngagementAPIService)(&c.common)
+	c.EventDestinationsAPI = (*EventDestinationsAPIService)(&c.common)
 	c.EventsAPI = (*EventsAPIService)(&c.common)
+	c.GlobalSuppressionsAPI = (*GlobalSuppressionsAPIService)(&c.common)
+	c.ISPFBLGuidesAPI = (*ISPFBLGuidesAPIService)(&c.common)
 	c.InboundProcessingAPI = (*InboundProcessingAPIService)(&c.common)
+	c.InboundRulesAPI = (*InboundRulesAPIService)(&c.common)
+	c.ManagedSPFAPI = (*ManagedSPFAPIService)(&c.common)
 	c.MessageEventsAPI = (*MessageEventsAPIService)(&c.common)
 	c.OAuth20API = (*OAuth20APIService)(&c.common)
 	c.OutOfOfficeAPI = (*OutOfOfficeAPIService)(&c.common)
+	c.PipelineSimulationAPI = (*PipelineSimulationAPIService)(&c.common)
 	c.PixelSettingsAPI = (*PixelSettingsAPIService)(&c.common)
 	c.ProductsAPI = (*ProductsAPIService)(&c.common)
 	c.ReputationAPI = (*ReputationAPIService)(&c.common)
+	c.ReputationPoliciesAPI = (*ReputationPoliciesAPIService)(&c.common)
 	c.SenderHealthAPI = (*SenderHealthAPIService)(&c.common)
+	c.SendingDelegationsAPI = (*SendingDelegationsAPIService)(&c.common)
 	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
 	c.ServerTestsAPI = (*ServerTestsAPIService)(&c.common)
 	c.SpamChecksAPI = (*SpamChecksAPIService)(&c.common)
@@ -161,6 +196,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)
+	c.TemplateVersionsAPI = (*TemplateVersionsAPIService)(&c.common)
 	c.ValidationPoliciesAPI = (*ValidationPoliciesAPIService)(&c.common)
 	c.WebhookCLIAPI = (*WebhookCLIAPIService)(&c.common)
 

@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **BimiVmcUrl** | Pointer to **NullableString** | BIMI VMC certificate URL | [optional] 
 **BimiEnabled** | Pointer to **bool** | Whether BIMI is enabled | [optional] 
 **ForwardRepliesTo** | Pointer to **NullableString** | Reply forwarding address | [optional] 
+**IsPrimary** | Pointer to **bool** | Whether this is the account primary/default sending domain | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
 
@@ -316,6 +317,31 @@ HasForwardRepliesTo returns a boolean if a field has been set.
 `func (o *SendingDomain) UnsetForwardRepliesTo()`
 
 UnsetForwardRepliesTo ensures that no value is present for ForwardRepliesTo, not even an explicit nil
+### GetIsPrimary
+
+`func (o *SendingDomain) GetIsPrimary() bool`
+
+GetIsPrimary returns the IsPrimary field if non-nil, zero value otherwise.
+
+### GetIsPrimaryOk
+
+`func (o *SendingDomain) GetIsPrimaryOk() (*bool, bool)`
+
+GetIsPrimaryOk returns a tuple with the IsPrimary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsPrimary
+
+`func (o *SendingDomain) SetIsPrimary(v bool)`
+
+SetIsPrimary sets IsPrimary field to given value.
+
+### HasIsPrimary
+
+`func (o *SendingDomain) HasIsPrimary() bool`
+
+HasIsPrimary returns a boolean if a field has been set.
+
 ### GetCreatedAt
 
 `func (o *SendingDomain) GetCreatedAt() time.Time`

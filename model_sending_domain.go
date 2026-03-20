@@ -40,6 +40,8 @@ type SendingDomain struct {
 	BimiEnabled *bool `json:"bimi_enabled,omitempty"`
 	// Reply forwarding address
 	ForwardRepliesTo NullableString `json:"forward_replies_to,omitempty"`
+	// Whether this is the account primary/default sending domain
+	IsPrimary *bool `json:"is_primary,omitempty"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
@@ -411,6 +413,38 @@ func (o *SendingDomain) UnsetForwardRepliesTo() {
 	o.ForwardRepliesTo.Unset()
 }
 
+// GetIsPrimary returns the IsPrimary field value if set, zero value otherwise.
+func (o *SendingDomain) GetIsPrimary() bool {
+	if o == nil || IsNil(o.IsPrimary) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPrimary
+}
+
+// GetIsPrimaryOk returns a tuple with the IsPrimary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendingDomain) GetIsPrimaryOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsPrimary) {
+		return nil, false
+	}
+	return o.IsPrimary, true
+}
+
+// HasIsPrimary returns a boolean if a field has been set.
+func (o *SendingDomain) HasIsPrimary() bool {
+	if o != nil && !IsNil(o.IsPrimary) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPrimary gets a reference to the given bool and assigns it to the IsPrimary field.
+func (o *SendingDomain) SetIsPrimary(v bool) {
+	o.IsPrimary = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *SendingDomain) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
@@ -514,6 +548,9 @@ func (o SendingDomain) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ForwardRepliesTo.IsSet() {
 		toSerialize["forward_replies_to"] = o.ForwardRepliesTo.Get()
+	}
+	if !IsNil(o.IsPrimary) {
+		toSerialize["is_primary"] = o.IsPrimary
 	}
 	if !IsNil(o.CreatedAt) {
 		toSerialize["created_at"] = o.CreatedAt

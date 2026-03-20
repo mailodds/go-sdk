@@ -1,7 +1,7 @@
 /*
 MailOdds Email Platform API
 
-Testing PixelSettingsAPIService
+Testing ISPFBLGuidesAPIService
 
 */
 
@@ -14,34 +14,34 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/mailodds/go-sdk/mailodds"
+	openapiclient "github.com/mailodds/go-sdk"
 )
 
-func Test_mailodds_PixelSettingsAPIService(t *testing.T) {
+func Test_openapi_ISPFBLGuidesAPIService(t *testing.T) {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test PixelSettingsAPIService GetPixelSettings", func(t *testing.T) {
+	t.Run("Test ISPFBLGuidesAPIService GetIspFblGuide", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.PixelSettingsAPI.GetPixelSettings(context.Background()).Execute()
+		var ispId string
+
+		httpRes, err := apiClient.ISPFBLGuidesAPI.GetIspFblGuide(context.Background(), ispId).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test PixelSettingsAPIService UpdatePixelSettings", func(t *testing.T) {
+	t.Run("Test ISPFBLGuidesAPIService ListIspFblGuides", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.PixelSettingsAPI.UpdatePixelSettings(context.Background()).Execute()
+		httpRes, err := apiClient.ISPFBLGuidesAPI.ListIspFblGuides(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

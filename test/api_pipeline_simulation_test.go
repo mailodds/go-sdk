@@ -1,7 +1,7 @@
 /*
 MailOdds Email Platform API
 
-Testing AgentControlPlaneAPIService
+Testing PipelineSimulationAPIService
 
 */
 
@@ -17,19 +17,18 @@ import (
 	openapiclient "github.com/mailodds/go-sdk"
 )
 
-func Test_mailodds_AgentControlPlaneAPIService(t *testing.T) {
+func Test_openapi_PipelineSimulationAPIService(t *testing.T) {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test AgentControlPlaneAPIService GetMcpCapabilities", func(t *testing.T) {
+	t.Run("Test PipelineSimulationAPIService SimulatePipeline", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AgentControlPlaneAPI.GetMcpCapabilities(context.Background()).Execute()
+		httpRes, err := apiClient.PipelineSimulationAPI.SimulatePipeline(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

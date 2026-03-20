@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Subject** | **string** | Email subject line | 
 **Html** | Pointer to **string** | HTML email body | [optional] 
 **Text** | Pointer to **string** | Plain text email body | [optional] 
-**DomainId** | **string** | Sending domain UUID | 
+**DomainId** | Pointer to **string** | Sending domain UUID. Optional -- auto-resolved from the from address, or falls back to primary domain. | [optional] 
 **ReplyTo** | Pointer to **string** | Reply-to address | [optional] 
 **Headers** | Pointer to **map[string]interface{}** | Extra email headers | [optional] 
 **Tags** | Pointer to **[]string** | Tags for categorization | [optional] 
@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewDeliverRequest
 
-`func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string, domainId string, ) *DeliverRequest`
+`func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string, ) *DeliverRequest`
 
 NewDeliverRequest instantiates a new DeliverRequest object
 This constructor will assign default values to properties that have it defined,
@@ -168,6 +168,11 @@ and a boolean to check if the value has been set.
 
 SetDomainId sets DomainId field to given value.
 
+### HasDomainId
+
+`func (o *DeliverRequest) HasDomainId() bool`
+
+HasDomainId returns a boolean if a field has been set.
 
 ### GetReplyTo
 

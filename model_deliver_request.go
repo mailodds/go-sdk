@@ -32,8 +32,8 @@ type DeliverRequest struct {
 	Html *string `json:"html,omitempty"`
 	// Plain text email body
 	Text *string `json:"text,omitempty"`
-	// Sending domain UUID
-	DomainId string `json:"domain_id"`
+	// Sending domain UUID. Optional -- auto-resolved from the from address, or falls back to primary domain.
+	DomainId *string `json:"domain_id,omitempty"`
 	// Reply-to address
 	ReplyTo *string `json:"reply_to,omitempty"`
 	// Extra email headers
@@ -58,12 +58,11 @@ type _DeliverRequest DeliverRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string, domainId string) *DeliverRequest {
+func NewDeliverRequest(to []DeliverRequestToInner, from string, subject string) *DeliverRequest {
 	this := DeliverRequest{}
 	this.To = to
 	this.From = from
 	this.Subject = subject
-	this.DomainId = domainId
 	var autoDetectSchema bool = false
 	this.AutoDetectSchema = &autoDetectSchema
 	return &this
@@ -215,28 +214,36 @@ func (o *DeliverRequest) SetText(v string) {
 	o.Text = &v
 }
 
-// GetDomainId returns the DomainId field value
+// GetDomainId returns the DomainId field value if set, zero value otherwise.
 func (o *DeliverRequest) GetDomainId() string {
-	if o == nil {
+	if o == nil || IsNil(o.DomainId) {
 		var ret string
 		return ret
 	}
-
-	return o.DomainId
+	return *o.DomainId
 }
 
-// GetDomainIdOk returns a tuple with the DomainId field value
+// GetDomainIdOk returns a tuple with the DomainId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeliverRequest) GetDomainIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DomainId) {
 		return nil, false
 	}
-	return &o.DomainId, true
+	return o.DomainId, true
 }
 
-// SetDomainId sets field value
+// HasDomainId returns a boolean if a field has been set.
+func (o *DeliverRequest) HasDomainId() bool {
+	if o != nil && !IsNil(o.DomainId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomainId gets a reference to the given string and assigns it to the DomainId field.
 func (o *DeliverRequest) SetDomainId(v string) {
-	o.DomainId = v
+	o.DomainId = &v
 }
 
 // GetReplyTo returns the ReplyTo field value if set, zero value otherwise.
@@ -546,7 +553,9 @@ func (o DeliverRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Text) {
 		toSerialize["text"] = o.Text
 	}
-	toSerialize["domain_id"] = o.DomainId
+	if !IsNil(o.DomainId) {
+		toSerialize["domain_id"] = o.DomainId
+	}
 	if !IsNil(o.ReplyTo) {
 		toSerialize["reply_to"] = o.ReplyTo
 	}
@@ -585,7 +594,6 @@ func (o *DeliverRequest) UnmarshalJSON(data []byte) (err error) {
 		"to",
 		"from",
 		"subject",
-		"domain_id",
 	}
 
 	allProperties := make(map[string]interface{})

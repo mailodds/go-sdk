@@ -1,7 +1,7 @@
 /*
 MailOdds Email Platform API
 
-Testing ProductsAPIService
+Testing GlobalSuppressionsAPIService
 
 */
 
@@ -17,47 +17,40 @@ import (
 	openapiclient "github.com/mailodds/go-sdk"
 )
 
-func Test_mailodds_ProductsAPIService(t *testing.T) {
+func Test_openapi_GlobalSuppressionsAPIService(t *testing.T) {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ProductsAPIService BatchProducts", func(t *testing.T) {
+	t.Run("Test GlobalSuppressionsAPIService AddGlobalSuppressionOverride", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var storeId string
-
-		resp, httpRes, err := apiClient.ProductsAPI.BatchProducts(context.Background(), storeId).Execute()
+		httpRes, err := apiClient.GlobalSuppressionsAPI.AddGlobalSuppressionOverride(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ProductsAPIService GetProduct", func(t *testing.T) {
+	t.Run("Test GlobalSuppressionsAPIService CheckGlobalSuppression", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var productId string
-
-		resp, httpRes, err := apiClient.ProductsAPI.GetProduct(context.Background(), productId).Execute()
+		httpRes, err := apiClient.GlobalSuppressionsAPI.CheckGlobalSuppression(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ProductsAPIService QueryProducts", func(t *testing.T) {
+	t.Run("Test GlobalSuppressionsAPIService RemoveGlobalSuppressionOverride", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ProductsAPI.QueryProducts(context.Background()).Execute()
+		httpRes, err := apiClient.GlobalSuppressionsAPI.RemoveGlobalSuppressionOverride(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

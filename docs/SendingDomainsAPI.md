@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**GetSendingDomainIdentityScore**](SendingDomainsAPI.md#GetSendingDomainIdentityScore) | **Get** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score
 [**GetSendingStats**](SendingDomainsAPI.md#GetSendingStats) | **Get** /v1/sending-stats | Get sending statistics
 [**ListSendingDomains**](SendingDomainsAPI.md#ListSendingDomains) | **Get** /v1/sending-domains | List sending domains
+[**SetPrimarySendingDomain**](SendingDomainsAPI.md#SetPrimarySendingDomain) | **Post** /v1/sending-domains/{domain_id}/set-primary | Set primary sending domain
 [**UpdateReplyForwarding**](SendingDomainsAPI.md#UpdateReplyForwarding) | **Patch** /v1/sending-domains/{domain_id}/reply-forwarding | Update reply forwarding config
 [**VerifySendingDomain**](SendingDomainsAPI.md#VerifySendingDomain) | **Post** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
 
@@ -476,6 +477,76 @@ Other parameters are passed through a pointer to a apiListSendingDomainsRequest 
 ### Return type
 
 [**ListSendingDomains200Response**](ListSendingDomains200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetPrimarySendingDomain
+
+> CreateSendingDomain201Response SetPrimarySendingDomain(ctx, domainId).Execute()
+
+Set primary sending domain
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	domainId := "domainId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SendingDomainsAPI.SetPrimarySendingDomain(context.Background(), domainId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SendingDomainsAPI.SetPrimarySendingDomain``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetPrimarySendingDomain`: CreateSendingDomain201Response
+	fmt.Fprintf(os.Stdout, "Response from `SendingDomainsAPI.SetPrimarySendingDomain`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**domainId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetPrimarySendingDomainRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**CreateSendingDomain201Response**](CreateSendingDomain201Response.md)
 
 ### Authorization
 

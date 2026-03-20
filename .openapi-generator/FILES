@@ -8,22 +8,33 @@ api_bounce_analysis.go
 api_bulk_validation.go
 api_campaign_analytics.go
 api_campaigns.go
+api_configuration_sets.go
 api_contact_lists.go
 api_content_classification.go
+api_deliverability_advisor.go
+api_dkim_management.go
 api_dmarc_monitoring.go
 api_domain_insights.go
 api_email_sending.go
 api_email_validation.go
 api_engagement.go
+api_event_destinations.go
 api_events.go
+api_global_suppressions.go
 api_inbound_processing.go
+api_inbound_rules.go
+api_ispfbl_guides.go
+api_managed_spf.go
 api_message_events.go
 api_o_auth20.go
 api_out_of_office.go
+api_pipeline_simulation.go
 api_pixel_settings.go
 api_products.go
 api_reputation.go
+api_reputation_policies.go
 api_sender_health.go
+api_sending_delegations.go
 api_sending_domains.go
 api_server_tests.go
 api_spam_checks.go
@@ -31,6 +42,7 @@ api_store_connections.go
 api_subscriber_lists.go
 api_suppression_lists.go
 api_system.go
+api_template_versions.go
 api_validation_policies.go
 api_webhook_cli.go
 client.go
@@ -83,6 +95,7 @@ docs/CheckSuppressionRequest.md
 docs/ClassifyContent200Response.md
 docs/ClassifyContent200ResponseContentCheck.md
 docs/ClassifyContentRequest.md
+docs/ConfigurationSetsAPI.md
 docs/ConfirmSubscription200Response.md
 docs/ContactList.md
 docs/ContactListsAPI.md
@@ -112,6 +125,7 @@ docs/CreateWebhookCliSessionRequest.md
 docs/CrossReferenceBounces200Response.md
 docs/CrossReferenceBounces200ResponseCrossReference.md
 docs/CrossReferenceBounces200ResponseCrossReferenceEntriesInner.md
+docs/DKIMManagementAPI.md
 docs/DMARCMonitoringAPI.md
 docs/DeleteJob200Response.md
 docs/DeleteOooContact200Response.md
@@ -124,6 +138,7 @@ docs/DeliverRequestStructuredData.md
 docs/DeliverRequestToInner.md
 docs/DeliverResponse.md
 docs/DeliverResponseDelivery.md
+docs/DeliverabilityAdvisorAPI.md
 docs/DisconnectStore200Response.md
 docs/DmarcDomain.md
 docs/DomainInsightsAPI.md
@@ -131,6 +146,7 @@ docs/EmailSendingAPI.md
 docs/EmailValidationAPI.md
 docs/EngagementAPI.md
 docs/ErrorResponse.md
+docs/EventDestinationsAPI.md
 docs/EventsAPI.md
 docs/GetBlacklistHistory200Response.md
 docs/GetBlacklistHistory200ResponseChecksInner.md
@@ -199,10 +215,13 @@ docs/GetSendingStats200Response.md
 docs/GetSendingStats200ResponseStats.md
 docs/GetSubscribers200Response.md
 docs/GetSyncJobErrors200Response.md
+docs/GlobalSuppressionsAPI.md
 docs/HealthCheck200Response.md
+docs/ISPFBLGuidesAPI.md
 docs/IdentityScoreCheck.md
 docs/ImportContactList200Response.md
 docs/InboundProcessingAPI.md
+docs/InboundRulesAPI.md
 docs/IntrospectToken200Response.md
 docs/Job.md
 docs/JobArtifacts.md
@@ -225,6 +244,7 @@ docs/ListStores200Response.md
 docs/ListSyncJobs200Response.md
 docs/ListWebhookDeliveries200Response.md
 docs/ListWebhookDeliveries200ResponseDeliveriesInner.md
+docs/ManagedSPFAPI.md
 docs/McpCapabilities.md
 docs/McpCapabilitiesPillarsInner.md
 docs/McpCapabilitiesPillarsInnerToolsInner.md
@@ -233,6 +253,7 @@ docs/OAuth20API.md
 docs/OAuthServerMetadata.md
 docs/OutOfOfficeAPI.md
 docs/Pagination.md
+docs/PipelineSimulationAPI.md
 docs/PixelSettingsAPI.md
 docs/Policy.md
 docs/PolicyListResponse.md
@@ -259,6 +280,7 @@ docs/RemoveSuppression200Response.md
 docs/RemoveSuppressionRequest.md
 docs/ReplayWebhookDelivery200Response.md
 docs/ReputationAPI.md
+docs/ReputationPoliciesAPI.md
 docs/ResultsResponse.md
 docs/RetryJob200Response.md
 docs/RunBlacklistCheck200Response.md
@@ -269,6 +291,7 @@ docs/RunSpamCheck201Response.md
 docs/RunSpamCheckRequest.md
 docs/ScheduleCampaignRequest.md
 docs/SenderHealthAPI.md
+docs/SendingDelegationsAPI.md
 docs/SendingDomain.md
 docs/SendingDomainDnsRecords.md
 docs/SendingDomainDnsRecordsNs.md
@@ -307,6 +330,7 @@ docs/TelemetrySummaryRates.md
 docs/TelemetrySummaryTopDomainsInner.md
 docs/TelemetrySummaryTopReasonsInner.md
 docs/TelemetrySummaryTotals.md
+docs/TemplateVersionsAPI.md
 docs/TestPolicyRequest.md
 docs/TestPolicyRequestTestResult.md
 docs/TrackEventRequest.md

@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Subject** | **string** |  | 
 **Html** | Pointer to **string** |  | [optional] 
 **Text** | Pointer to **string** |  | [optional] 
-**DomainId** | **string** |  | 
+**DomainId** | Pointer to **string** | Sending domain UUID. Optional -- auto-resolved from the from address, or falls back to primary domain. | [optional] 
 **ReplyTo** | Pointer to **string** |  | [optional] 
 **Headers** | Pointer to **map[string]interface{}** |  | [optional] 
 **Tags** | Pointer to **[]string** |  | [optional] 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewBatchDeliverRequest
 
-`func NewBatchDeliverRequest(to []string, from string, subject string, domainId string, ) *BatchDeliverRequest`
+`func NewBatchDeliverRequest(to []string, from string, subject string, ) *BatchDeliverRequest`
 
 NewBatchDeliverRequest instantiates a new BatchDeliverRequest object
 This constructor will assign default values to properties that have it defined,
@@ -165,6 +165,11 @@ and a boolean to check if the value has been set.
 
 SetDomainId sets DomainId field to given value.
 
+### HasDomainId
+
+`func (o *BatchDeliverRequest) HasDomainId() bool`
+
+HasDomainId returns a boolean if a field has been set.
 
 ### GetReplyTo
 

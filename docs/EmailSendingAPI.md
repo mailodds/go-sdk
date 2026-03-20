@@ -30,7 +30,7 @@ import (
 )
 
 func main() {
-	batchDeliverRequest := *openapiclient.NewBatchDeliverRequest([]string{"To_example"}, "From_example", "Subject_example", "DomainId_example") // BatchDeliverRequest | 
+	batchDeliverRequest := *openapiclient.NewBatchDeliverRequest([]string{"To_example"}, "From_example", "Subject_example") // BatchDeliverRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -96,7 +96,7 @@ import (
 )
 
 func main() {
-	deliverRequest := *openapiclient.NewDeliverRequest([]openapiclient.DeliverRequestToInner{*openapiclient.NewDeliverRequestToInner("Email_example")}, "From_example", "Subject_example", "DomainId_example") // DeliverRequest | 
+	deliverRequest := *openapiclient.NewDeliverRequest([]openapiclient.DeliverRequestToInner{*openapiclient.NewDeliverRequestToInner("Email_example")}, "From_example", "Subject_example") // DeliverRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
