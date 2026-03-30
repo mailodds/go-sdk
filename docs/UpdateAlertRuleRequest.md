@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Metric** | Pointer to **string** |  | [optional] 
 **Threshold** | Pointer to **float32** |  | [optional] 
 **Channel** | Pointer to **string** |  | [optional] 
-**WindowMinutes** | Pointer to **int32** |  | [optional] 
+**WindowMinutes** | Pointer to **int32** | Evaluation window in minutes (15, 60, 1440, or 2880) | [optional] 
 **Enabled** | Pointer to **bool** |  | [optional] 
 
 ## Methods

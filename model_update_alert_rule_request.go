@@ -23,6 +23,7 @@ type UpdateAlertRuleRequest struct {
 	Metric *string `json:"metric,omitempty"`
 	Threshold *float32 `json:"threshold,omitempty"`
 	Channel *string `json:"channel,omitempty"`
+	// Evaluation window in minutes (15, 60, 1440, or 2880)
 	WindowMinutes *int32 `json:"window_minutes,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 }

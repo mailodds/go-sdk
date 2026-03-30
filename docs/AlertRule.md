@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Metric** | Pointer to **string** | Monitored metric name | [optional] 
 **Threshold** | Pointer to **float32** | Alert threshold value (0-1) | [optional] 
 **Channel** | Pointer to **string** | Notification channel | [optional] 
-**WindowMinutes** | Pointer to **int32** | Evaluation window in minutes | [optional] 
+**WindowMinutes** | Pointer to **int32** | Evaluation window in minutes (15, 60, 1440, or 2880) | [optional] 
 **Enabled** | Pointer to **bool** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 

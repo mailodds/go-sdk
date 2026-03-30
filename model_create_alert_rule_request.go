@@ -28,7 +28,7 @@ type CreateAlertRuleRequest struct {
 	Threshold float32 `json:"threshold"`
 	// Notification channel (e.g., webhook)
 	Channel string `json:"channel"`
-	// Evaluation window in minutes
+	// Evaluation window in minutes (15, 60, 1440, or 2880)
 	WindowMinutes *int32 `json:"window_minutes,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 }

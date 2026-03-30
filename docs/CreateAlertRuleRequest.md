@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Metric** | **string** | Metric to monitor (e.g., bounce_rate, complaint_rate) | 
 **Threshold** | **float32** | Threshold value (0-1, e.g. 0.02 for 2%) | 
 **Channel** | **string** | Notification channel (e.g., webhook) | 
-**WindowMinutes** | Pointer to **int32** | Evaluation window in minutes | [optional] [default to 60]
+**WindowMinutes** | Pointer to **int32** | Evaluation window in minutes (15, 60, 1440, or 2880) | [optional] [default to 60]
 **Enabled** | Pointer to **bool** |  | [optional] [default to true]
 
 ## Methods

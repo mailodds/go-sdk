@@ -28,7 +28,7 @@ type AlertRule struct {
 	Threshold *float32 `json:"threshold,omitempty"`
 	// Notification channel
 	Channel *string `json:"channel,omitempty"`
-	// Evaluation window in minutes
+	// Evaluation window in minutes (15, 60, 1440, or 2880)
 	WindowMinutes *int32 `json:"window_minutes,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
