@@ -24,7 +24,7 @@ type AlertRule struct {
 	Id *string `json:"id,omitempty"`
 	// Monitored metric name
 	Metric *string `json:"metric,omitempty"`
-	// Alert threshold value
+	// Alert threshold value (0-1)
 	Threshold *float32 `json:"threshold,omitempty"`
 	// Notification channel
 	Channel *string `json:"channel,omitempty"`

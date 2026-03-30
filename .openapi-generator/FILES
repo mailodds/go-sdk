@@ -30,7 +30,6 @@ api_o_auth20.go
 api_out_of_office.go
 api_pipeline_simulation.go
 api_pixel_settings.go
-api_products.go
 api_reputation.go
 api_reputation_policies.go
 api_sender_health.go
@@ -38,7 +37,6 @@ api_sending_delegations.go
 api_sending_domains.go
 api_server_tests.go
 api_spam_checks.go
-api_store_connections.go
 api_subscriber_lists.go
 api_suppression_lists.go
 api_system.go
@@ -82,8 +80,6 @@ docs/BounceAnalysisResponse.md
 docs/BounceAnalysisResponseAnalysis.md
 docs/BounceAnalysisResponseAnalysisCategories.md
 docs/BounceAnalysisResponseAnalysisTopDomainsInner.md
-docs/BulkUpdateProducts200Response.md
-docs/BulkUpdateProductsRequest.md
 docs/BulkValidationAPI.md
 docs/Campaign.md
 docs/CampaignAnalyticsAPI.md
@@ -116,7 +112,6 @@ docs/CreatePolicyFromPresetRequest.md
 docs/CreatePolicyRequest.md
 docs/CreateSendingDomain201Response.md
 docs/CreateSendingDomainRequest.md
-docs/CreateStore201Response.md
 docs/CreateStoreRequest.md
 docs/CreateToken200Response.md
 docs/CreateVariantRequest.md
@@ -139,7 +134,6 @@ docs/DeliverRequestToInner.md
 docs/DeliverResponse.md
 docs/DeliverResponseDelivery.md
 docs/DeliverabilityAdvisorAPI.md
-docs/DisconnectStore200Response.md
 docs/DmarcDomain.md
 docs/DomainInsightsAPI.md
 docs/EmailSendingAPI.md
@@ -198,7 +192,6 @@ docs/GetMessageEvents200ResponseSummary.md
 docs/GetOooStatus200Response.md
 docs/GetPixelSettings200Response.md
 docs/GetPresignedUploadRequest.md
-docs/GetProduct200Response.md
 docs/GetReplyForwarding200Response.md
 docs/GetReputation200Response.md
 docs/GetReputationTimeline200Response.md
@@ -214,7 +207,6 @@ docs/GetSendingDomainIdentityScore200Response.md
 docs/GetSendingStats200Response.md
 docs/GetSendingStats200ResponseStats.md
 docs/GetSubscribers200Response.md
-docs/GetSyncJobErrors200Response.md
 docs/GlobalSuppressionsAPI.md
 docs/HealthCheck200Response.md
 docs/ISPFBLGuidesAPI.md
@@ -240,8 +232,6 @@ docs/ListOooContacts200Response.md
 docs/ListSendingDomains200Response.md
 docs/ListServerTests200Response.md
 docs/ListSpamChecks200Response.md
-docs/ListStores200Response.md
-docs/ListSyncJobs200Response.md
 docs/ListWebhookDeliveries200Response.md
 docs/ListWebhookDeliveries200ResponseDeliveriesInner.md
 docs/ManagedSPFAPI.md
@@ -250,6 +240,7 @@ docs/McpCapabilitiesPillarsInner.md
 docs/McpCapabilitiesPillarsInnerToolsInner.md
 docs/MessageEventsAPI.md
 docs/OAuth20API.md
+docs/OAuthClientRegistration.md
 docs/OAuthServerMetadata.md
 docs/OutOfOfficeAPI.md
 docs/Pagination.md
@@ -270,12 +261,10 @@ docs/ProductFacets.md
 docs/ProductFacetsCategoriesInner.md
 docs/ProductFacetsPriceRangesInner.md
 docs/ProductFacetsStoresInner.md
-docs/ProductsAPI.md
 docs/QueryContactList200Response.md
 docs/QueryContactList200ResponseEmailsInner.md
 docs/QueryContactListRequest.md
 docs/QueryContactListRequestFiltersInner.md
-docs/QueryProducts200Response.md
 docs/RemoveSuppression200Response.md
 docs/RemoveSuppressionRequest.md
 docs/ReplayWebhookDelivery200Response.md
@@ -307,7 +296,6 @@ docs/SpamCheck.md
 docs/SpamCheckChecks.md
 docs/SpamChecksAPI.md
 docs/StoreConnection.md
-docs/StoreConnectionsAPI.md
 docs/StoreProduct.md
 docs/SubscribeRequest.md
 docs/Subscriber.md
@@ -342,7 +330,6 @@ docs/UpdateOooContactRequest.md
 docs/UpdatePixelSettingsRequest.md
 docs/UpdatePolicyRequest.md
 docs/UpdateReplyForwardingRequest.md
-docs/UpdateStoreRequest.md
 docs/ValidateBatch200Response.md
 docs/ValidateBatch200ResponseSummary.md
 docs/ValidateBatchRequest.md
@@ -388,8 +375,6 @@ model_bounce_analysis_response.go
 model_bounce_analysis_response_analysis.go
 model_bounce_analysis_response_analysis_categories.go
 model_bounce_analysis_response_analysis_top_domains_inner.go
-model_bulk_update_products_200_response.go
-model_bulk_update_products_request.go
 model_campaign.go
 model_campaign_response.go
 model_campaign_stats.go
@@ -416,7 +401,6 @@ model_create_policy_from_preset_request.go
 model_create_policy_request.go
 model_create_sending_domain_201_response.go
 model_create_sending_domain_request.go
-model_create_store_201_response.go
 model_create_store_request.go
 model_create_token_200_response.go
 model_create_variant_request.go
@@ -436,7 +420,6 @@ model_deliver_request_structured_data.go
 model_deliver_request_to_inner.go
 model_deliver_response.go
 model_deliver_response_delivery.go
-model_disconnect_store_200_response.go
 model_dmarc_domain.go
 model_error_response.go
 model_get_blacklist_history_200_response.go
@@ -489,7 +472,6 @@ model_get_message_events_200_response_summary.go
 model_get_ooo_status_200_response.go
 model_get_pixel_settings_200_response.go
 model_get_presigned_upload_request.go
-model_get_product_200_response.go
 model_get_reply_forwarding_200_response.go
 model_get_reputation_200_response.go
 model_get_reputation_timeline_200_response.go
@@ -505,7 +487,6 @@ model_get_sending_domain_identity_score_200_response.go
 model_get_sending_stats_200_response.go
 model_get_sending_stats_200_response_stats.go
 model_get_subscribers_200_response.go
-model_get_sync_job_errors_200_response.go
 model_health_check_200_response.go
 model_identity_score_check.go
 model_import_contact_list_200_response.go
@@ -527,13 +508,12 @@ model_list_ooo_contacts_200_response.go
 model_list_sending_domains_200_response.go
 model_list_server_tests_200_response.go
 model_list_spam_checks_200_response.go
-model_list_stores_200_response.go
-model_list_sync_jobs_200_response.go
 model_list_webhook_deliveries_200_response.go
 model_list_webhook_deliveries_200_response_deliveries_inner.go
 model_mcp_capabilities.go
 model_mcp_capabilities_pillars_inner.go
 model_mcp_capabilities_pillars_inner_tools_inner.go
+model_o_auth_client_registration.go
 model_o_auth_server_metadata.go
 model_pagination.go
 model_policy.go
@@ -555,7 +535,6 @@ model_query_contact_list_200_response.go
 model_query_contact_list_200_response_emails_inner.go
 model_query_contact_list_request.go
 model_query_contact_list_request_filters_inner.go
-model_query_products_200_response.go
 model_remove_suppression_200_response.go
 model_remove_suppression_request.go
 model_replay_webhook_delivery_200_response.go
@@ -610,7 +589,6 @@ model_update_ooo_contact_request.go
 model_update_pixel_settings_request.go
 model_update_policy_request.go
 model_update_reply_forwarding_request.go
-model_update_store_request.go
 model_validate_batch_200_response.go
 model_validate_batch_200_response_summary.go
 model_validate_batch_request.go

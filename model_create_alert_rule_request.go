@@ -24,7 +24,7 @@ var _ MappedNullable = &CreateAlertRuleRequest{}
 type CreateAlertRuleRequest struct {
 	// Metric to monitor (e.g., bounce_rate, complaint_rate)
 	Metric string `json:"metric"`
-	// Threshold value to trigger alert
+	// Threshold value (0-1, e.g. 0.02 for 2%)
 	Threshold float32 `json:"threshold"`
 	// Notification channel (e.g., webhook)
 	Channel string `json:"channel"`

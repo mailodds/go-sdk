@@ -94,12 +94,8 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.mailodds.com/v1",
-				Description: "Production server (API v1 endpoints)",
-			},
-			{
 				URL: "https://api.mailodds.com",
-				Description: "Production server (OAuth and discovery endpoints)",
+				Description: "Production server",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{

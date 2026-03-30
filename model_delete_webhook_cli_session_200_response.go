@@ -20,6 +20,7 @@ var _ MappedNullable = &DeleteWebhookCliSession200Response{}
 
 // DeleteWebhookCliSession200Response struct for DeleteWebhookCliSession200Response
 type DeleteWebhookCliSession200Response struct {
+	Deleted *bool `json:"deleted,omitempty"`
 	Status *string `json:"status,omitempty"`
 }
 
@@ -38,6 +39,38 @@ func NewDeleteWebhookCliSession200Response() *DeleteWebhookCliSession200Response
 func NewDeleteWebhookCliSession200ResponseWithDefaults() *DeleteWebhookCliSession200Response {
 	this := DeleteWebhookCliSession200Response{}
 	return &this
+}
+
+// GetDeleted returns the Deleted field value if set, zero value otherwise.
+func (o *DeleteWebhookCliSession200Response) GetDeleted() bool {
+	if o == nil || IsNil(o.Deleted) {
+		var ret bool
+		return ret
+	}
+	return *o.Deleted
+}
+
+// GetDeletedOk returns a tuple with the Deleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteWebhookCliSession200Response) GetDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Deleted) {
+		return nil, false
+	}
+	return o.Deleted, true
+}
+
+// HasDeleted returns a boolean if a field has been set.
+func (o *DeleteWebhookCliSession200Response) HasDeleted() bool {
+	if o != nil && !IsNil(o.Deleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleted gets a reference to the given bool and assigns it to the Deleted field.
+func (o *DeleteWebhookCliSession200Response) SetDeleted(v bool) {
+	o.Deleted = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -82,6 +115,9 @@ func (o DeleteWebhookCliSession200Response) MarshalJSON() ([]byte, error) {
 
 func (o DeleteWebhookCliSession200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Deleted) {
+		toSerialize["deleted"] = o.Deleted
+	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}

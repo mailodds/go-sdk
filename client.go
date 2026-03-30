@@ -108,8 +108,6 @@ type APIClient struct {
 
 	PixelSettingsAPI *PixelSettingsAPIService
 
-	ProductsAPI *ProductsAPIService
-
 	ReputationAPI *ReputationAPIService
 
 	ReputationPoliciesAPI *ReputationPoliciesAPIService
@@ -123,8 +121,6 @@ type APIClient struct {
 	ServerTestsAPI *ServerTestsAPIService
 
 	SpamChecksAPI *SpamChecksAPIService
-
-	StoreConnectionsAPI *StoreConnectionsAPIService
 
 	SubscriberListsAPI *SubscriberListsAPIService
 
@@ -184,7 +180,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.OutOfOfficeAPI = (*OutOfOfficeAPIService)(&c.common)
 	c.PipelineSimulationAPI = (*PipelineSimulationAPIService)(&c.common)
 	c.PixelSettingsAPI = (*PixelSettingsAPIService)(&c.common)
-	c.ProductsAPI = (*ProductsAPIService)(&c.common)
 	c.ReputationAPI = (*ReputationAPIService)(&c.common)
 	c.ReputationPoliciesAPI = (*ReputationPoliciesAPIService)(&c.common)
 	c.SenderHealthAPI = (*SenderHealthAPIService)(&c.common)
@@ -192,7 +187,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
 	c.ServerTestsAPI = (*ServerTestsAPIService)(&c.common)
 	c.SpamChecksAPI = (*SpamChecksAPIService)(&c.common)
-	c.StoreConnectionsAPI = (*StoreConnectionsAPIService)(&c.common)
 	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)

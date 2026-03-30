@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Deleted** | Pointer to **bool** |  | [optional] 
 **Status** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -24,6 +25,31 @@ will change when the set of required properties is changed
 NewDeleteWebhookCliSession200ResponseWithDefaults instantiates a new DeleteWebhookCliSession200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetDeleted
+
+`func (o *DeleteWebhookCliSession200Response) GetDeleted() bool`
+
+GetDeleted returns the Deleted field if non-nil, zero value otherwise.
+
+### GetDeletedOk
+
+`func (o *DeleteWebhookCliSession200Response) GetDeletedOk() (*bool, bool)`
+
+GetDeletedOk returns a tuple with the Deleted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeleted
+
+`func (o *DeleteWebhookCliSession200Response) SetDeleted(v bool)`
+
+SetDeleted sets Deleted field to given value.
+
+### HasDeleted
+
+`func (o *DeleteWebhookCliSession200Response) HasDeleted() bool`
+
+HasDeleted returns a boolean if a field has been set.
 
 ### GetStatus
 
