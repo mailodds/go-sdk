@@ -14,6 +14,7 @@ api_content_classification.go
 api_deliverability_advisor.go
 api_dkim_management.go
 api_dmarc_monitoring.go
+api_dns_provider.go
 api_domain_insights.go
 api_email_sending.go
 api_email_validation.go
@@ -37,6 +38,7 @@ api_sending_delegations.go
 api_sending_domains.go
 api_server_tests.go
 api_spam_checks.go
+api_storefront_domains.go
 api_subscriber_lists.go
 api_suppression_lists.go
 api_system.go
@@ -93,6 +95,7 @@ docs/ClassifyContent200ResponseContentCheck.md
 docs/ClassifyContentRequest.md
 docs/ConfigurationSetsAPI.md
 docs/ConfirmSubscription200Response.md
+docs/ConnectDnsProviderRequest.md
 docs/ContactList.md
 docs/ContactListsAPI.md
 docs/ContentClassificationAPI.md
@@ -113,6 +116,7 @@ docs/CreatePolicyRequest.md
 docs/CreateSendingDomain201Response.md
 docs/CreateSendingDomainRequest.md
 docs/CreateStoreRequest.md
+docs/CreateStorefrontDomainRequest.md
 docs/CreateToken200Response.md
 docs/CreateVariantRequest.md
 docs/CreateWebhookCliSession201Response.md
@@ -122,6 +126,7 @@ docs/CrossReferenceBounces200ResponseCrossReference.md
 docs/CrossReferenceBounces200ResponseCrossReferenceEntriesInner.md
 docs/DKIMManagementAPI.md
 docs/DMARCMonitoringAPI.md
+docs/DNSProviderAPI.md
 docs/DeleteJob200Response.md
 docs/DeleteOooContact200Response.md
 docs/DeletePolicy200Response.md
@@ -297,6 +302,7 @@ docs/SpamCheckChecks.md
 docs/SpamChecksAPI.md
 docs/StoreConnection.md
 docs/StoreProduct.md
+docs/StorefrontDomainsAPI.md
 docs/SubscribeRequest.md
 docs/Subscriber.md
 docs/SubscriberList.md
@@ -384,6 +390,7 @@ model_classify_content_200_response.go
 model_classify_content_200_response_content_check.go
 model_classify_content_request.go
 model_confirm_subscription_200_response.go
+model_connect_dns_provider_request.go
 model_contact_list.go
 model_correct_inbound_message_request.go
 model_create_alert_rule_201_response.go
@@ -402,6 +409,7 @@ model_create_policy_request.go
 model_create_sending_domain_201_response.go
 model_create_sending_domain_request.go
 model_create_store_request.go
+model_create_storefront_domain_request.go
 model_create_token_200_response.go
 model_create_variant_request.go
 model_create_webhook_cli_session_201_response.go
@@ -600,3 +608,5 @@ model_validation_result.go
 model_validation_result_suppression.go
 model_webhook_event.go
 response.go
+test/api_dns_provider_test.go
+test/api_storefront_domains_test.go

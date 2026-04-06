@@ -74,6 +74,8 @@ type APIClient struct {
 
 	DMARCMonitoringAPI *DMARCMonitoringAPIService
 
+	DNSProviderAPI *DNSProviderAPIService
+
 	DeliverabilityAdvisorAPI *DeliverabilityAdvisorAPIService
 
 	DomainInsightsAPI *DomainInsightsAPIService
@@ -122,6 +124,8 @@ type APIClient struct {
 
 	SpamChecksAPI *SpamChecksAPIService
 
+	StorefrontDomainsAPI *StorefrontDomainsAPIService
+
 	SubscriberListsAPI *SubscriberListsAPIService
 
 	SuppressionListsAPI *SuppressionListsAPIService
@@ -163,6 +167,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ContentClassificationAPI = (*ContentClassificationAPIService)(&c.common)
 	c.DKIMManagementAPI = (*DKIMManagementAPIService)(&c.common)
 	c.DMARCMonitoringAPI = (*DMARCMonitoringAPIService)(&c.common)
+	c.DNSProviderAPI = (*DNSProviderAPIService)(&c.common)
 	c.DeliverabilityAdvisorAPI = (*DeliverabilityAdvisorAPIService)(&c.common)
 	c.DomainInsightsAPI = (*DomainInsightsAPIService)(&c.common)
 	c.EmailSendingAPI = (*EmailSendingAPIService)(&c.common)
@@ -187,6 +192,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SendingDomainsAPI = (*SendingDomainsAPIService)(&c.common)
 	c.ServerTestsAPI = (*ServerTestsAPIService)(&c.common)
 	c.SpamChecksAPI = (*SpamChecksAPIService)(&c.common)
+	c.StorefrontDomainsAPI = (*StorefrontDomainsAPIService)(&c.common)
 	c.SubscriberListsAPI = (*SubscriberListsAPIService)(&c.common)
 	c.SuppressionListsAPI = (*SuppressionListsAPIService)(&c.common)
 	c.SystemAPI = (*SystemAPIService)(&c.common)

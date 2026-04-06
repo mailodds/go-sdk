@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**CancelCampaign**](CampaignsAPI.md#CancelCampaign) | **Post** /v1/campaigns/{campaign_id}/cancel | Cancel a campaign
 [**CreateCampaign**](CampaignsAPI.md#CreateCampaign) | **Post** /v1/campaigns | Create a campaign
 [**CreateCampaignVariant**](CampaignsAPI.md#CreateCampaignVariant) | **Post** /v1/campaigns/{campaign_id}/variants | Create A/B variant
+[**DeleteCampaign**](CampaignsAPI.md#DeleteCampaign) | **Delete** /v1/campaigns/{campaign_id} | Delete a campaign
 [**GetCampaign**](CampaignsAPI.md#GetCampaign) | **Get** /v1/campaigns/{campaign_id} | Get campaign with stats
 [**ListCampaigns**](CampaignsAPI.md#ListCampaigns) | **Get** /v1/campaigns | List campaigns
 [**ScheduleCampaign**](CampaignsAPI.md#ScheduleCampaign) | **Post** /v1/campaigns/{campaign_id}/schedule | Schedule a campaign
@@ -215,6 +216,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteCampaign
+
+> DeletePolicyRule200Response DeleteCampaign(ctx, campaignId).Execute()
+
+Delete a campaign
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	campaignId := "campaignId_example" // string | Campaign UUID
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CampaignsAPI.DeleteCampaign(context.Background(), campaignId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaignsAPI.DeleteCampaign``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteCampaign`: DeletePolicyRule200Response
+	fmt.Fprintf(os.Stdout, "Response from `CampaignsAPI.DeleteCampaign`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**campaignId** | **string** | Campaign UUID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteCampaignRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
